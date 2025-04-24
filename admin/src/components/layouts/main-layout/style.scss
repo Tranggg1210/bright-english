@@ -1,0 +1,14 @@
+.main-layout{
+    .logo-image{
+        margin: 12px;
+        display: flex;
+        justify-content: center;
+        border-radius: 12px;
+        padding: 4px;
+
+        >img{
+            width: 100%;
+            height: auto;
+        }
+    }
+}
