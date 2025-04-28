@@ -6,7 +6,6 @@ import React, { useState } from 'react';
 import {
   DesktopOutlined,
   FileOutlined,
-  PieChartOutlined,
   TeamOutlined,
   UserOutlined,
 } from '@ant-design/icons';
@@ -34,7 +33,7 @@ function getItem(
 }
 
 const items: MenuItem[] = [
-  getItem('Option 1', '1', <PieChartOutlined />),
+  getItem('Người dùng', '1', <UserOutlined />),
   getItem('Option 2', '2', <DesktopOutlined />),
   getItem('User', 'sub1', <UserOutlined />, [
     getItem('Tom', '3'),
