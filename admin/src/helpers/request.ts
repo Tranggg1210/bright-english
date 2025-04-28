@@ -3,7 +3,7 @@ import CookieStorage from "./cookies";
 
 const headers = {
     "Content-Type": "application/json",
-}
+};
 
 const API_REQUEST_TIMEOUT = 9000;
 
@@ -11,12 +11,12 @@ class Request {
     axios: AxiosInstance;
 
     constructor(baseURL: string) {
-        const token = CookieStorage.getCookie('access-token');
+        const token = CookieStorage.getCookie("access-token");
 
         if (token) {
             Object.assign(headers, {
                 Authorization: `Bearer ${token}`,
-            })
+            });
         }
 
         this.axios = axios.create({
@@ -26,47 +26,47 @@ class Request {
             responseType: "json",
             validateStatus: (status) => {
                 if (status === 403) return false;
-                else {
-                    return status >= 200 && status < 300;
-                }
-            }
+                return status >= 200 && status < 300;
+            },
         });
 
-        this.axios.interceptors.request.use(
-            (config) => config,
-            (err) => Promise.reject(err)
-        );
-
         this.axios.interceptors.response.use(
-            (response) => {
-                return response;
-            },
+            (response) => response,
             async (error: AxiosError) => {
+                const customError = {
+                    code: error.response?.status ?? 500,
+                    message:
+                        (error.response?.data as { message?: string })?.message ||
+                        error.message ||
+                        "Lỗi không xác định",
+                };
+
                 if (error.response?.status === 401 && error.config) {
                     try {
                         const refreshedToken = await this.refreshAccessToken();
                         if (refreshedToken) {
-                            CookieStorage.getCookie('access-token', refreshedToken);
-                            error.config.headers['Authorization'] = `Bearer ${refreshedToken}`;
-                            return this.axios(error.config);
+                            CookieStorage.setCookie("access-token", refreshedToken);
+                            error.config.headers["Authorization"] = `Bearer ${refreshedToken}`;
+                            return this.axios(error.config); 
                         }
                     } catch (refreshError) {
-                        return Promise.reject(refreshError);
+                        return Promise.reject(refreshError); 
                     }
                 }
-                return Promise.reject(error);
+
+                return Promise.reject(customError);
             }
         );
     }
 
     async refreshAccessToken(): Promise<string | null> {
         try {
-            const refreshToken = CookieStorage.getCookie('refresh-token');
+            const refreshToken = CookieStorage.getCookie("refresh-token");
             if (!refreshToken) {
                 return null;
             }
 
-            const response = await axios.post('/auth/refresh-token', { refreshToken });
+            const response = await axios.post("/auth/refresh-token", { refreshToken });
             if (response.status === 200) {
                 return response.data.accessToken;
             } else {
@@ -100,14 +100,14 @@ class Request {
 
     upload(url: string, file: File, config?: AxiosRequestConfig) {
         const formData = new FormData();
-        formData.append('file', file);
+        formData.append("file", file);
 
         return this.axios.post(url, formData, {
             headers: {
-                'Content-Type': 'multipart/form-data',
+                "Content-Type": "multipart/form-data",
                 ...(config && config.headers ? config.headers : {}),
             },
-            ...config
+            ...config,
         });
     }
 }
