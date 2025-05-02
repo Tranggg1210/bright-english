@@ -19,7 +19,7 @@ export const postLogin = createAsyncThunk(
     async (values: object, { rejectWithValue }) => {
       try {
         const response = await RequestMethod.post(apiConstant.auth.login, values);
-        return response.data;
+        return response.data.data;
       } catch (error) {
         return rejectWithValue(error);
       }

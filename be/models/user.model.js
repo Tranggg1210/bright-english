@@ -39,7 +39,6 @@ const userSchema = new Schema(
     avatar: {
       type: String,
       trim: true,
-      default: 'https://th.bing.com/th/id/OIP.z3fa8PjEnvzg4bhW61tEOwAAAA?rs=1&pid=ImgDetMain',
     },
     role: {
       type: String,

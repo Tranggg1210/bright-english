@@ -14,7 +14,7 @@ const CookieStorage = {
                 .find(row => row.startsWith(key))
                 ?.split('=')[1];
 
-            if (cookieValue) {
+            if (cookieValue  && cookieValue !== 'undefined' && cookieValue !== 'null') {
                 return JSON.parse(decodeURIComponent(cookieValue)) as T;
             }
         } catch (error) {

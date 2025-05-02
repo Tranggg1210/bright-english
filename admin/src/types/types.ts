@@ -10,7 +10,7 @@ export interface CustomAxiosPayload {
 }
 
 export interface CustomMeta {
-  arg: any; // hoặc bạn define rõ nếu muốn
+  arg: any; 
   requestId: string;
   rejectedWithValue: boolean;
   requestStatus: "rejected" | "fulfilled" | "pending";

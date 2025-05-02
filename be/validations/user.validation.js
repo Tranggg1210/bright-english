@@ -48,8 +48,8 @@ const updateUserById = {
       }),
       avatar: joi.string().optional(),
       dob: joi.date().optional(),
-      role: joi.string().optional().valid('admin', 'member').messages({
-        'any.only': 'Vai trò chỉ có thể là "admin" hoặc "member"',
+      role: joi.string().optional().valid('admin', 'user').messages({
+        'any.only': 'Vai trò chỉ có thể là "admin" hoặc "user"',
       }),
     })
     .or('fullname', 'avatar', 'role', 'dob')

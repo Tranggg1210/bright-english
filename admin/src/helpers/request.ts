@@ -12,7 +12,6 @@ class Request {
 
     constructor(baseURL: string) {
         const token = CookieStorage.getCookie("access-token");
-
         if (token) {
             Object.assign(headers, {
                 Authorization: `Bearer ${token}`,
@@ -82,13 +81,39 @@ class Request {
         return this.axios.get(url, config);
     }
 
-    post(url: string, data: object, config?: AxiosRequestConfig) {
+    post(url: string, data: object, isLoad?: boolean, config?: AxiosRequestConfig) {
+        if (isLoad) {
+          const formData = new FormData();
+          Object.entries(data).forEach(([key, value]) => {
+            formData.append(key, value as any);
+          });
+          return this.axios.post(url, formData, {
+            ...config,
+            headers: {
+              ...(config?.headers || {}),
+              'Content-Type': 'multipart/form-data',
+            },
+          });
+        }
         return this.axios.post(url, data, config);
-    }
-
-    put(url: string, data: object, config?: AxiosRequestConfig) {
+      }
+    
+      put(url: string, data: object, isLoad?: boolean, config?: AxiosRequestConfig) {
+        if (isLoad) {
+          const formData = new FormData();
+          Object.entries(data).forEach(([key, value]) => {
+            formData.append(key, value as any);
+          });
+          return this.axios.put(url, formData, {
+            ...config,
+            headers: {
+              ...(config?.headers || {}),
+              'Content-Type': 'multipart/form-data',
+            },
+          });
+        }
         return this.axios.put(url, data, config);
-    }
+      }
 
     patch(url: string, data: object, config?: AxiosRequestConfig) {
         return this.axios.patch(url, data, config);

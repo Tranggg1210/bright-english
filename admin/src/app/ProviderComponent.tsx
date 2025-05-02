@@ -7,9 +7,10 @@ import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 
 import store from "@src/services";
-import { getCurrentUser } from "@src/services/auth";
+import { getCurrentUser, updateUserInfor } from "@src/services/auth";
 import CookieStorage from "@src/helpers/cookies";
 import { useAppDispatch } from "@src/hooks/useHookReducers";
+import _ from "lodash";
 
 function ProviderComponent({ main }: { main: React.ReactNode }) {
   return (
@@ -25,11 +26,21 @@ function InnerProvider({ main }: { main: React.ReactNode }) {
 
   const loadUserInfo = async () => {
     try {
-      const res = await dispatch(getCurrentUser({}));
-      console.log(res);
-    } catch (error) {
+      const res = await dispatch(getCurrentUser({})).unwrap();
+      if(!_.isEmpty(res)){
+        if(res?.data?.user?.role !== "admin"){
+          toast.error("Bạn không phải admin! Hãy đăng nhập với quyền admin bạn nhé!");
+          return;
+        }else{
+          updateUserInfor(res?.data?.user);
+          router.push("/");
+          return;
+        }
+      }
+
+    } catch (error: any) {
       console.error(error);
-      toast.error("Đăng nhập thất bại, vui lòng kiểm tra tài khoản hoặc mật khẩu của bạn!");
+      toast.error(error?.message)
     }
   };
 
