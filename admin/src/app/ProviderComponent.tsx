@@ -4,7 +4,7 @@ import { Provider } from "react-redux";
 import { ConfigProvider, theme as antdTheme } from "antd";
 import { ToastContainer, toast } from "react-toastify";
 import { useEffect } from "react";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 
 import store from "@src/services";
 import { getCurrentUser, updateUserInfor } from "@src/services/auth";
@@ -23,6 +23,7 @@ function ProviderComponent({ main }: { main: React.ReactNode }) {
 function InnerProvider({ main }: { main: React.ReactNode }) {
   const router = useRouter();
   const dispatch = useAppDispatch();
+  const pathname = usePathname();
 
   const loadUserInfo = async () => {
     try {
@@ -33,7 +34,7 @@ function InnerProvider({ main }: { main: React.ReactNode }) {
           return;
         }else{
           updateUserInfor(res?.data?.user);
-          router.push("/");
+          router.push(pathname);
           return;
         }
       }

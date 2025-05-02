@@ -121,7 +121,7 @@ function UserManagementUI({
   return (
     <div className="users-management">
       <div className="w-full flex justify-between gap-2">
-        <h1 className="title text-primary mb-3">Quản lý người dùng</h1>
+        <h1 className="font-bold text-[24px] text-primary mb-3">Quản lý người dùng</h1>
         <Button
           type="primary"
           icon={<PlusOutlined />}

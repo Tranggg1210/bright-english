@@ -1,6 +1,5 @@
 "use client";
 
-import "./style.scss";
 import { UserType } from "@src/types/interface";
 import { Form, UploadProps, UploadFile } from "antd";
 import { useEffect, useState } from "react";
@@ -39,11 +38,6 @@ function UsersManagement() {
   });
 
   useEffect(() => {
-    if (_.isEmpty(userInfor)) router.push("/login");
-    loaderDataUser(page);
-  }, [page]);
-
-  useEffect(() => {
     if (currentUser?.avatar) {
       setFileList([
         {
@@ -58,6 +52,11 @@ function UsersManagement() {
     }
   }, [currentUser]);
 
+  useEffect(() => {
+    if (_.isEmpty(userInfor)) router.push("/login");
+    loaderDataUser(page);
+  }, [page]);
+
   const loaderDataUser = async (page: number) => {
     try {
       const params = {
@@ -68,7 +67,7 @@ function UsersManagement() {
       const res = await dispatch(getListUser(params)).unwrap();
       if (!_.isEmpty(res.data.users)) {
         setUsers(res.data.users);
-        setTotalUsers(res.data.total);
+        setTotalUsers(res.data.totalResults);
       }
     } catch (error) {
       console.log(error);

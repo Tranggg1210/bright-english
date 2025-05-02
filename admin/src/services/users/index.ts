@@ -6,7 +6,9 @@ export const getListUser = createAsyncThunk(
     "users/getListUser",
     async (parmas: object, { rejectWithValue }) => {
         try {
-            const response = await RequestMethod.get(apiConstant.users.init, parmas);
+            const response = await RequestMethod.get(apiConstant.users.init, {
+                params: parmas
+            });
             return response.data;
         } catch (err) {
             return rejectWithValue(err);

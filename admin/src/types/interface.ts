@@ -42,7 +42,34 @@ interface UserManagementProps {
     confirmAction: () => void;
 }
 
+interface TopicType {
+    _id: string;
+    name: string;
+}
+
+interface TopicManagementProps {
+    handleAddTopic: () => void;
+    handleEdit: (value: TopicType) => void;
+    handleDelete: (value: TopicType) => void;
+    topics: TopicType[];
+    handleCancel: () => void;
+    handleOk: () => void;
+    isModalOpen: boolean;
+    currentTopic: TopicType | null;
+    form: FormInstance<TopicType>;
+    isConfirmOpen: boolean;
+    setIsConfirmOpen: (open: boolean) => void;
+    confirmTitle: {
+        title: string,
+        subTitle: string,
+        isDelete: boolean
+    };
+    confirmAction: () => void;
+}
+
 export type {
     UserType,
-    UserManagementProps
+    UserManagementProps,
+    TopicType,
+    TopicManagementProps
 }
