@@ -3,7 +3,7 @@ import TopicManagement from '@src/components/templates/_topic';
 
 
 function Page() {
-  return  <MainLayout main={<TopicManagement />} />
+  return <MainLayout main={<TopicManagement />} />
 }
 
 export default Page

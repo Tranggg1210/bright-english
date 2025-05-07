@@ -2,9 +2,21 @@ const httpStatus = require('http-status');
 const Vocabulary = require('../models/vocabulary.model');
 const ApiError = require('../utils/ApiError');
 const catchAsync = require('../utils/catchAsync');
+const { cloudinary } = require('../configs/cloudinary.config');
 
 const createVocabulary = catchAsync(async (req, res) => {
   const vocabulary = await Vocabulary.create(req.body);
+
+  if (req.file) {
+    try {
+      const image = await cloudinary.uploader.upload(req.file.path);
+      vocabulary.image = image.url;
+      await vocabulary.save();
+    } catch (error) {
+      console.log(error);
+      throw new ApiError(httpStatus.INTERNAL_SERVER_ERROR, 'Lỗi upload image');
+    }
+  }
 
   res.status(httpStatus.CREATED).json({
     code: httpStatus.CREATED,
@@ -24,11 +36,7 @@ const getVocabularies = catchAsync(async (req, res) => {
     sort[key.trim()] = order?.trim() === 'asc' ? 1 : -1;
   });
 
-  const vocabularies = await Vocabulary.find()
-    .limit(+limit)
-    .skip(skip)
-    .sort(sort)
-    .lean();
+  const vocabularies = await Vocabulary.find().limit(+limit).skip(skip).sort(sort).lean();
   const totalResults = await Vocabulary.countDocuments();
 
   res.status(httpStatus.OK).json({
@@ -78,6 +86,12 @@ const updateVocabularyById = catchAsync(async (req, res) => {
   }
 
   Object.assign(vocabulary, req.body);
+
+  if (req.file) {
+    const image = await cloudinary.uploader.upload(req.file.path);
+    vocabulary.image = image.url;
+  }
+
   await vocabulary.save();
 
   res.status(httpStatus.OK).json({

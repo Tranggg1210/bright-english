@@ -2,12 +2,14 @@ import { configureStore } from "@reduxjs/toolkit";
 import authReducer from "./auth";
 import usersReducer from "./users";
 import topicsReducer from "./topic";
+import vocabularysReducer from "./vocabulary";
 
 const stores = configureStore({
     reducer: {
         auth: authReducer,
         users: usersReducer,
-        topics: topicsReducer
+        topics: topicsReducer,
+        vocabulary: vocabularysReducer
     }
 });
 

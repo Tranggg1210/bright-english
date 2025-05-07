@@ -6,6 +6,7 @@ import React, { useState } from "react";
 import {
   BookOutlined,
   FileOutlined,
+  SnippetsOutlined,
   TeamOutlined,
   UserOutlined,
 } from "@ant-design/icons";
@@ -36,6 +37,7 @@ function getItem(
 const items: MenuItem[] = [
   getItem("Người dùng", "/", <UserOutlined />),
   getItem("Topic", "/topic", <BookOutlined />),
+  getItem("Từ vựng", "/vocabulary", <SnippetsOutlined />),
   getItem("User", "sub1", <UserOutlined />, [
     getItem("Tom", "3"),
     getItem("Bill", "4"),

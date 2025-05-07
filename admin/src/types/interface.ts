@@ -67,9 +67,49 @@ interface TopicManagementProps {
     confirmAction: () => void;
 }
 
+
+interface  VocabularyType  {
+    _id: string;
+    topicId: string;
+    word: string;
+    translate: string;
+    transcription: string;
+    image: string;
+    description: string;
+}
+
+interface VocabularyManagementProps {
+    handleAdd: () => void;
+    handleEdit: (value: VocabularyType) => void;
+    handleDelete: (value: VocabularyType) => void;
+    vocabularies: VocabularyType[];
+    page: number;
+    handlePageChange: (page: number) => void;
+    total: number;
+    handleCancel: () => void;
+    handleOk: () => void;
+    isModalOpen: boolean;
+    currentVocabulary: VocabularyType | null;
+    fileList: UploadFile[];
+    handleChange: (info: UploadChangeParam<UploadFile<any>>) => void;
+    form: FormInstance<VocabularyType>;
+    uploadButton: ReactNode;
+    isConfirmOpen: boolean;
+    setIsConfirmOpen: (open: boolean) => void;
+    confirmTitle: {
+        title: string,
+        subTitle: string,
+        isDelete: boolean
+    };
+    confirmAction: () => void;
+    topics: TopicType[]
+}
+
 export type {
     UserType,
     UserManagementProps,
     TopicType,
-    TopicManagementProps
+    TopicManagementProps,
+    VocabularyManagementProps,
+    VocabularyType
 }
