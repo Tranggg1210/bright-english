@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
+import ProviderComponent from "./ProviderComponent";
+import { Suspense } from "react";
 import { Montserrat } from "next/font/google";
-import "./style.global.scss";
-import { ConfigProvider, theme as antdTheme } from "antd";
+import './global.css';
 
 const montserrat = Montserrat({
   subsets: ["latin"],
@@ -24,18 +25,9 @@ export default function RootLayout({
         className={`${montserrat.className} antialiased`}
         cz-shortcut-listen="false"
       >
-        <ConfigProvider
-          theme={{
-            algorithm: antdTheme.defaultAlgorithm,
-            token: {
-              colorPrimary: "#43a047", 
-              borderRadius: 8,
-              fontSize: 14,
-            },
-          }}
-        >
-          {children}
-        </ConfigProvider>
+        <Suspense fallback={null}>
+          <ProviderComponent main={children} />
+        </Suspense>
       </body>
     </html>
   );
