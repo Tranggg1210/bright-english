@@ -1,0 +1,48 @@
+.footer {
+  padding: 3rem 0 2rem;
+  background-color: #f8f9fa;
+  .width-page {
+    @media (max-width: 768px) {
+      flex-direction: column;
+    }
+  }
+  &-nav,
+  &-socials,
+  .width-page {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  a,
+  li,
+  p {
+    padding: 0 1rem;
+    text-wrap: nowrap;
+    @media (max-width: 500px) {
+      padding: 0.5rem;
+    }
+  }
+  a {
+    color: #ff8400;
+    text-decoration: underline;
+    transition: all 0.3s linear;
+    &:hover {
+      opacity: 0.8;
+    }
+  }
+  p {
+    font-size: 1rem;
+    text-align: left;
+    margin: 1rem 0;
+  }
+
+  a {
+    font-size: 1.5rem;
+    color: #ff8400;
+    transition: all 0.3s linear;
+    cursor: pointer;
+    &:hover {
+      opacity: 0.8;
+    }
+  }
+}

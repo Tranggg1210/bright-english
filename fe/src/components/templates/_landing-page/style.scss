@@ -1,0 +1,27 @@
+.landing-page {
+  background-color: #fff;
+  .width-page {
+    width: 80%;
+  }
+
+  .container-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .h1-title {
+    font-size: 1.75rem;
+    font-weight: 600;
+    margin: 0.75rem 0;
+    color: #212529;
+  }
+  .p-desc {
+    font-size: 1.25rem;
+    font-weight: 100;
+    color: #656769;
+    font-family: #3F4254;
+    text-align: center;
+  }
+  
+}

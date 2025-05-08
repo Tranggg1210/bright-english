@@ -1,0 +1,58 @@
+.landing-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+
+  .header {
+    background-color: #fff;
+    padding: 0.75rem 0;
+    box-shadow: 0 0 12px rgba(0 0 0/10%);
+    height: 62px;
+
+    .width-page {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      @media (max-width: 500px) {
+        width: 90%;
+        gap: 16px;
+      }
+
+      > div {
+        @media (max-width: 500px) {
+          gap: 4px;
+        }
+      }
+    }
+
+    img {
+      width: 150px;
+    }
+
+    .btn {
+      color: #ff8400;
+      font-size: 15px;
+      font-weight: 900;
+      transition: all 0.3s ease;
+      cursor: pointer;
+      position: relative;
+      z-index: 4;
+      opacity: 0.5;
+      padding: 4px;
+      border-bottom: 2px solid transparent;
+      margin-top: 2px;
+
+      &:hover {
+        opacity: 1 !important;
+        border-bottom: 2px solid #ff8400;
+      }
+      @media (max-width: 500px) {
+        padding: 0.75rem 1rem;
+        font-size: 13px;
+        padding: 1px;
+      }
+    }
+  }
+}
