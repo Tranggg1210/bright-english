@@ -17,13 +17,13 @@ function Header() {
           <div className="flex justify-center items-center gap-4">
             <button
               className="btn btn-sign-up"
-              onClick={() => router.push("/login")}
+              onClick={() => router.push("/auth")}
             >
               ĐĂNG NHẬP
             </button>
             <button
-              className="btn btn-sign-up !opacity-80"
-              onClick={() => router.push("/login")}
+              className="btn btn-sign-up btn-try-it"
+              onClick={() => router.push("/app")}
             >
               TRẢI NGHIỆM {">>"}
             </button>
