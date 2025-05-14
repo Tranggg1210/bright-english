@@ -11,7 +11,7 @@ const Banner: React.FC = () => {
           <h1>Bright English</h1>
           <h2>Học tiếng Anh dễ hiểu – vui vẻ – hiệu quả</h2>
          <div className="h-20">
-         <button onClick={() => router.push("/auth")}>ĐĂNG NHẬP</button>
+         <button className="ld-banner-btn" onClick={() => router.push("/auth")}>ĐĂNG NHẬP</button>
          </div>
         </div>
       </section>

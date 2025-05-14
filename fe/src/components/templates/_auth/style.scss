@@ -1,0 +1,59 @@
+.auth {
+  background-color: #fff;
+  padding: 1.5rem;
+  border-radius: 2rem;
+  max-width: 603px;
+  width: 500px;
+  font-family: 'Quicksand', sans-serif;
+  border: 2px solid #fff3e0;
+  box-shadow: 0 2px 0 0 #fff3e0;
+  min-height: 94vh;
+  margin: 16px;
+
+  @media (max-width: 500px){
+    width: 90vw;
+    max-width: unset;
+  }
+
+  &__logo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    > img {
+      width: 174px;
+    }
+  }
+
+  &__navigation {
+    margin: 2rem 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    border-radius: 3rem;
+    background-color: #fff3e0;
+    padding: 0.5rem;
+
+    &--btn {
+      padding: 0.6875rem 1rem;
+      width: 48%;
+      border-radius: 3rem;
+      background-color: transparent;
+      outline: none;
+      border: none;
+      line-height: 1.25rem;
+      color: #8b90a7;
+      cursor: pointer;
+      font: {
+        weight: 600;
+        size: 0.875rem;
+        family: 'Quicksand', sans-serif;
+      }
+    }
+
+    &--active {
+      background-color: #ff8400;
+      color: #fff;
+    }
+  }
+}

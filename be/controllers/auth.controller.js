@@ -46,8 +46,9 @@ const googleLogin = catchAsync(async (req, res) => {
     audience: process.env.GOOGLE_CLIENT_ID,
   });
 
+  console.log(ticket)
+
   const payload = ticket.getPayload();
-  console.log(payload);
   const { email, name, picture, sub: googleId } = payload;
 
   let user = await User.findOne({ email });

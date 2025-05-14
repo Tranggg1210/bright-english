@@ -1,7 +1,9 @@
 const apiConstant = {
     auth: {
         login: "/auth/login",
-        getMe: "/auth/me"
+        getMe: "/auth/me",
+        loginWithGG: "/auth/login-google",
+        register: "/auth/register",
     },
     users: {
         init: "/users",

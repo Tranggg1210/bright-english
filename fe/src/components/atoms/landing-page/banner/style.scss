@@ -45,16 +45,16 @@
       }
     }
 
-    button {
+    .ld-banner-btn {
       text-transform: uppercase;
-      padding: 1rem 3rem;
-      font-size: 0.9rem;
+      padding: 16px 48px !important;
+      font-size:  0.9rem;
       font-weight: 700;
       letter-spacing: 0.1rem;
       background-color: #ff8400;
       color: #fff;
       border-radius: 48px;
-      margin-top: 42px;
+      margin-top: 42px !important;
       border: none;
       border-bottom: 6px solid #937049;
       transition: all 0.2s ease;

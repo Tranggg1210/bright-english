@@ -1,0 +1,70 @@
+.button {
+  font-style: normal;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 20px;
+}
+
+.button-component {
+  outline: none;
+  border: none;
+  .icon-button {
+    margin-right: 10px;
+  }
+  .loader {
+    margin-right: 8px;
+    border: 2px solid #fff;
+    border-bottom-color: transparent !important;
+    border-radius: 50%;
+    display: inline-block;
+    box-sizing: border-box;
+    animation: rotation 1s linear infinite;
+  }
+  .content-btn {
+    text-transform: uppercase;
+    font-weight: 600;
+    line-height: 22px;
+  }
+
+  &:hover {
+    background-color: #aed2ee !important;
+    border: 1px solid #b3deff !important;
+    color: #4267cd !important;
+    opacity: 1 !important;
+  }
+
+  &:disabled {
+    pointer-events: none !important;
+    cursor: not-allowed !important;
+  }
+
+  @keyframes rotation {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+}
+
+@media (max-width: 500px) {
+  .button {
+    font-size: 13px !important;
+    padding: 4px 10px !important;
+    border-radius: 15px !important;
+  }
+  .content-btn {
+    font-size: 12px;
+  }
+}
+@media (max-width: 400px) {
+  .content-btn {
+    font-size: 10px;
+  }
+  .button-component {
+    .icon-button {
+      margin-right: 0px;
+    }
+  }
+}
