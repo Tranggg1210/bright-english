@@ -30,6 +30,26 @@ const listRoutesApi = [
   {
     path: '/logs',
     route: require('./log.route'),
+  },
+  {
+    path: '/user-vocabularies',
+    route: require('./user-vocabulary.route'),
+  },
+  {
+    path: '/study-trackingtime',
+    route: require('./study-tracking-time.route'),
+  },
+  {
+    path: '/contact',
+    route: require('./contact.route'),
+  },
+  {
+    path: '/report',
+    route: require('./report.route'),
+  },
+  {
+    path: '/user_conversation',
+    route: require('./user_conversation.route'),
   }
 ];
 
