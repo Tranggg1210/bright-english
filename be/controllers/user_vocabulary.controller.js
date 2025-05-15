@@ -1,5 +1,5 @@
 const httpStatus = require('http-status');
-const UserVocabulary = require('../models/userVocabulary.model');
+const UserVocabulary = require('../models/user_vocabularies.models');
 const ApiError = require('../utils/ApiError');
 const catchAsync = require('../utils/catchAsync');
 

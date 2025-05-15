@@ -38,6 +38,42 @@ export const postLoginWithGoogle = createAsyncThunk(
   }
 );
 
+export const getOTP = createAsyncThunk(
+  "auth/getOTP",
+  async (values: object, { rejectWithValue }) => {
+    try {
+      const response = await RequestMethod.post(apiConstant.auth.forgotPassword, values);
+      return response.data.data;
+    } catch (error) {
+      return rejectWithValue(error);
+    }
+  }
+);
+
+export const vetifyOTP = createAsyncThunk(
+  "auth/vetifyOTP",
+  async (values: object, { rejectWithValue }) => {
+    try {
+      const response = await RequestMethod.post(apiConstant.auth.vetifyOTP, values);
+      return response.data.data;
+    } catch (error) {
+      return rejectWithValue(error);
+    }
+  }
+);
+
+export const resetPassword = createAsyncThunk(
+  "auth/resetPassword",
+  async (values: object, { rejectWithValue }) => {
+    try {
+      const response = await RequestMethod.post(apiConstant.auth.resetPassword, values);
+      return response.data.data;
+    } catch (error) {
+      return rejectWithValue(error);
+    }
+  }
+);
+
 export const postRegister = createAsyncThunk(
   "auth/postRegisterWithGoogle",
   async (values: object, { rejectWithValue }) => {

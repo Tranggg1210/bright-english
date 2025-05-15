@@ -33,10 +33,6 @@ export const forgotPasswordValidate = () =>
 
 export const createPasswordValidate = () =>
   Yup.object({
-    otp: Yup.string()
-      .required('Vui lòng nhập mã xác minh của bạn')
-      .min(6, 'Mã xác minh phải có ít nhất 6 chữ số')
-      .max(11, 'Mã xác minh chỉ có tối đa 11 chữ số'),
     password: Yup.string()
       .required('Vui lòng nhập mật khẩu')
       .min(8, 'Password phải lớn hơn 8 ký tự')

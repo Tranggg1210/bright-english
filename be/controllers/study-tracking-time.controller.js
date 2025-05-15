@@ -1,5 +1,5 @@
 const httpStatus = require('http-status');
-const StudyTrackingTime = require('../models/studyTrackingTime.model');
+const StudyTrackingTime = require('../models/study_tracking_time.model');
 const ApiError = require('../utils/ApiError');
 const catchAsync = require('../utils/catchAsync');
 const mongoose = require('mongoose');

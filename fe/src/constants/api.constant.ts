@@ -4,6 +4,9 @@ const apiConstant = {
         getMe: "/auth/me",
         loginWithGG: "/auth/login-google",
         register: "/auth/register",
+        forgotPassword: "/auth/forgot-password",
+        vetifyOTP: "/auth/verify-otp",
+        resetPassword: "/auth/reset-password"
     },
     users: {
         init: "/users",

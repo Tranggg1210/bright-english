@@ -1,41 +1,57 @@
-.login {
-  &__app {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+.forgot__password {
+  background-color: #fff;
+  padding: 1.5rem;
+  border-radius: 2rem;
+  width: 603px;
+  font-family: "Quicksand", sans-serif;
+  border: 2px solid #fff3e0;
+  box-shadow: 0 2px 0 0 #fff3e0;
+  padding-bottom: 0;
+  @media (max-width: 500px) {
+    width: 90vw;
+    max-width: unset;
+  }
 
-    .S9gUrf-YoZ4jf{
-        display: flex;
-        justify-content: center;
-        align-self: center;
+  &--title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    svg {
+      cursor: pointer;
+    }
+    > h4 {
+      color: #3f4254;
+      text-align: center;
+      font: {
+        size: 1.25rem;
+        weight: 700;
+      }
+      line-height: 1.5rem;
     }
   }
 
-  &__separator {
-    margin: 2rem 0 1.25rem;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  .vetify-otp {
+    margin: 24px auto 0;
 
-    > hr {
-      width: 250px;
-      height: 0px;
-      border-radius: 10px;
-      border-top: 1px solid #d9d9d9;
-      border-bottom: none;
-    }
-
-    > p {
-      margin: 0 1rem;
-      color: #8b90a7;
-      font: {
-        size: 0.75rem;
-        weight: 700;
-      }
+    >div{
+      justify-content: center;
+      margin: 24px 0;
     }
   }
 
   &__form {
+    &--title {
+      color: #3f4254;
+      line-height: 1.372rem;
+      text-align: justify;
+      text-align: center;
+      font: {
+        size: 0.875rem;
+        weight: 600;
+      }
+      margin: 2rem 0 1rem;
+    }
+
     &--group {
       margin-bottom: 1rem;
     }
@@ -55,6 +71,15 @@
       position: relative;
     }
 
+    .otp-input-fg {
+      width: 40px !important;
+      height: 40px;
+      border: 2px solid #ccc;
+      border-radius: 4px;
+      margin: 0 8px;
+      outline: #ff8400;
+    }
+
     &--input {
       width: 100%;
       padding: 0.75rem 1rem;
@@ -68,7 +93,7 @@
       }
       &:focus {
         box-shadow: 0 0 0 4px rgba(0, 123, 255, 0.4);
-        border: 1px solid #ff8400 !important;
+        border: 1px solid #5ac8fa !important;
       }
     }
 
@@ -78,7 +103,6 @@
       right: 0.75rem;
       top: 50%;
       transform: translateY(-50%);
-      cursor: pointer;
     }
 
     .input-error {
@@ -91,31 +115,28 @@
       font-weight: 500;
     }
 
-    &--nav {
-      text-align: end;
-      margin-bottom: 2rem;
-      a {
-        font-weight: 700;
-        font-size: 0.875rem;
-        line-height: 1.25rem;
-        color: #ff8400;
-      }
-    }
-
     &--btn {
+      margin-top: 1rem;
       font-size: 16px !important;
       color: rgb(255, 255, 255);
       padding: 11px;
       border-radius: 48px;
-      background-color: rgb(0, 149, 147);
+      background-color: #ff8400;
       width: 100%;
       border: 1px solid transparent;
+      transition: all 0.3s linear;
+      cursor: pointer;
       font: {
         weight: 600;
         size: 1rem;
         family: "Quicksand", sans-serif;
       }
-      margin-bottom: 1rem;
+      margin-bottom: 2rem;
+
+      &:hover {
+        background-color: #fff3e0;
+        color: #ff8400;
+      }
     }
   }
 }
