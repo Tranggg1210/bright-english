@@ -9,22 +9,46 @@ export const getCurrentUser = createAsyncThunk(
       const response = await RequestMethod.get(apiConstant.auth.getMe, parmas);
       return response.data;
     } catch (err) {
-        return rejectWithValue(err);
+      return rejectWithValue(err);
     }
   }
 );
 
 export const postLogin = createAsyncThunk(
-    "auth/postLogin",
-    async (values: object, { rejectWithValue }) => {
-      try {
-        const response = await RequestMethod.post(apiConstant.auth.login, values);
-        return response.data.data;
-      } catch (error) {
-        return rejectWithValue(error);
-      }
+  "auth/postLogin",
+  async (values: object, { rejectWithValue }) => {
+    try {
+      const response = await RequestMethod.post(apiConstant.auth.login, values);
+      return response.data.data;
+    } catch (error) {
+      return rejectWithValue(error);
     }
-  );
+  }
+);
+
+export const postLoginWithGoogle = createAsyncThunk(
+  "auth/postLoginWithGoogle",
+  async (values: object, { rejectWithValue }) => {
+    try {
+      const response = await RequestMethod.post(apiConstant.auth.loginWithGG, values);
+      return response.data.data;
+    } catch (error) {
+      return rejectWithValue(error);
+    }
+  }
+);
+
+export const postRegister = createAsyncThunk(
+  "auth/postRegisterWithGoogle",
+  async (values: object, { rejectWithValue }) => {
+    try {
+      const response = await RequestMethod.post(apiConstant.auth.register, values);
+      return response.data.data;
+    } catch (error) {
+      return rejectWithValue(error);
+    }
+  }
+);
 
 const authSlice = createSlice({
   name: "auth",

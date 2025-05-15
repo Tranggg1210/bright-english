@@ -1,10 +1,10 @@
 import type { Metadata } from "next";
 import { Suspense } from "react";
-import { Montserrat } from "next/font/google";
+import { Quicksand } from "next/font/google";
 import ProviderComponent from "./provider-component";
 import "./globals.scss";
 
-const montserrat = Montserrat({
+const quicksand = Quicksand({
   subsets: ["latin"],
 });
 
@@ -52,7 +52,6 @@ export const metadata: Metadata = {
   },
 };
 
-
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -61,7 +60,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${montserrat.className} antialiased`}
+        className={`${quicksand.className} antialiased`}
         cz-shortcut-listen="false"
       >
         <Suspense fallback={null}>
