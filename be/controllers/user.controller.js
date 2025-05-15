@@ -1,6 +1,8 @@
 const httpStatus = require('http-status');
 const User = require('../models/user.model');
 const Log = require('../models/log.model');
+const UserConversation = require('../models/user_conversation.model');
+const UserVocabulary = require('../models/user_vocabularies.models');
 const ApiError = require('../utils/ApiError');
 const catchAsync = require('../utils/catchAsync');
 const { cloudinary } = require('../configs/cloudinary.config');
@@ -106,6 +108,8 @@ const deleteUserById = catchAsync(async (req, res) => {
   }
 
   await Log.deleteMany({ userId: req.params.userId });
+  await UserConversation.deleteMany({ userId: req.params.userId });
+  await UserVocabulary.deleteMany({ userId: req.params.userId });
 
   res.status(httpStatus.OK).json({
     message: 'Xoá người dùng và logs thành công',
