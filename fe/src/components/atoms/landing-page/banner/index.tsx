@@ -1,8 +1,17 @@
+import LocalStorage from "@src/helpers/local-storage";
 import "./style.scss";
 import { useRouter } from "next/navigation";
 
 const Banner: React.FC = () => {
   const router = useRouter();
+
+  const handleSubmitBtn = () => {
+    if (LocalStorage.getLocalStorage("access-token", null)) {
+      router.push("/auth");
+    } else {
+      router.push("/app");
+    }
+  };
 
   return (
     <div className="landing-banner">
@@ -10,9 +19,13 @@ const Banner: React.FC = () => {
         <div className="width-page">
           <h1>Bright English</h1>
           <h2>Học tiếng Anh dễ hiểu – vui vẻ – hiệu quả</h2>
-         <div className="h-20">
-         <button className="ld-banner-btn" onClick={() => router.push("/auth")}>ĐĂNG NHẬP</button>
-         </div>
+          <div className="h-20">
+            <button className="ld-banner-btn" onClick={handleSubmitBtn}>
+              {LocalStorage.getLocalStorage("access-token", null)
+                ? "TRẢI NGHIỆM"
+                : "ĐĂNG NHẬP"}
+            </button>
+          </div>
         </div>
       </section>
     </div>

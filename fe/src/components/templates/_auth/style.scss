@@ -4,13 +4,32 @@
   border-radius: 2rem;
   max-width: 603px;
   width: 500px;
-  font-family: 'Quicksand', sans-serif;
+  font-family: "Quicksand", sans-serif;
   border: 2px solid #fff3e0;
   box-shadow: 0 2px 0 0 #fff3e0;
   min-height: 94vh;
   margin: 16px;
 
-  @media (max-width: 500px){
+  &__header {
+    position: relative;
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+
+    .icon-back {
+      position: absolute;
+      cursor: pointer;
+      transition: all 0.3s linear;
+      left: 8px;
+
+      &:hover {
+        scale: 1.05;
+      }
+    }
+  }
+
+  @media (max-width: 500px) {
     width: 90vw;
     max-width: unset;
   }
@@ -47,7 +66,7 @@
       font: {
         weight: 600;
         size: 0.875rem;
-        family: 'Quicksand', sans-serif;
+        family: "Quicksand", sans-serif;
       }
     }
 

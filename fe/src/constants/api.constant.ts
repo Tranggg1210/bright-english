@@ -19,6 +19,7 @@ const apiConstant = {
     vocabularys: {
         init: "/vocabularies",
         id: (id: string) => `/vocabularies/${id}` 
-    }
+    },
+    contact: "/contact"
 }
 export default apiConstant;
