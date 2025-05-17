@@ -10,12 +10,7 @@ const contactRoute = express.Router();
 contactRoute
   .route('/')
   .post(validate(contactValidation.createContact), contactController.createContact)
-  .get(
-    auth,
-    author([USER_ROLE_ENUM.ADMIN]),
-    validate(contactValidation.getContacts),
-    contactController.getContacts,
-  );
+  .get(auth, author([USER_ROLE_ENUM.ADMIN]), validate(contactValidation.getContacts), contactController.getContacts);
 
 contactRoute
   .route('/:contactId')
@@ -31,20 +26,5 @@ contactRoute
     validate(contactValidation.updateContactById),
     contactController.updateContactById,
   )
-  .delete(
-    auth,
-    author([USER_ROLE_ENUM.ADMIN]),
-    validate(contactValidation.deleteContactById),
-    contactController.deleteContactById,
-  );
-
-contactRoute
-  .route('/:contactId/status')
-  .patch(
-    auth,
-    author([USER_ROLE_ENUM.ADMIN]),
-    validate(contactValidation.updateContactStatus),
-    contactController.updateContactStatus,
-  );
 
 module.exports = contactRoute;

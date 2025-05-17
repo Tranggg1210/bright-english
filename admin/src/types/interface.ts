@@ -105,11 +105,36 @@ interface VocabularyManagementProps {
     topics: TopicType[]
 }
 
+interface ContactType{
+    _id: string;
+    fullName: string;
+    email: string;
+    phone: string;
+    message: string;
+    status: 'unread' | 'read' | 'replied'
+}
+
+
+interface ContactManagementProps {
+    handleEdit: (value: ContactType) => void;
+    contacts: ContactType[];
+    handleCancel: () => void;
+    handleOk: () => void;
+    isModalOpen: boolean;
+    form: FormInstance<ContactType>;
+    page: number;
+    handlePageChange: (page: number) => void;
+    total: number;
+}
+
+
 export type {
     UserType,
     UserManagementProps,
     TopicType,
     TopicManagementProps,
     VocabularyManagementProps,
-    VocabularyType
+    VocabularyType,
+    ContactManagementProps,
+    ContactType
 }

@@ -49,10 +49,6 @@ const exerciseSchema = new Schema(
         }],
       }
     ],
-    logs: {
-      type: Schema.Types.ObjectId,
-      ref: 'Logs',  
-    },
   },
   { timestamps: true }
 );

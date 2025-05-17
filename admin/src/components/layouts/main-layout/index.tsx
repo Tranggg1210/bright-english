@@ -9,6 +9,7 @@ import {
   SnippetsOutlined,
   TeamOutlined,
   UserOutlined,
+  MailOutlined 
 } from "@ant-design/icons";
 import type { MenuProps } from "antd";
 import { Layout, Menu, theme } from "antd";
@@ -36,8 +37,9 @@ function getItem(
 
 const items: MenuItem[] = [
   getItem("Người dùng", "/", <UserOutlined />),
-  getItem("Topic", "/topic", <BookOutlined />),
+  getItem("Chủ đề", "/topic", <BookOutlined />),
   getItem("Từ vựng", "/vocabulary", <SnippetsOutlined />),
+  getItem("Liên hệ", "/contact", <MailOutlined />),
   getItem("User", "sub1", <UserOutlined />, [
     getItem("Tom", "3"),
     getItem("Bill", "4"),

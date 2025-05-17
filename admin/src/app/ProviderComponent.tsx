@@ -8,9 +8,9 @@ import { usePathname, useRouter } from "next/navigation";
 
 import store from "@src/services";
 import { getCurrentUser, updateUserInfor } from "@src/services/auth";
-import CookieStorage from "@src/helpers/cookies";
 import { useAppDispatch } from "@src/hooks/useHookReducers";
 import _ from "lodash";
+import LocalStorage from "@src/helpers/local-storage";
 
 function ProviderComponent({ main }: { main: React.ReactNode }) {
   return (
@@ -46,7 +46,7 @@ function InnerProvider({ main }: { main: React.ReactNode }) {
   };
 
   useEffect(() => {
-    const accessToken = CookieStorage.getCookie("access-token");
+    const accessToken = LocalStorage.getLocalStorage("access-token");
     if (!accessToken) {
       router.push("/login");
     } else {

@@ -58,12 +58,14 @@ const getContactById = catchAsync(async (req, res) => {
 });
 
 const updateContactById = catchAsync(async (req, res) => {
-  const contact = await Contact.findById(req.params.contactId);
+  const { contactId } = req.params;
+
+  const contact = await Contact.findById(contactId);
   if (!contact) {
     throw new ApiError(httpStatus.NOT_FOUND, 'Không tìm thấy liên hệ!');
   }
 
-  Object.assign(contact, req.body);
+  Object.assign(contact, req.body); 
   await contact.save();
 
   res.status(httpStatus.OK).json({
@@ -73,38 +75,9 @@ const updateContactById = catchAsync(async (req, res) => {
   });
 });
 
-const updateContactStatus = catchAsync(async (req, res) => {
-  const { contactId } = req.params;
-  const { status } = req.body;
-
-  const contact = await Contact.findByIdAndUpdate(contactId, { status }, { new: true });
-  if (!contact) throw new ApiError(httpStatus.NOT_FOUND, 'Không tìm thấy liên hệ');
-
-  res.status(httpStatus.OK).json({
-    code: httpStatus.OK,
-    message: 'Cập nhật trạng thái liên hệ thành công!',
-    data: { contact },
-  });
-});
-
-const deleteContactById = catchAsync(async (req, res) => {
-  const contact = await Contact.findByIdAndDelete(req.params.contactId);
-  if (!contact) {
-    throw new ApiError(httpStatus.NOT_FOUND, 'Không tìm thấy liên hệ!');
-  }
-
-  res.status(httpStatus.OK).json({
-    code: httpStatus.OK,
-    message: 'Xóa liên hệ thành công!',
-    data: { contact },
-  });
-});
-
 module.exports = {
   createContact,
   getContacts,
   getContactById,
   updateContactById,
-  updateContactStatus,
-  deleteContactById,
 };
