@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const userConversationSchema = new mongoose.Schema({
   userId: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'User',
+    ref: 'Users',
     required: true,
   },
   conversationId: {
@@ -27,6 +27,6 @@ const userConversationSchema = new mongoose.Schema({
     type: Date,
     default: Date.now,
   },
-}, { timestamps: true });
+}, { timestamps: true, strict: true  });
 
 module.exports = mongoose.model('UserConversation', userConversationSchema);

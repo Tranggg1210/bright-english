@@ -18,6 +18,10 @@ const apiConstant = {
     contact: {
         init: "/contact",
         id: (id: string) => `/contact/${id}` 
+    },
+    report: {
+        init: "/report",
+        id: (id: string) => `/report/${id}` 
     }
 }
 export default apiConstant;

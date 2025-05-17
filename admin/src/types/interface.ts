@@ -127,6 +127,29 @@ interface ContactManagementProps {
     total: number;
 }
 
+interface ReportType{
+    _id: string;
+    userId: string;
+    title: string;
+    fullname: string;
+    message: string;
+    email: string;
+    status: 'unread' | 'read' | 'replied'
+}
+
+
+interface ReportManagementProps {
+    handleEdit: (value: ReportType) => void;
+    reports: ReportType[];
+    handleCancel: () => void;
+    handleOk: () => void;
+    isModalOpen: boolean;
+    form: FormInstance<ReportType>;
+    page: number;
+    handlePageChange: (page: number) => void;
+    total: number;
+}
+
 
 export type {
     UserType,
@@ -136,5 +159,7 @@ export type {
     VocabularyManagementProps,
     VocabularyType,
     ContactManagementProps,
-    ContactType
+    ContactType,
+    ReportManagementProps,
+    ReportType
 }

@@ -28,6 +28,6 @@ const contactSchema = new mongoose.Schema(
       default: 'unread',
     },
   },
-  { timestamps: true },
+  { timestamps: true, strict: true  },
 );
 module.exports = mongoose.model('Contact', contactSchema);

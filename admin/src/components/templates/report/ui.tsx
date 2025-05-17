@@ -11,7 +11,7 @@ import {
   Select,
 } from "antd";
 import { EditOutlined } from "@ant-design/icons";
-import { ContactManagementProps, ContactType } from "@src/types/interface";
+import {  ReportManagementProps, ReportType } from "@src/types/interface";
 import TextArea from "antd/es/input/TextArea";
 
 function ContactUI({
@@ -20,17 +20,17 @@ function ContactUI({
   handleOk,
   isModalOpen,
   form,
-  contacts,
   total,
   page,
   handlePageChange,
-}: ContactManagementProps) {
-  const columns: TableProps<ContactType>["columns"] = [
+  reports
+}: ReportManagementProps) {
+  const columns: TableProps<ReportType>["columns"] = [
     {
       title: "Họ tên",
-      dataIndex: "fullName",
-      key: "fullName",
-      sorter: (a, b) => a.fullName.localeCompare(b.fullName),
+      dataIndex: "fullname",
+      key: "fullname",
+      sorter: (a, b) => a.fullname.localeCompare(b.fullname),
     },
     {
       title: "Email",
@@ -38,9 +38,9 @@ function ContactUI({
       key: "email",
     },
     {
-      title: "Số điện thoại",
-      dataIndex: "phone",
-      key: "phone",
+      title: "Tiêu đề",
+      dataIndex: "title",
+      key: "title",
     },
     {
       title: "Trạng thái",
@@ -78,12 +78,12 @@ function ContactUI({
     <div className="users-management">
       <div className="w-full flex justify-between gap-2">
         <h1 className="font-bold text-[24px] text-primary mb-3">
-          Quản lý liên hệ
+          Quản lý báo cáo
         </h1>
       </div>
-      <Table<ContactType>
+      <Table<ReportType>
         columns={columns}
-        dataSource={contacts}
+        dataSource={reports}
         rowKey="_id"
         pagination={{
           current: page,
@@ -93,7 +93,7 @@ function ContactUI({
         }}
       />
       <Modal
-        title="Cập nhật bài liên hệ"
+        title="Cập nhật bài báo cáo"
         open={isModalOpen}
         onOk={handleOk}
         onCancel={handleCancel}
@@ -105,7 +105,7 @@ function ContactUI({
           <Form.Item label="Id" name="_id" hidden>
             <Input disabled />
           </Form.Item>
-          <Form.Item label="Họ tên" name="fullName">
+          <Form.Item label="Họ tên" name="fullname">
             <Input disabled />
           </Form.Item>
 
@@ -113,7 +113,7 @@ function ContactUI({
             <Input disabled />
           </Form.Item>
 
-          <Form.Item label="Số điện thoại" name="phone">
+          <Form.Item label="Tiêu đề" name="title">
             <Input disabled />
           </Form.Item>
 

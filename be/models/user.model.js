@@ -46,7 +46,7 @@ const userSchema = new Schema(
       default: USER_ROLE_ENUM.USER,
     },
   },
-  { timestamps: true },
+  { timestamps: true, strict: true  },
 );
 
 userSchema.pre('save', async function (next) {

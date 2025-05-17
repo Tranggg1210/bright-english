@@ -5,7 +5,7 @@ const Schema = mongoose.Schema;
 const userVocabularySchema = new Schema({
   userId: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'User',
+    ref: 'Users',
     required: true,
   },
   vocabId: {
@@ -23,6 +23,7 @@ const userVocabularySchema = new Schema({
   },
 }, {
   timestamps: true,
+  strict: true 
 });
 
 userVocabularySchema.index({ userId: 1, vocabId: 1 }, { unique: true });

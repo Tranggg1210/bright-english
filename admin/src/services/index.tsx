@@ -3,13 +3,17 @@ import authReducer from "./auth";
 import usersReducer from "./users";
 import topicsReducer from "./topic";
 import vocabularysReducer from "./vocabulary";
+import reportsReducer from "./report";
+import contactsReducer from "./contact";
 
 const stores = configureStore({
     reducer: {
         auth: authReducer,
         users: usersReducer,
         topics: topicsReducer,
-        vocabulary: vocabularysReducer
+        vocabulary: vocabularysReducer,
+        report: reportsReducer,
+        contact: contactsReducer
     }
 });
 

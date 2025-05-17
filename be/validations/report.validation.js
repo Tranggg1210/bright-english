@@ -51,16 +51,10 @@ const updateReportById = {
   }),
 };
 
-const deleteReportById = {
-  params: joi.object({
-    reportId: joi.string().required().custom(objectId),
-  }),
-};
 
 module.exports = {
   createReport,
   getReports,
   getReportById,
   updateReportById,
-  deleteReportById,
 };

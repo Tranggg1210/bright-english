@@ -9,7 +9,8 @@ import {
   SnippetsOutlined,
   TeamOutlined,
   UserOutlined,
-  MailOutlined 
+  MailOutlined, 
+  ExclamationCircleOutlined
 } from "@ant-design/icons";
 import type { MenuProps } from "antd";
 import { Layout, Menu, theme } from "antd";
@@ -40,6 +41,7 @@ const items: MenuItem[] = [
   getItem("Chủ đề", "/topic", <BookOutlined />),
   getItem("Từ vựng", "/vocabulary", <SnippetsOutlined />),
   getItem("Liên hệ", "/contact", <MailOutlined />),
+  getItem("Báo cáo", "/report", <ExclamationCircleOutlined />),
   getItem("User", "sub1", <UserOutlined />, [
     getItem("Tom", "3"),
     getItem("Bill", "4"),

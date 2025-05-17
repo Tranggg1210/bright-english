@@ -5,18 +5,18 @@ const Schema = mongoose.Schema;
 const vocabularySchema = new Schema(
   {
     topicId: {
-      type: mongoose.Schema.Types.ObjectId, 
+      type: mongoose.Schema.Types.ObjectId,
       ref: 'Topic',
       required: true,
     },
     word: {
       type: String,
-      required: true, 
+      required: true,
       trim: true,
     },
     translate: {
       type: String,
-      required: true, 
+      required: true,
       trim: true,
     },
     transcription: {
@@ -32,7 +32,7 @@ const vocabularySchema = new Schema(
       trim: true,
     },
   },
-  { timestamps: true },
+  { timestamps: true, strict: true },
 );
 
 const Vocabulary = mongoose.model('Vocabulary', vocabularySchema);
