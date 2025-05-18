@@ -5,12 +5,11 @@ import "./style.scss";
 import React, { useState } from "react";
 import {
   BookOutlined,
-  FileOutlined,
   SnippetsOutlined,
-  TeamOutlined,
   UserOutlined,
   MailOutlined, 
-  ExclamationCircleOutlined
+  ExclamationCircleOutlined,
+  FormOutlined
 } from "@ant-design/icons";
 import type { MenuProps } from "antd";
 import { Layout, Menu, theme } from "antd";
@@ -42,16 +41,7 @@ const items: MenuItem[] = [
   getItem("Từ vựng", "/vocabulary", <SnippetsOutlined />),
   getItem("Liên hệ", "/contact", <MailOutlined />),
   getItem("Báo cáo", "/report", <ExclamationCircleOutlined />),
-  getItem("User", "sub1", <UserOutlined />, [
-    getItem("Tom", "3"),
-    getItem("Bill", "4"),
-    getItem("Alex", "5"),
-  ]),
-  getItem("Team", "sub2", <TeamOutlined />, [
-    getItem("Team 1", "6"),
-    getItem("Team 2", "8"),
-  ]),
-  getItem("Files", "9", <FileOutlined />),
+  getItem("Bài tập", "/exercise", <FormOutlined />)
 ];
 
 const App: React.FC<{ main: React.ReactNode }> = ({ main }) => {

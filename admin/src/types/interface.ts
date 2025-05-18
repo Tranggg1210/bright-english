@@ -150,6 +150,59 @@ interface ReportManagementProps {
     total: number;
 }
 
+interface MatchItem {
+  id: string;
+  image: string;
+  content: string;
+  key: string;
+  index: number;
+}
+
+interface ExerciseQuestion {
+  prompt?: string;
+  audio?: string;
+  dataLeft?: MatchItem[];
+  dataRight?: MatchItem[];
+  answer: any; 
+  content?: string[];
+}
+
+interface ExerciseType {
+  _id?: string;
+  topicId: string; 
+  type: 'write' | 'match' | 'dictation' |  'multiple_choice'; 
+  name: string;
+  text?: string;
+  questions: ExerciseQuestion[];
+  createdAt?: Date;
+  updatedAt?: Date;
+}
+
+interface ExerciseManagementProps {
+    handleEdit: (value: ExerciseType) => void;
+    handleDelete: (value: ExerciseType) => void;
+    exercises: ExerciseType[];
+    page: number;
+    handlePageChange: (page: number) => void;
+    total: number;
+    isConfirmOpen: boolean;
+    setIsConfirmOpen: (open: boolean) => void;
+    confirmAction: () => void;
+}
+
+
+interface ExerciseHeaderTopic {
+    topicId: string;
+    type: 'write' | 'match' | 'dictation' |  'multiple_choice',
+    name: string;
+    text?: string;
+}
+interface MatchingItem {
+    content?: string;
+    image?: string;
+    key: string,
+    id: string;
+}
 
 export type {
     UserType,
@@ -161,5 +214,10 @@ export type {
     ContactManagementProps,
     ContactType,
     ReportManagementProps,
-    ReportType
+    ReportType,
+    ExerciseType,
+    ExerciseManagementProps,
+    MatchingItem,
+    ExerciseHeaderTopic,
+    ExerciseQuestion
 }

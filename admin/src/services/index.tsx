@@ -5,6 +5,7 @@ import topicsReducer from "./topic";
 import vocabularysReducer from "./vocabulary";
 import reportsReducer from "./report";
 import contactsReducer from "./contact";
+import exercisesReducer from "./exercise";
 
 const stores = configureStore({
     reducer: {
@@ -13,7 +14,8 @@ const stores = configureStore({
         topics: topicsReducer,
         vocabulary: vocabularysReducer,
         report: reportsReducer,
-        contact: contactsReducer
+        contact: contactsReducer,
+        exercise: exercisesReducer
     }
 });
 

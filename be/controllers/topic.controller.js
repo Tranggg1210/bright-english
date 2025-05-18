@@ -23,24 +23,45 @@ const createTopic = catchAsync(async (req, res) => {
 });
 
 const getTopics = catchAsync(async (req, res) => {
-  const { limit = 10, page = 1, sortBy = 'createdAt:desc' } = req.query;
-
+  const { limit = 10, page = 1 } = req.query;
   const skip = (+page - 1) * +limit;
 
-  const sort = {};
-  sortBy.split(',').forEach((sortOption) => {
-    const [key, order] = sortOption.split(':');
-    sort[key.trim()] = order?.trim() === 'asc' ? 1 : -1;
-  });
+  const topicsAggregate = await Topic.aggregate([
+    {
+      $addFields: {
+        topicNumber: {
+          $toInt: {
+            $getField: {
+              input: {
+                $regexFind: {
+                  input: "$name",
+                  regex: /(?<=TOPIC\s)\d+/
+                }
+              },
+              field: "match"
+            }
+          }
+        }
+      }
+    },
+    { $sort: { topicNumber: 1 } },
+    { $skip: skip },
+    { $limit: +limit },
+    {
+      $project: {
+        _id: 1,
+        name: 1
+      }
+    }
+  ]);
 
-  const topics = await Topic.find().limit(+limit).skip(skip).sort(sort);
   const totalResults = await Topic.countDocuments();
 
   res.status(httpStatus.OK).json({
     code: httpStatus.OK,
     message: 'Lấy danh sách topic thành công!',
     data: {
-      topics,
+      topics: topicsAggregate,
       limit: +limit,
       currentPage: +page,
       totalPage: Math.ceil(totalResults / +limit),
@@ -48,6 +69,7 @@ const getTopics = catchAsync(async (req, res) => {
     },
   });
 });
+
 
 const getTopicById = catchAsync(async (req, res) => {
   const topic = await Topic.findById(req.params.topicId);

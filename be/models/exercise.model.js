@@ -7,7 +7,6 @@ const MatchItemSchema = new Schema({
   image: String,
   content: String,
   key: String,
-  index: Number,
 }, { _id: false });
 
 const exerciseSchema = new Schema(
