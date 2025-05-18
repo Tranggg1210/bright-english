@@ -54,7 +54,7 @@ function ExerciseManagementUI({
             ? "Dạng nối"
             : type === "dictation"
             ? "Dạng nghe chép"
-            : "Dạng gộp";
+            : "Dạng chọn đáp án";
         const color =
           type === "write"
             ? "gray"

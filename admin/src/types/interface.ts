@@ -160,6 +160,7 @@ interface MatchItem {
 
 interface ExerciseQuestion {
     _id?: string;
+    id?: string;
     prompt?: string;
     audio?: string;
     dataLeft?: MatchItem[];

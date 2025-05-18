@@ -54,6 +54,9 @@ function ExerciseManagement() {
   };
 
   const handleEdit = (value: ExerciseType) => {
+    if(value.type === 'multiple_choice'){
+      return router.push(`/exercise/multiple-choice?q=${value._id}`);
+    }
     router.push(`/exercise/${value.type}?q=${value._id}`);
   };
 
