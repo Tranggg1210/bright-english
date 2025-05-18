@@ -3,20 +3,20 @@ const { objectId } = require('./custom.validation');
 const { EXERCISE_TYPE } = require('../constants');
 
 const matchItem = Joi.object({
-    id: Joi.string(),
-    image: Joi.string().uri().allow('', null),
-    content: Joi.string().allow('', null),
-    key: Joi.string(),
-    index: Joi.number(),
-  }).custom((value, helpers) => {
-    const hasImage = value.image && value.image.trim() !== '';
-    const hasContent = value.content && value.content.trim() !== '';
-    if (!hasImage && !hasContent) {
-      return helpers.message('Mỗi item phải có ít nhất "image" hoặc "content"');
-    }
-    return value;
-  });
-  
+  id: Joi.string(),
+  image: Joi.string().uri().allow('', null),
+  content: Joi.string().allow('', null),
+  key: Joi.string(),
+  index: Joi.number(),
+}).custom((value, helpers) => {
+  const hasImage = value.image && value.image.trim() !== '';
+  const hasContent = value.content && value.content.trim() !== '';
+  if (!hasImage && !hasContent) {
+    return helpers.message('Mỗi item phải có ít nhất "image" hoặc "content"');
+  }
+  return value;
+});
+
 const question = Joi.object({
   prompt: Joi.string().allow('', null),
   audio: Joi.string().uri().allow('', null),
@@ -33,7 +33,7 @@ const createExercise = {
       .valid(...Object.values(EXERCISE_TYPE))
       .required(),
     name: Joi.string().required(),
-    text: Joi.string().optional(),
+    text: Joi.string().allow('', null).optional(),
     questions: Joi.array().items(question).required(),
   }),
 };
@@ -61,7 +61,6 @@ const getExerciseByTopicId = {
   }),
 };
 
-
 const updateExerciseById = {
   params: Joi.object({
     exerciseId: Joi.string().required().custom(objectId),
@@ -70,7 +69,7 @@ const updateExerciseById = {
     topicId: Joi.string().custom(objectId),
     type: Joi.string().valid(...Object.values(EXERCISE_TYPE)),
     name: Joi.string(),
-    text: Joi.string(),
+    text: Joi.string().allow('', null).optional(),
     questions: Joi.array().items(question),
   }),
 };
@@ -87,5 +86,5 @@ module.exports = {
   getExerciseById,
   updateExerciseById,
   deleteExerciseById,
-  getExerciseByTopicId
+  getExerciseByTopicId,
 };

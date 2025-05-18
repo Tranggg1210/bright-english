@@ -21,7 +21,7 @@ const createContact = {
     message: joi.string().required().messages({
       'any.required': 'Vui lòng nhập nội dung liên hệ',
     }),
-    status: joi.string().valid('chua-doc', 'da-doc', 'da-tra-loi').default('chua-doc'),
+    status: joi.string().valid('unread', 'read', 'replied').default('unread'),
   }),
 };
 
@@ -57,25 +57,7 @@ const updateContactById = {
       'string.max': 'Số điện thoại không vượt quá 15 ký tự',
     }),
     message: joi.string(),
-    status: joi.string().valid('chua-doc', 'da-doc', 'da-tra-loi'),
-  }),
-};
-
-const updateContactStatus = {
-  params: joi.object({
-    contactId: joi.string().required().custom(objectId),
-  }),
-  body: joi.object().keys({
-    status: joi.string().valid('chua-doc', 'da-doc', 'da-tra-loi').required().messages({
-      'any.required': 'Vui lòng chọn trạng thái',
-      'any.only': 'Trạng thái không hợp lệ',
-    }),
-  }),
-};
-
-const deleteContactById = {
-  params: joi.object({
-    contactId: joi.string().required().custom(objectId),
+    status: joi.string().valid('unread', 'read', 'replied'),
   }),
 };
 
@@ -84,6 +66,4 @@ module.exports = {
   getContacts,
   getContactById,
   updateContactById,
-  updateContactStatus,
-  deleteContactById,
 };

@@ -5,7 +5,7 @@ const studyTrackingTimeSchema = new Schema(
   {
     userId: {
       type: Schema.Types.ObjectId,
-      ref: 'User',
+      ref: 'Users',
       required: true,
     },
     timeLearn: {
@@ -18,7 +18,7 @@ const studyTrackingTimeSchema = new Schema(
       required: true,
     },
   },
-  { timestamps: true },
+  { timestamps: true, strict: true  },
 );
 
 module.exports = mongoose.model('StudyTrackingTime', studyTrackingTimeSchema);

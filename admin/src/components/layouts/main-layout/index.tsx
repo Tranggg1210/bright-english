@@ -5,16 +5,20 @@ import "./style.scss";
 import React, { useState } from "react";
 import {
   BookOutlined,
-  FileOutlined,
   SnippetsOutlined,
-  TeamOutlined,
   UserOutlined,
+  MailOutlined,
+  ExclamationCircleOutlined,
+  FormOutlined,
+  MessageOutlined,
 } from "@ant-design/icons";
 import type { MenuProps } from "antd";
-import { Layout, Menu, theme } from "antd";
+import { Layout, Menu, theme, Button } from "antd";
 import Logo from "@public/images/logo.png";
 import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
+import LocalStorage from "@src/helpers/local-storage";
+import CookieStorage from "@src/helpers/cookies";
 
 const { Content, Sider } = Layout;
 
@@ -36,18 +40,12 @@ function getItem(
 
 const items: MenuItem[] = [
   getItem("Người dùng", "/", <UserOutlined />),
-  getItem("Topic", "/topic", <BookOutlined />),
+  getItem("Chủ đề", "/topic", <BookOutlined />),
   getItem("Từ vựng", "/vocabulary", <SnippetsOutlined />),
-  getItem("User", "sub1", <UserOutlined />, [
-    getItem("Tom", "3"),
-    getItem("Bill", "4"),
-    getItem("Alex", "5"),
-  ]),
-  getItem("Team", "sub2", <TeamOutlined />, [
-    getItem("Team 1", "6"),
-    getItem("Team 2", "8"),
-  ]),
-  getItem("Files", "9", <FileOutlined />),
+  getItem("Liên hệ", "/contact", <MailOutlined />),
+  getItem("Báo cáo", "/report", <ExclamationCircleOutlined />),
+  getItem("Bài tập", "/exercise", <FormOutlined />),
+  getItem("Hội thoại", "/conversation", <MessageOutlined />),
 ];
 
 const App: React.FC<{ main: React.ReactNode }> = ({ main }) => {
@@ -58,14 +56,31 @@ const App: React.FC<{ main: React.ReactNode }> = ({ main }) => {
     token: { colorBgContainer, borderRadiusLG },
   } = theme.useToken();
 
+  const handleLogout = () => {
+    LocalStorage.removeLocalStorage(undefined, true);
+    CookieStorage.removeCookie(undefined, true);
+    router.push("/login");
+  };
+
   return (
     <Layout style={{ minHeight: "100vh" }} className="main-layout">
       <Sider
         collapsible
         collapsed={collapsed}
-        onCollapse={(value) => setCollapsed(value)}
+        onCollapse={setCollapsed}
+        style={{
+          position: "fixed",
+          left: 0,
+          top: 0,
+          bottom: 0,
+          height: "100vh",
+          overflow: "auto",
+        }}
       >
-        <div className="logo-image">
+        <div
+          className="logo-image"
+          style={{ padding: 16, textAlign: "center" }}
+        >
           <Image src={Logo} alt="logo" />
         </div>
         <Menu
@@ -78,9 +93,29 @@ const App: React.FC<{ main: React.ReactNode }> = ({ main }) => {
               router.push(key.toString());
             }
           }}
+          style={{ flex: 1 }}
         />
+        <div
+          style={{
+            padding: 16,
+            textAlign: "center",
+            borderTop: "1px solid rgba(255,255,255,0.2)",
+            marginTop: "120px"
+          }}
+        >
+          <Button danger block onClick={handleLogout}>
+            Đăng xuất
+          </Button>
+        </div>
       </Sider>
-      <Layout>
+
+      <Layout
+        style={{
+          marginLeft: collapsed ? 80 : 200,
+          transition: "margin-left 0.2s",
+          minHeight: "100vh",
+        }}
+      >
         <Content style={{ margin: "16px" }}>
           <div
             style={{

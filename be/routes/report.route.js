@@ -36,11 +36,5 @@ reportRoute
     validate(reportValidation.updateReportById),
     reportController.updateReportById,
   )
-  .delete(
-    auth,
-    author([USER_ROLE_ENUM.ADMIN]),
-    validate(reportValidation.deleteReportById),
-    reportController.deleteReportById,
-  );
 
 module.exports = reportRoute;

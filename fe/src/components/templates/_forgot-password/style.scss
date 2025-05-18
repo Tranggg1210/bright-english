@@ -1,0 +1,142 @@
+.forgot__password {
+  background-color: #fff;
+  padding: 1.5rem;
+  border-radius: 2rem;
+  width: 603px;
+  font-family: "Quicksand", sans-serif;
+  border: 2px solid #fff3e0;
+  box-shadow: 0 2px 0 0 #fff3e0;
+  padding-bottom: 0;
+  @media (max-width: 500px) {
+    width: 90vw;
+    max-width: unset;
+  }
+
+  &--title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    svg {
+      cursor: pointer;
+    }
+    > h4 {
+      color: #3f4254;
+      text-align: center;
+      font: {
+        size: 1.25rem;
+        weight: 700;
+      }
+      line-height: 1.5rem;
+    }
+  }
+
+  .vetify-otp {
+    margin: 24px auto 0;
+
+    >div{
+      justify-content: center;
+      margin: 24px 0;
+    }
+  }
+
+  &__form {
+    &--title {
+      color: #3f4254;
+      line-height: 1.372rem;
+      text-align: justify;
+      text-align: center;
+      font: {
+        size: 0.875rem;
+        weight: 600;
+      }
+      margin: 2rem 0 1rem;
+    }
+
+    &--group {
+      margin-bottom: 1rem;
+    }
+
+    &--label {
+      display: block;
+      font: {
+        weight: 700;
+        size: 0.875rem;
+      }
+      color: #3f4254;
+      line-height: 1.25rem;
+      margin-bottom: 8px;
+    }
+
+    &--container {
+      position: relative;
+    }
+
+    .otp-input-fg {
+      width: 40px !important;
+      height: 40px;
+      border: 2px solid #ccc;
+      border-radius: 4px;
+      margin: 0 8px;
+      outline: #ff8400;
+    }
+
+    &--input {
+      width: 100%;
+      padding: 0.75rem 1rem;
+      border: 1px solid #ebebf0;
+      border-radius: 48px;
+      outline: none;
+      font: {
+        weight: 500;
+        size: 1rem;
+        family: "Quicksand", sans-serif;
+      }
+      &:focus {
+        box-shadow: 0 0 0 4px rgba(0, 123, 255, 0.4);
+        border: 1px solid #5ac8fa !important;
+      }
+    }
+
+    &--icon {
+      height: 24px;
+      position: absolute;
+      right: 0.75rem;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+
+    .input-error {
+      border: 1px solid red;
+    }
+
+    &--error {
+      margin: 0.5rem 0.25rem 0;
+      color: red;
+      font-weight: 500;
+    }
+
+    &--btn {
+      margin-top: 1rem;
+      font-size: 16px !important;
+      color: rgb(255, 255, 255);
+      padding: 11px;
+      border-radius: 48px;
+      background-color: #ff8400;
+      width: 100%;
+      border: 1px solid transparent;
+      transition: all 0.3s linear;
+      cursor: pointer;
+      font: {
+        weight: 600;
+        size: 1rem;
+        family: "Quicksand", sans-serif;
+      }
+      margin-bottom: 2rem;
+
+      &:hover {
+        background-color: #fff3e0;
+        color: #ff8400;
+      }
+    }
+  }
+}

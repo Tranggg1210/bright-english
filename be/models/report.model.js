@@ -3,7 +3,7 @@ const reportSchema = new mongoose.Schema(
   {
     userId: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'User',
+      ref: 'Users',
       required: true,
     },
     title: {
@@ -23,6 +23,6 @@ const reportSchema = new mongoose.Schema(
       default: 'unread',
     },
   },
-  { timestamps: true },
+  { timestamps: true, strict: true  },
 );
 module.exports = mongoose.model('Report', reportSchema);

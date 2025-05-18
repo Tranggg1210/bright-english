@@ -35,11 +35,11 @@ const logSchema = new Schema(
     },
     userId: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'User',
+      ref: 'Users',
       required: true,
     }
   },
-  { timestamps: true }
+  { timestamps: true, strict: true  }
 );
 
 const Log = mongoose.model('Log', logSchema);

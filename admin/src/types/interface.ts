@@ -68,7 +68,7 @@ interface TopicManagementProps {
 }
 
 
-interface  VocabularyType  {
+interface VocabularyType {
     _id: string;
     topicId: string;
     word: string;
@@ -105,11 +105,160 @@ interface VocabularyManagementProps {
     topics: TopicType[]
 }
 
+interface ContactType {
+    _id: string;
+    fullName: string;
+    email: string;
+    phone: string;
+    message: string;
+    status: 'unread' | 'read' | 'replied'
+}
+
+
+interface ContactManagementProps {
+    handleEdit: (value: ContactType) => void;
+    contacts: ContactType[];
+    handleCancel: () => void;
+    handleOk: () => void;
+    isModalOpen: boolean;
+    form: FormInstance<ContactType>;
+    page: number;
+    handlePageChange: (page: number) => void;
+    total: number;
+}
+
+interface ReportType {
+    _id: string;
+    userId: string;
+    title: string;
+    fullname: string;
+    message: string;
+    email: string;
+    status: 'unread' | 'read' | 'replied'
+}
+
+
+interface ReportManagementProps {
+    handleEdit: (value: ReportType) => void;
+    reports: ReportType[];
+    handleCancel: () => void;
+    handleOk: () => void;
+    isModalOpen: boolean;
+    form: FormInstance<ReportType>;
+    page: number;
+    handlePageChange: (page: number) => void;
+    total: number;
+}
+
+interface MatchItem {
+    id: string;
+    image: string;
+    content: string;
+    key: string;
+    index: number;
+}
+
+interface ExerciseQuestion {
+    _id?: string;
+    id?: string;
+    prompt?: string;
+    audio?: string;
+    dataLeft?: MatchItem[];
+    dataRight?: MatchItem[];
+    answer: any;
+    content?: string[];
+}
+
+interface ExerciseType {
+    _id?: string;
+    topicId: string;
+    type: 'write' | 'match' | 'dictation' | 'multiple_choice';
+    name: string;
+    text?: string;
+    questions: ExerciseQuestion[];
+    createdAt?: Date;
+    updatedAt?: Date;
+}
+
+interface ExerciseManagementProps {
+    handleEdit: (value: ExerciseType) => void;
+    handleDelete: (value: ExerciseType) => void;
+    exercises: ExerciseType[];
+    page: number;
+    handlePageChange: (page: number) => void;
+    total: number;
+    isConfirmOpen: boolean;
+    setIsConfirmOpen: (open: boolean) => void;
+    confirmAction: () => void;
+}
+
+
+interface ExerciseHeaderTopic {
+    topicId: string;
+    type: 'write' | 'match' | 'dictation' | 'multiple_choice',
+    name: string;
+    text?: string;
+}
+interface MatchingItem {
+    content?: string;
+    image?: string;
+    key: string,
+    id: string;
+}
+
+
+interface ConversationType {
+  _id?: string;
+  topicId: string;
+  name: string;
+  listConver: {
+    speaker: 'speakerA' | 'speakerB';
+    text: string;
+    audio?: string;
+  }[];
+  listInfor: {
+    speakerA: {
+      avatar: string;
+      name: string;
+    };
+    speakerB: {
+      avatar: string;
+      name: string;
+    };
+  };
+  description?: string;
+  createdAt?: Date;
+  updatedAt?: Date;
+}
+
+interface ConversationManagementProps {
+    handleEdit: (value: ConversationType) => void;
+    handleDelete: (value: ConversationType) => void;
+    conversations: ConversationType[];
+    page: number;
+    handlePageChange: (page: number) => void;
+    total: number;
+    isConfirmOpen: boolean;
+    setIsConfirmOpen: (open: boolean) => void;
+    confirmAction: () => void;
+}
+
 export type {
     UserType,
     UserManagementProps,
     TopicType,
     TopicManagementProps,
     VocabularyManagementProps,
-    VocabularyType
+    VocabularyType,
+    ContactManagementProps,
+    ContactType,
+    ReportManagementProps,
+    ReportType,
+    ExerciseType,
+    ExerciseManagementProps,
+    MatchingItem,
+    ExerciseHeaderTopic,
+    ExerciseQuestion,
+    ConversationType,
+    ConversationManagementProps
 }

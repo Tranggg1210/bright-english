@@ -26,14 +26,22 @@ const getReports = catchAsync(async (req, res) => {
     sort[key.trim()] = order?.trim() === 'asc' ? 1 : -1;
   });
 
-  const reports = await Report.find().limit(+limit).skip(skip).sort(sort);
+  const reports = await Report.find().limit(+limit).skip(skip).sort(sort).populate('userId', 'fullname email');
+
+  const flattenReports = reports.map((report) => ({
+    ...report.toObject(),
+    fullname: report.userId.fullname,
+    email: report.userId.email,
+    userId: report.userId._id,
+  }));
+
   const totalResults = await Report.countDocuments();
 
   res.status(httpStatus.OK).json({
     code: httpStatus.OK,
     message: 'Lấy danh sách báo cáo thành công!',
     data: {
-      reports,
+      reports: flattenReports,
       limit: +limit,
       currentPage: +page,
       totalPage: Math.ceil(totalResults / +limit),
@@ -72,23 +80,9 @@ const updateReportById = catchAsync(async (req, res) => {
   });
 });
 
-const deleteReportById = catchAsync(async (req, res) => {
-  const report = await Report.findByIdAndDelete(req.params.reportId);
-  if (!report) {
-    throw new ApiError(httpStatus.NOT_FOUND, 'Không tìm thấy báo cáo!');
-  }
-
-  res.status(httpStatus.OK).json({
-    message: 'Xoá báo cáo thành công!',
-    code: httpStatus.OK,
-    data: { report },
-  });
-});
-
 module.exports = {
   createReport,
   getReports,
   getReportById,
   updateReportById,
-  deleteReportById,
 };

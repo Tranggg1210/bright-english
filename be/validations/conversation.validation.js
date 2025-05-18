@@ -29,7 +29,7 @@ const createConversation = {
         name: joi.string().trim().allow('', null),
       }),
     }),
-    translate: joi.string().trim().allow('', null),
+    description: joi.string().trim().allow('', null),
   }),
 };
 
@@ -71,7 +71,7 @@ const updateConversationById = {
         name: joi.string().trim().allow('', null),
       }),
     }),
-    translate: joi.string().trim().allow('', null),
+    description: joi.string().trim().allow('', null),
   }),
 };
 

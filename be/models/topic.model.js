@@ -9,7 +9,7 @@ const topicSchema = new Schema(
       required: true,
     }
   },
-  { timestamps: true },
+  { timestamps: true, strict: true  },
 );
 
 const Topic = mongoose.model('Topic', topicSchema);

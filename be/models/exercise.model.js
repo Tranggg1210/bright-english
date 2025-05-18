@@ -7,7 +7,6 @@ const MatchItemSchema = new Schema({
   image: String,
   content: String,
   key: String,
-  index: Number,
 }, { _id: false });
 
 const exerciseSchema = new Schema(
@@ -43,18 +42,10 @@ const exerciseSchema = new Schema(
           type: Schema.Types.Mixed, 
           required: true,
         },
-        content: [{
-          type: Schema.Types.ObjectId,
-          ref: 'Vocabulary',
-        }],
       }
     ],
-    logs: {
-      type: Schema.Types.ObjectId,
-      ref: 'Logs',  
-    },
   },
-  { timestamps: true }
+  { timestamps: true, strict: true  }
 );
 
 

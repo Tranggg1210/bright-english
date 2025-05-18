@@ -10,18 +10,32 @@ const storage = multer.diskStorage({
 })
 
 const fileFilter = (req, file, cb) => {
-  if (['image/png', 'image/jpg', 'image/jpeg'].includes(file.mimetype)) {
+  const allowedMimeTypes = [
+    'image/png',
+    'image/jpg',
+    'image/jpeg',
+    'image/webp',
+    'audio/mpeg',
+    'audio/mp3',
+    'audio/wav',
+    'video/mp4',
+    'video/webm',
+    'video/quicktime',
+  ];
+
+  if (allowedMimeTypes.includes(file.mimetype)) {
     cb(null, true);
   } else {
-    cb(new Error('Chỉ hỗ trợ định dạng PNG, JPG, JPEG'), false);
+    cb(new Error('Chỉ hỗ trợ file ảnh, audio hoặc video hợp lệ'), false);
   }
 };
+
 
 const upload = multer({
   storage,
   fileFilter,
   limits: {
-    fileSize: 0.5 * 1024 * 1024, 
+    fileSize: 20 * 1024 * 1024, // 20MB
   },
 });
 

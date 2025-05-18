@@ -11,6 +11,7 @@ import { toast } from "react-toastify";
 import _ from "lodash";
 import CookieStorage from "@src/helpers/cookies";
 import { useRouter } from "next/navigation";
+import LocalStorage from "@src/helpers/local-storage";
 
 const Login = () => {
   const [loading, setLoading] = useState(false);
@@ -30,15 +31,21 @@ const Login = () => {
 
       const user = await dispatch(postLogin({ email, password })).unwrap();
 
-      if(!_.isEmpty(user)){
-        CookieStorage.setCookie('access-token', user.accessToken);
-        CookieStorage.setCookie('refresh-token', user.refreshToken);
+      if (!_.isEmpty(user)) {
+        if (user.user.role !== "admin") {
+          toast.dismiss();
+          toast.warning("Bạn không phải là admin!");
+          return;
+        }
+
+        LocalStorage.setLocalStorage("access-token", user.accessToken);
+        CookieStorage.setCookie("refresh-token", user.refreshToken);
         dispatch(updateUserInfor(user.user));
 
         toast.success("Đăng nhập thành công!");
 
         setTimeout(() => {
-          router.push('/');
+          router.push("/");
         }, 500);
       }
     } catch (err: any) {

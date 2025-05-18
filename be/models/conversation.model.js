@@ -41,12 +41,12 @@ const conversationSchema = new Schema(
         name: { type: String, trim: true },
       },
     },
-    translate: {
+    description: {
       type: String,
       trim: true,
     },
   },
-  { timestamps: true },
+  { timestamps: true, strict: true  },
 );
 
 const Conversation = mongoose.model('Conversation', conversationSchema);

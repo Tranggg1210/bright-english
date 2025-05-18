@@ -1,17 +1,18 @@
 import axios, { AxiosInstance, AxiosError, AxiosRequestConfig } from "axios";
 import CookieStorage from "./cookies";
+import LocalStorage from "./local-storage";
 
 const headers = {
     "Content-Type": "application/json",
 };
 
-const API_REQUEST_TIMEOUT = 9000;
+const API_REQUEST_TIMEOUT = 90000;
 
 class Request {
     axios: AxiosInstance;
 
     constructor(baseURL: string) {
-        const token = CookieStorage.getCookie("access-token");
+        const token = LocalStorage.getLocalStorage("access-token");
         if (token) {
             Object.assign(headers, {
                 Authorization: `Bearer ${token}`,
@@ -44,7 +45,7 @@ class Request {
                     try {
                         const refreshedToken = await this.refreshAccessToken();
                         if (refreshedToken) {
-                            CookieStorage.setCookie("access-token", refreshedToken);
+                            LocalStorage.setLocalStorage("access-token", refreshedToken);
                             error.config.headers["Authorization"] = `Bearer ${refreshedToken}`;
                             return this.axios(error.config); 
                         }
