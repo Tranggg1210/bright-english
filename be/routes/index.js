@@ -50,6 +50,10 @@ const listRoutesApi = [
   {
     path: '/user_conversation',
     route: require('./user_conversation.route'),
+  },
+   {
+    path: '/cloudianry',
+    route: require('./upload.route'),
   }
 ];
 

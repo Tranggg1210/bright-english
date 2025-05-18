@@ -68,7 +68,7 @@ interface TopicManagementProps {
 }
 
 
-interface  VocabularyType  {
+interface VocabularyType {
     _id: string;
     topicId: string;
     word: string;
@@ -105,7 +105,7 @@ interface VocabularyManagementProps {
     topics: TopicType[]
 }
 
-interface ContactType{
+interface ContactType {
     _id: string;
     fullName: string;
     email: string;
@@ -127,7 +127,7 @@ interface ContactManagementProps {
     total: number;
 }
 
-interface ReportType{
+interface ReportType {
     _id: string;
     userId: string;
     title: string;
@@ -151,31 +151,32 @@ interface ReportManagementProps {
 }
 
 interface MatchItem {
-  id: string;
-  image: string;
-  content: string;
-  key: string;
-  index: number;
+    id: string;
+    image: string;
+    content: string;
+    key: string;
+    index: number;
 }
 
 interface ExerciseQuestion {
-  prompt?: string;
-  audio?: string;
-  dataLeft?: MatchItem[];
-  dataRight?: MatchItem[];
-  answer: any; 
-  content?: string[];
+    _id?: string;
+    prompt?: string;
+    audio?: string;
+    dataLeft?: MatchItem[];
+    dataRight?: MatchItem[];
+    answer: any;
+    content?: string[];
 }
 
 interface ExerciseType {
-  _id?: string;
-  topicId: string; 
-  type: 'write' | 'match' | 'dictation' |  'multiple_choice'; 
-  name: string;
-  text?: string;
-  questions: ExerciseQuestion[];
-  createdAt?: Date;
-  updatedAt?: Date;
+    _id?: string;
+    topicId: string;
+    type: 'write' | 'match' | 'dictation' | 'multiple_choice';
+    name: string;
+    text?: string;
+    questions: ExerciseQuestion[];
+    createdAt?: Date;
+    updatedAt?: Date;
 }
 
 interface ExerciseManagementProps {
@@ -193,7 +194,7 @@ interface ExerciseManagementProps {
 
 interface ExerciseHeaderTopic {
     topicId: string;
-    type: 'write' | 'match' | 'dictation' |  'multiple_choice',
+    type: 'write' | 'match' | 'dictation' | 'multiple_choice',
     name: string;
     text?: string;
 }

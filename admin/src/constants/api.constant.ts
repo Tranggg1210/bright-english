@@ -27,6 +27,9 @@ const apiConstant = {
         init: "/exercises",
         id: (id: string) => `/exercises/${id}`,
         seachByTopicId: (id: string) => `/exercises/topic/${id}` 
+    },
+    upload: {
+        init: "/cloudianry"
     }
 }
 export default apiConstant;

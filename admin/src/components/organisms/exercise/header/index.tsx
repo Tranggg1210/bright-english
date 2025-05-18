@@ -9,6 +9,8 @@ import _ from "lodash";
 import { getListTopic } from "@src/services/topic";
 import { toast } from "react-toastify";
 
+const { Panel } = Collapse;
+
 type Props = {
   exerciseTitle: ExerciseHeaderTopic;
   onChange: (value: ExerciseHeaderTopic) => void;
@@ -31,7 +33,7 @@ const CommonExercise = ({ exerciseTitle, onChange, type }: Props) => {
       form.setFieldsValue(defaultData);
       onChange(defaultData);
     }
-  }, [topics, exerciseTitle]);
+  }, [topics, exerciseTitle, form, onChange, type]);
 
   useEffect(() => {
     if (exerciseTitle) {
@@ -42,7 +44,7 @@ const CommonExercise = ({ exerciseTitle, onChange, type }: Props) => {
         topicId: exerciseTitle.topicId || topics?.[0]?._id,
       });
     }
-  }, [exerciseTitle]);
+  }, [exerciseTitle, form, topics, type]);
 
   const loaderData = async () => {
     try {
@@ -60,12 +62,9 @@ const CommonExercise = ({ exerciseTitle, onChange, type }: Props) => {
 
   useEffect(() => {
     if (!topics || _.isEmpty(topics)) {
-      const shouldFetchTopics = _.isEmpty(topics);
-      if (shouldFetchTopics) {
-        loaderData();
-      }
+      loaderData();
     }
-  }, []);
+  }, [topics]);
 
   const onValuesChange = (_: any, allValues: any) => {
     const updatedExercise: ExerciseHeaderTopic = {
@@ -76,58 +75,56 @@ const CommonExercise = ({ exerciseTitle, onChange, type }: Props) => {
   };
 
   return (
-    <Collapse
-      defaultActiveKey={["1"]}
-      items={[
-        {
-          key: "1",
-          label: "📝 Thông tin chung",
-          children: (
-            <Form layout="vertical" form={form} onValuesChange={onValuesChange}>
-              <Form.Item
-                name="name"
-                label="Tên bài tập"
-                rules={[{ required: true, message: "Không được để trống tên" }]}
-              >
-                <Input placeholder="Nhập tên bài tập" />
-              </Form.Item>
+    <Collapse accordion>
+      <Panel key="1" header="📝 Thông tin chung">
+        <Form
+          layout="vertical"
+          form={form}
+          onValuesChange={onValuesChange}
+          autoComplete="off"
+        >
+          <Form.Item
+            name="name"
+            label="Tên bài tập"
+            rules={[{ required: true, message: "Không được để trống tên" }]}
+          >
+            <Input placeholder="Nhập tên bài tập" />
+          </Form.Item>
 
-              <Form.Item name="text" label="Mô tả / đề bài chung">
-                <Input.TextArea placeholder="Nhập mô tả ngắn gọn" rows={3} />
-              </Form.Item>
+          <Form.Item name="text" label="Mô tả / đề bài chung">
+            <Input.TextArea placeholder="Nhập mô tả ngắn gọn" rows={3} />
+          </Form.Item>
 
-              {!type && (
-                <Form.Item
-                  name="type"
-                  label="Loại bài tập"
-                  rules={[{ required: true, message: "Chọn loại bài tập" }]}
-                >
-                  <Select
-                    placeholder="Chọn loại bài tập"
-                    options={EXERCISE_TYPE_OPTIONS}
-                    disabled={!!exerciseTitle?.type}
-                  />
-                </Form.Item>
-              )}
+          {!type && (
+            <Form.Item
+              name="type"
+              label="Loại bài tập"
+              rules={[{ required: true, message: "Chọn loại bài tập" }]}
+            >
+              <Select
+                placeholder="Chọn loại bài tập"
+                options={EXERCISE_TYPE_OPTIONS}
+                disabled={!!exerciseTitle?.type}
+              />
+            </Form.Item>
+          )}
 
-              <Form.Item
-                label="Chủ đề"
-                name="topicId"
-                rules={[{ required: true, message: "Chọn chủ đề" }]}
-              >
-                <Select placeholder="Chọn chủ đề">
-                  {topics.map((item: TopicType) => (
-                    <Select.Option value={item._id} key={item._id}>
-                      {item.name}
-                    </Select.Option>
-                  ))}
-                </Select>
-              </Form.Item>
-            </Form>
-          ),
-        },
-      ]}
-    />
+          <Form.Item
+            label="Chủ đề"
+            name="topicId"
+            rules={[{ required: true, message: "Chọn chủ đề" }]}
+          >
+            <Select placeholder="Chọn chủ đề">
+              {topics.map((item: TopicType) => (
+                <Select.Option value={item._id} key={item._id}>
+                  {item.name}
+                </Select.Option>
+              ))}
+            </Select>
+          </Form.Item>
+        </Form>
+      </Panel>
+    </Collapse>
   );
 };
 

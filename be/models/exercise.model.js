@@ -42,10 +42,6 @@ const exerciseSchema = new Schema(
           type: Schema.Types.Mixed, 
           required: true,
         },
-        content: [{
-          type: Schema.Types.ObjectId,
-          ref: 'Vocabulary',
-        }],
       }
     ],
   },

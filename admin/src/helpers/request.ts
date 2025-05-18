@@ -6,7 +6,7 @@ const headers = {
     "Content-Type": "application/json",
 };
 
-const API_REQUEST_TIMEOUT = 9000;
+const API_REQUEST_TIMEOUT = 90000;
 
 class Request {
     axios: AxiosInstance;

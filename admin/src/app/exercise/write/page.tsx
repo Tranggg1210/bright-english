@@ -1,8 +1,8 @@
 import MainLayout from "@src/components/layouts/main-layout";
-import Contact from '@src/components/templates/_contact';
+import WriteExercise from "@src/components/templates/_exercise/write";
 
 function Page() {
-  return <MainLayout main={<Contact />} />;
+  return <MainLayout main={<WriteExercise />} />;
 }
 
 export default Page;

@@ -1,8 +1,8 @@
 import MainLayout from "@src/components/layouts/main-layout";
-import Contact from '@src/components/templates/_contact';
+import DictationExercise from "@src/components/templates/_exercise/dictation";
 
 function Page() {
-  return <MainLayout main={<Contact />} />;
+  return <MainLayout main={<DictationExercise />} />;
 }
 
 export default Page;

@@ -1,7 +1,11 @@
 "use client";
 
 import { useAppDispatch } from "@src/hooks/useHookReducers";
-import { createExercise, getExerciseById, updateExercise } from "@src/services/exercise";
+import {
+  createExercise,
+  getExerciseById,
+  updateExercise,
+} from "@src/services/exercise";
 import {
   ExerciseHeaderTopic,
   ExerciseQuestion,
@@ -13,52 +17,50 @@ import React, { useEffect, useRef, useState } from "react";
 import { toast } from "react-toastify";
 import { LeftOutlined } from "@ant-design/icons";
 import CommonExercise from "@src/components/organisms/exercise/header";
-import MatchingForm, {
-  MatchingFormRef,
-} from "@src/components/molecules/exercise/matching-form";
-import PreviewMatching from "@src/components/molecules/exercise/preview-matching";
 import _ from "lodash";
-import { shuffleArray } from "@src/utils/shuffle-array";
+import WriteForm from "@src/components/molecules/exercise/write-form";
+import PreviewWrite from "@src/components/molecules/exercise/preview-write";
 
-function MatchExercise() {
+function WriteExercise() {
   const searchParams = useSearchParams();
   const router = useRouter();
   const dispatch = useAppDispatch();
 
-  const [matchExerciseTitle, setMatchExerciseTiTle] =
-    useState<ExerciseHeaderTopic>({
-      name: "",
-      topicId: "",
-      type: "match",
-      text: "",
-    });
+  const [title, setTitle] = useState<ExerciseHeaderTopic>({
+    name: "",
+    topicId: "",
+    type: "write",
+    text: "",
+  });
 
-  const [questionsExercise, setQuestionsExercise] = useState<
-    ExerciseQuestion[]
-  >([]);
+  const [questions, setQuestions] = useState<ExerciseQuestion[]>([]);
 
   const [isPreviewOpen, setIsPreviewOpen] = useState(false);
 
-  const formRef = useRef<MatchingFormRef>(null);
+  const formRef = useRef<any>(null);
 
   const loaderExerciseById = async () => {
     try {
-      const { data }: { data: {
-        exercise: ExerciseType
-      } } = await dispatch(
+      const {
+        data,
+      }: {
+        data: {
+          exercise: ExerciseType;
+        };
+      } = await dispatch(
         getExerciseById({
           _id: searchParams.get("q"),
         })
       ).unwrap();
 
       if (data && !_.isEmpty(data)) {
-        setMatchExerciseTiTle({
+        setTitle({
           topicId: data.exercise.topicId,
           type: data.exercise.type,
           name: data.exercise.name,
           text: data?.exercise.text,
         });
-        setQuestionsExercise(data.exercise.questions);
+        setQuestions(data.exercise.questions);
       }
     } catch {
       toast.dismiss();
@@ -75,47 +77,37 @@ function MatchExercise() {
 
   const handlePreview = () => {
     if (!formRef.current) return;
-    const values = formRef.current.getFormValues?.();
-    if (values?.dataLeft?.length && values?.dataRight?.length) {
-      setIsPreviewOpen(true);
-    }
+    setIsPreviewOpen(true);
   };
 
-  const isPreviewDisabled = !(
-    matchExerciseTitle &&
-    questionsExercise?.length > 0 &&
-    (questionsExercise?.[0]?.dataLeft?.length ?? 0) > 1
-  );
+  const isPreviewDisabled = !(title.name && questions?.length > 0);
 
-  const handleSave = async() => {
+  const handleSave = async () => {
     try {
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const sanitizedQuestions = questions.map(({ _id, ...rest }) => rest);
+
       const newExercise: ExerciseType = {
-        ...matchExerciseTitle,
-        questions: questionsExercise?.map((item) => ({
-          prompt: "",
-          answer: [],
-          audio: "",
-          content: [],
-          dataLeft: shuffleArray(item.dataLeft || []),
-          dataRight: shuffleArray(item.dataRight || []),
-        })),
+        ...title,
+        questions: sanitizedQuestions,
       };
 
       if (searchParams.get("q")) {
-        await dispatch(updateExercise({
-          id: searchParams.get('q') || "",
-          exercise: newExercise
-        }));
+        await dispatch(
+          updateExercise({
+            id: searchParams.get("q") || "",
+            exercise: newExercise,
+          })
+        );
         toast.success("Chỉnh sửa bài tập thành công!");
-      }else{
+      } else {
         await dispatch(createExercise(newExercise));
         toast.success("Tạo bài tập thành công!");
       }
 
       setTimeout(() => {
         router.push("/exercise");
-      }, 500)
-
+      }, 500);
     } catch {
       toast.dismiss();
       toast.error(
@@ -136,7 +128,7 @@ function MatchExercise() {
             onClick={() => router.push("/exercise")}
           />
           <h1 className="font-bold text-[24px] text-primary">
-            {searchParams.get('q') ? "Chỉnh sửa bài tập" : "Tạo bài tập"}
+            {searchParams.get("q") ? "Chỉnh sửa bài tập" : "Tạo bài tập"}
           </h1>
         </div>
         <div className="flex items-center gap-3">
@@ -159,15 +151,11 @@ function MatchExercise() {
         </div>
       </div>
 
-      <CommonExercise
-        exerciseTitle={matchExerciseTitle}
-        onChange={setMatchExerciseTiTle}
-        type="match"
-      />
-      <MatchingForm
+      <CommonExercise exerciseTitle={title} onChange={setTitle} type="write" />
+      <WriteForm
         ref={formRef}
-        exerciseQuestion={questionsExercise}
-        onChange={setQuestionsExercise}
+        exerciseQuestion={questions}
+        onChange={setQuestions}
       />
 
       <Modal
@@ -176,13 +164,13 @@ function MatchExercise() {
         footer={null}
         width={800}
       >
-        <PreviewMatching
-          matchExerciseTitle={matchExerciseTitle}
-          questionsExercise={questionsExercise}
+        <PreviewWrite
+          questionsExercise={questions}
+          writeExerciseTitle={title}
         />
       </Modal>
     </div>
   );
 }
 
-export default MatchExercise;
+export default WriteExercise;

@@ -6,6 +6,7 @@ import vocabularysReducer from "./vocabulary";
 import reportsReducer from "./report";
 import contactsReducer from "./contact";
 import exercisesReducer from "./exercise";
+import uploadReducer from "./upload";
 
 const stores = configureStore({
     reducer: {
@@ -15,7 +16,8 @@ const stores = configureStore({
         vocabulary: vocabularysReducer,
         report: reportsReducer,
         contact: contactsReducer,
-        exercise: exercisesReducer
+        exercise: exercisesReducer,
+        upload: uploadReducer
     }
 });
 

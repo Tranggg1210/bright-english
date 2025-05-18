@@ -3,7 +3,6 @@ require('dotenv').config();
 const cors = require('cors');
 const http = require('http');
 const morgan = require('morgan');
-const cron = require('node-cron');
 const express = require('express');
 const mongoose = require('mongoose');
 const httpStatus = require('http-status');
