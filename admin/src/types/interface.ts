@@ -206,6 +206,43 @@ interface MatchingItem {
     id: string;
 }
 
+
+interface ConversationType {
+  _id?: string;
+  topicId: string;
+  name: string;
+  listConver: {
+    speaker: 'speakerA' | 'speakerB';
+    text: string;
+    audio?: string;
+  }[];
+  listInfor: {
+    speakerA: {
+      avatar: string;
+      name: string;
+    };
+    speakerB: {
+      avatar: string;
+      name: string;
+    };
+  };
+  description?: string;
+  createdAt?: Date;
+  updatedAt?: Date;
+}
+
+interface ConversationManagementProps {
+    handleEdit: (value: ConversationType) => void;
+    handleDelete: (value: ConversationType) => void;
+    conversations: ConversationType[];
+    page: number;
+    handlePageChange: (page: number) => void;
+    total: number;
+    isConfirmOpen: boolean;
+    setIsConfirmOpen: (open: boolean) => void;
+    confirmAction: () => void;
+}
+
 export type {
     UserType,
     UserManagementProps,
@@ -221,5 +258,7 @@ export type {
     ExerciseManagementProps,
     MatchingItem,
     ExerciseHeaderTopic,
-    ExerciseQuestion
+    ExerciseQuestion,
+    ConversationType,
+    ConversationManagementProps
 }

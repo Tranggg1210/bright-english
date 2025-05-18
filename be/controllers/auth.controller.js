@@ -45,9 +45,7 @@ const googleLogin = catchAsync(async (req, res) => {
     idToken,
     audience: process.env.GOOGLE_CLIENT_ID,
   });
-
-  console.log(ticket)
-
+  
   const payload = ticket.getPayload();
   const { email, name, picture, sub: googleId } = payload;
 

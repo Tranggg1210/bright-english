@@ -41,7 +41,7 @@ const conversationSchema = new Schema(
         name: { type: String, trim: true },
       },
     },
-    translate: {
+    description: {
       type: String,
       trim: true,
     },

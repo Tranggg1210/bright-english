@@ -10,6 +10,7 @@ import {
   MailOutlined,
   ExclamationCircleOutlined,
   FormOutlined,
+  MessageOutlined,
 } from "@ant-design/icons";
 import type { MenuProps } from "antd";
 import { Layout, Menu, theme, Button } from "antd";
@@ -44,6 +45,7 @@ const items: MenuItem[] = [
   getItem("Liên hệ", "/contact", <MailOutlined />),
   getItem("Báo cáo", "/report", <ExclamationCircleOutlined />),
   getItem("Bài tập", "/exercise", <FormOutlined />),
+  getItem("Hội thoại", "/conversation", <MessageOutlined />),
 ];
 
 const App: React.FC<{ main: React.ReactNode }> = ({ main }) => {
@@ -98,7 +100,7 @@ const App: React.FC<{ main: React.ReactNode }> = ({ main }) => {
             padding: 16,
             textAlign: "center",
             borderTop: "1px solid rgba(255,255,255,0.2)",
-            marginTop: "200px"
+            marginTop: "120px"
           }}
         >
           <Button danger block onClick={handleLogout}>

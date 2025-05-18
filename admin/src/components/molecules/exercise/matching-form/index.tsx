@@ -37,7 +37,7 @@ const MatchingForm = forwardRef<MatchingFormRef, Props>(
     const [typeColumn, setTypeColumn] = useState<{
       leftType: "text" | "image" | null;
       rightType: "text" | "image" | null;
-    }>({ leftType: "text", rightType: "text" });
+    }>({ leftType: null, rightType: null });
 
     useImperativeHandle(ref, () => ({
       getFormValues: () => form.getFieldsValue(),
@@ -51,16 +51,18 @@ const MatchingForm = forwardRef<MatchingFormRef, Props>(
       ) {
         const q = exerciseQuestion[0];
         setTypeColumn({
-          leftType: q?.dataLeft?.[0]?.content
-            ? "text"
-            : q?.dataLeft?.[0]?.image
-            ? "image"
-            : null,
-          rightType: q?.dataRight?.[0]?.content
-            ? "text"
-            : q?.dataRight?.[0]?.image
-            ? "image"
-            : null,
+          leftType:
+            typeColumn.leftType || q?.dataLeft?.[0]?.content
+              ? "text"
+              : q?.dataLeft?.[0]?.image
+              ? "image"
+              : null,
+          rightType:
+            typeColumn.rightType || q?.dataRight?.[0]?.content
+              ? "text"
+              : q?.dataRight?.[0]?.image
+              ? "image"
+              : null,
         });
         setTypeColumnInitialized(true);
       }

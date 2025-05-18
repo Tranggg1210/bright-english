@@ -41,8 +41,6 @@ const WriteForm = forwardRef<WriteFormRef, WriteFormProps>(
       }
     };
 
-    console.log(exerciseQuestion)
-
     return (
       <div className="mt-6">
         <div className="mb-6">

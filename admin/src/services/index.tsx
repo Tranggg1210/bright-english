@@ -7,6 +7,7 @@ import reportsReducer from "./report";
 import contactsReducer from "./contact";
 import exercisesReducer from "./exercise";
 import uploadReducer from "./upload";
+import conversationsReducer from "./conversation";
 
 const stores = configureStore({
     reducer: {
@@ -17,7 +18,8 @@ const stores = configureStore({
         report: reportsReducer,
         contact: contactsReducer,
         exercise: exercisesReducer,
-        upload: uploadReducer
+        upload: uploadReducer,
+        conversation: conversationsReducer
     }
 });
 

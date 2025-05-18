@@ -30,6 +30,11 @@ const apiConstant = {
     },
     upload: {
         init: "/cloudianry"
+    },
+    conversations: {
+        init: "/conversations",
+        id: (id: string) => `/conversations/${id}`,
+        seachByTopicId: (id: string) => `/conversations/topic/${id}` 
     }
 }
 export default apiConstant;
