@@ -20,3 +20,14 @@ export interface ButtonProps {
   classNameInContent?: string;
   bgLoader?: string
 }
+
+export interface IUser {
+  email: string;
+  fullname: string;
+  dob?: Date;
+  password?: string;
+  googleId?: string;
+  isLocked: boolean;
+  avatar?: string;
+  role: 'user' | 'admin' ; 
+}

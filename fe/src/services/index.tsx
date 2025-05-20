@@ -4,6 +4,7 @@ import usersReducer from "./users";
 import topicsReducer from "./topic";
 import vocabularysReducer from "./vocabulary";
 import contactReducer from "./contact";
+import sidebarReducer from "./sidebar";
 
 const stores = configureStore({
     reducer: {
@@ -11,7 +12,8 @@ const stores = configureStore({
         users: usersReducer,
         topics: topicsReducer,
         vocabulary: vocabularysReducer,
-        conatct: contactReducer
+        conatct: contactReducer,
+        sidebar: sidebarReducer
     }
 });
 

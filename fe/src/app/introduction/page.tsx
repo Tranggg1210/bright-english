@@ -1,9 +1,9 @@
 import React from 'react'
 import MainLayout from '@src/components/layouts/main-layout'
-import Home from '@src/components/templates/_home'
+import Introduction from '@src/components/templates/_introduction'
 
 function Page() {
-  return <MainLayout main={<Home/>}/>
+  return <MainLayout main={<Introduction/>}/>
 }
 
 export default Page
