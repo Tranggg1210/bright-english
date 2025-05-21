@@ -11,7 +11,7 @@ function BannerHome({
   title = "Học tập giúp bạn cải thiện cuộc sống của mình và tạo ra sự khác biệt đáng kể",
 }: BannerProps) {
   return (
-    <div className="banner">
+    <div className="banner-home">
       <div className="banner-content">{title}</div>
       <div className="banner-image">
         <Image src={BannerRight} alt="banner-image" />

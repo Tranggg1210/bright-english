@@ -20,6 +20,7 @@ import { useAppDispatch, useAppSelector } from "@src/hooks/useHookReducers";
 import { setIsFullSidebar } from "@src/services/sidebar";
 import useWindowSize from "@src/hooks/useWindowSize";
 import { useEffect } from "react";
+import { useRouter } from "next/navigation";
 
 type NavItemType = {
   children_id: string;
@@ -86,6 +87,7 @@ const Sidebar = () => {
   const dispatch = useAppDispatch();
   const { isFullSidebar } = useAppSelector((state) => state.sidebar);
   const { width } = useWindowSize();
+  const router = useRouter();
   const handleEnLarge = () => {
     dispatch(setIsFullSidebar(!isFullSidebar));
   };
@@ -102,11 +104,13 @@ const Sidebar = () => {
         }`}
       >
         <div className="sidebar-logo">
-          {isFullSidebar ? (
-            <Image src={logo} alt="logo" width={150} height={40} />
-          ) : (
-            <Image src={logoMobile} alt="logo" width={32} height={32} />
-          )}
+          <div onClick={() => router.push("/")} className="cursor-pointer">
+            {isFullSidebar ? (
+              <Image src={logo} alt="logo" width={150} height={40} />
+            ) : (
+              <Image src={logoMobile} alt="logo" width={32} height={32} />
+            )}
+          </div>
 
           <ButtonComponent
             onClick={handleEnLarge}

@@ -13,14 +13,14 @@ const Footer: React.FC = () => {
         </div>
         <div className="footer-socials">
           <a
-            href="https://facebook.com"
+            href="https://www.facebook.com/trang.nguyen.974652"
             target="_blank"
             rel="noopener noreferrer"
           >
             <FaFacebook />
           </a>
           <a
-            href="https://github.com"
+            href="https://github.com/Tranggg1210/bright-english"
             target="_blank"
             rel="noopener noreferrer"
           >
