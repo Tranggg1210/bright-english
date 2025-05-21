@@ -208,27 +208,28 @@ interface MatchingItem {
 
 
 interface ConversationType {
-  _id?: string;
-  topicId: string;
-  name: string;
-  listConver: {
-    speaker: 'speakerA' | 'speakerB';
-    text: string;
-    audio?: string;
-  }[];
-  listInfor: {
-    speakerA: {
-      avatar: string;
-      name: string;
+    _id?: string;
+    topicId: string;
+    name: string;
+    listConver: {
+        _id?: string;
+        speaker: 'speakerA' | 'speakerB';
+        text: string;
+        audio?: string;
+    }[];
+    listInfor: {
+        speakerA: {
+            avatar: string;
+            name: string;
+        };
+        speakerB: {
+            avatar: string;
+            name: string;
+        };
     };
-    speakerB: {
-      avatar: string;
-      name: string;
-    };
-  };
-  description?: string;
-  createdAt?: Date;
-  updatedAt?: Date;
+    description?: string;
+    createdAt?: Date;
+    updatedAt?: Date;
 }
 
 interface ConversationManagementProps {

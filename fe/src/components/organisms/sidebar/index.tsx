@@ -44,7 +44,7 @@ const navData: NavGroupType[] = [
       {
         children_id: "a1",
         icon: BookIcon,
-        title: "Sách của tôi",
+        title: "Trang chủ",
         to: "/app",
       },
       {
