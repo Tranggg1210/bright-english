@@ -7,14 +7,19 @@ import { Form } from "antd";
 import { TopicType } from "@src/types/interface";
 import TopicManagementUI from "./ui";
 import _ from "lodash";
-import { createTopic, deleteTopic, getListTopic, updateTopic } from "@src/services/topic";
+import {
+  createTopic,
+  deleteTopic,
+  getListTopic,
+  updateTopic,
+} from "@src/services/topic";
 import { toast } from "react-toastify";
 
 function TopicManagement() {
   const dispatch = useAppDispatch();
   const router = useRouter();
   const [form] = Form.useForm();
-  const {topics} = useAppSelector(state => state.topics);
+  const { topics } = useAppSelector((state) => state.topics);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [currentTopic, setCurrentTopic] = useState<TopicType | null>(null);
   const { userInfor } = useAppSelector((state) => state.auth);
@@ -27,9 +32,10 @@ function TopicManagement() {
   });
 
   useEffect(() => {
-    if (_.isEmpty(userInfor)) router.push("/login");
-    loaderData();
-  }, []);
+    if (!_.isEmpty(userInfor)) {
+      loaderData();
+    }
+  }, [userInfor]);
 
   const loaderData = async () => {
     try {
@@ -44,7 +50,6 @@ function TopicManagement() {
       toast.error("Không thể lấy danh sách chủ đề!");
     }
   };
-
 
   const handleEdit = (value: TopicType) => {
     setIsModalOpen(true);
@@ -63,16 +68,18 @@ function TopicManagement() {
       const values = await form.validateFields();
 
       if (currentTopic) {
-        await dispatch(updateTopic({
+        await dispatch(
+          updateTopic({
             id: currentTopic._id,
             topic: {
-                name: values.name
-            }
-        })).unwrap();
+              name: values.name,
+            },
+          })
+        ).unwrap();
         toast.dismiss();
         toast.success("Cập nhật chủ đề thành công!");
       } else {
-        if(values?.name?.trim() === '') return;
+        if (values?.name?.trim() === "") return;
 
         await dispatch(createTopic(values)).unwrap();
         toast.dismiss();
@@ -85,9 +92,7 @@ function TopicManagement() {
       console.log(error);
       toast.dismiss();
       toast.error(
-        currentTopic
-          ? "Cập nhật chủ đề thất bại!"
-          : "Thêm chủ đề thất bại!"
+        currentTopic ? "Cập nhật chủ đề thất bại!" : "Thêm chủ đề thất bại!"
       );
     }
   };
@@ -118,22 +123,23 @@ function TopicManagement() {
     setIsConfirmOpen(true);
   };
 
-
-  return <TopicManagementUI
-    confirmAction={confirmAction}
-    confirmTitle={confirmTitle}
-    currentTopic={currentTopic}
-    form={form}
-    handleAddTopic={handleAddTopic}
-    handleCancel={handleCancel}
-    handleDelete={handleDelete}
-    handleEdit={handleEdit}
-    handleOk={handleOk}
-    isConfirmOpen={isConfirmOpen}
-    isModalOpen={isModalOpen}
-    setIsConfirmOpen={setIsConfirmOpen}
-    topics={topics}
-  />;
+  return (
+    <TopicManagementUI
+      confirmAction={confirmAction}
+      confirmTitle={confirmTitle}
+      currentTopic={currentTopic}
+      form={form}
+      handleAddTopic={handleAddTopic}
+      handleCancel={handleCancel}
+      handleDelete={handleDelete}
+      handleEdit={handleEdit}
+      handleOk={handleOk}
+      isConfirmOpen={isConfirmOpen}
+      isModalOpen={isModalOpen}
+      setIsConfirmOpen={setIsConfirmOpen}
+      topics={topics}
+    />
+  );
 }
 
 export default TopicManagement;

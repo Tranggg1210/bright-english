@@ -22,9 +22,10 @@ function ExerciseManagement() {
   const deleteExerciseItem = useRef<ExerciseType | null>(null);
 
   useEffect(() => {
-    if (_.isEmpty(userInfor)) router.push("/login");
-    loaderData();
-  }, [page]);
+    if (!_.isEmpty(userInfor)) {
+      loaderData();
+    };
+  }, [page, userInfor]);
 
   const loaderData = async () => {
     try {

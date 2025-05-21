@@ -41,12 +41,11 @@ function InnerProvider({ main }: { main: React.ReactNode }) {
 
     } catch (error: any) {
       console.error(error);
-      toast.error(error?.message)
     }
   };
 
   useEffect(() => {
-    const accessToken = LocalStorage.getLocalStorage("access-token");
+    const accessToken = LocalStorage.getLocalStorage("access-token", null);
     if (!accessToken) {
       router.push("/login");
     } else {
