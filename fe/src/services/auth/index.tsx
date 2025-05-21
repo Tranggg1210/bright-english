@@ -1,6 +1,7 @@
 import apiConstant from "@src/constants/api.constant";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { RequestMethod } from "@src/hooks/useHookReducers";
+import { IUser } from "@src/types/interface";
 
 export const getCurrentUser = createAsyncThunk(
   "auth/getCurrentUser",
@@ -86,13 +87,21 @@ export const postRegister = createAsyncThunk(
   }
 );
 
+export interface UserInfoState {
+  isFetching: boolean;
+  error: any; 
+  userInfor: IUser | null;
+}
+const initialState: UserInfoState = {
+  isFetching: false,
+  error: {},
+  userInfor: null,
+};
+
+
 const authSlice = createSlice({
   name: "auth",
-  initialState: {
-    isFetching: false,
-    error: {},
-    userInfor: {},
-  },
+  initialState,
   reducers: {
     updateUserInfor: (state, action) => {
       state.userInfor = action.payload;
@@ -110,7 +119,7 @@ const authSlice = createSlice({
     builder.addCase(getCurrentUser.rejected, (state, action) => {
       state.isFetching = true;
       state.error = action.error;
-      state.userInfor = {};
+      state.userInfor = null;
     });
   },
 });

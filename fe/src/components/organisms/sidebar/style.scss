@@ -1,0 +1,129 @@
+.sidebar {
+  padding: 1rem 1rem;
+  transition: all 0.3s linear;
+
+  @media (max-width: 500px) {
+    display: none;
+  }
+}
+.sidebar-mobile {
+  display: none;
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+.sidebar-shrink {
+  width: 7rem;
+}
+
+.sidebar-enlarge {
+  width: 16.875rem;
+}
+
+.sidebar-logo {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #fff;
+  padding: 1rem;
+  border-radius: 1rem;
+  border: 0.25rem solid #ff8b0f;
+  position: relative;
+  transition: all 0.3s linear;
+
+  > button {
+    width: 2rem;
+    height: 2rem;
+    border-radius: 50%;
+    background-color: #ff8400;
+    border: 0.125rem solid #fff3e0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+}
+.sidebar-shrink .btn-shrink {
+  transition: all 0.3s linear;
+  background-color: #97ae43;
+  border: 0.125rem solid #fff4e3;
+  position: absolute;
+  right: -1rem;
+  @media (max-width: 768px) {
+    display: none;
+    .nav-learn-about,
+    .nav-features {
+      width: 100%;
+    }
+  }
+}
+.sidebar-nav {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+
+  @media (max-width: 500px) {
+    width: 100%;
+  }
+}
+.sidebar-nav::-webkit-scrollbar {
+  display: none;
+}
+.nav-title {
+  color: #ffffff91 !important;
+  font: {
+    size: 14px !important;
+    weight: 700 !important;
+  }
+  line-height: 20px !important;
+  margin: 1rem;
+}
+.sidebar-shrink .nav-title {
+  text-align: center;
+  margin: 1rem 0;
+}
+
+@media (max-width: 500px) {
+  .sidebar-mobile {
+    display: flex;
+    height: 62px;
+    background-color: #FF8944;
+
+    .nav-features,
+    .nav-router,
+    .sidebar-nav {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      width: max-content;
+    }
+
+    .sidebar-nav {
+      width: 100%;
+    }
+  }
+}
+
+@media (max-width: 400px) {
+  .sidebar-mobile {
+    overflow-x: auto;
+
+    &::-webkit-scrollbar {
+      width: 2px;
+      height: 3px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background-color: #ededed;
+      border-radius: 10px;
+    }
+
+    &::-webkit-scrollbar-thumb:hover {
+      background-color: #555;
+    }
+  }
+}

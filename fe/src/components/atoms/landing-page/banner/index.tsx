@@ -7,9 +7,9 @@ const Banner: React.FC = () => {
 
   const handleSubmitBtn = () => {
     if (LocalStorage.getLocalStorage("access-token", null)) {
-      router.push("/auth");
-    } else {
       router.push("/app");
+    } else {
+      router.push("/auth");
     }
   };
 

@@ -21,40 +21,43 @@ const ContactSchema = Yup.object().shape({
     .max(400, "Tin nhắn tối đa 400 ký tự"),
 });
 
-export default function ContactPage() {
+export default function ContactPage({ isSupport }: { isSupport?: boolean }) {
   const dispatch = useAppDispatch();
   const { notify } = useNotification();
   const [loading, setLoading] = useState(false);
   const router = useRouter();
 
   return (
-    <div className="contact-container">
-      <div className="contact-container__header">
-        <div onClick={() => router.push("/")} className="icon-back">
-          <svg
-            width="32"
-            height="32"
-            viewBox="0 0 32 32"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <rect width="32" height="32" rx="16" fill="#C4C4CF" />
-            <path
-              d="M18 12L14.7071 15.2929C14.3738 15.6262 14.2071 15.7929 14.2071 16C14.2071 16.2071 14.3738 16.3738 14.7071 16.7071L18 20"
-              stroke="white"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-          </svg>
-        </div>
-        <h1 className="contact-title">Liên hệ với chúng tôi 😄</h1>
-      </div>
-      <p className="contact-description">
-        Nếu bạn có thắc mắc gì hãy liên hệ với chúng tôi ngay để đượ giải đáp
-        bạn dấu yêu nhé ^^
-      </p>
-
+    <div className={`contact-container ${isSupport ? "contact-support" : ""}`}>
+      {!isSupport && (
+        <>
+          <div className="contact-container__header">
+            <div onClick={() => router.push("/")} className="icon-back">
+              <svg
+                width="32"
+                height="32"
+                viewBox="0 0 32 32"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <rect width="32" height="32" rx="16" fill="#C4C4CF" />
+                <path
+                  d="M18 12L14.7071 15.2929C14.3738 15.6262 14.2071 15.7929 14.2071 16C14.2071 16.2071 14.3738 16.3738 14.7071 16.7071L18 20"
+                  stroke="white"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
+            </div>
+            <h1 className="contact-title">Liên hệ với chúng tôi 😄</h1>
+          </div>
+          <p className="contact-description">
+            Nếu bạn có thắc mắc gì hãy liên hệ với chúng tôi ngay để được giải
+            đáp bạn dấu yêu nhé ^^
+          </p>
+        </>
+      )}
       <Formik
         initialValues={{ fullName: "", email: "", phone: "", message: "" }}
         validationSchema={ContactSchema}
@@ -83,17 +86,16 @@ export default function ContactPage() {
             <div className="contact-form-wapper">
               <div className="contact-form-group">
                 <label htmlFor="fullName">Họ tên</label>
-                <Field type="text" name="fullName" />
+                <Field type="text" name="fullName"/>
                 <ErrorMessage
                   name="fullName"
                   component="div"
                   className="contact-error"
                 />
               </div>
-
               <div className="contact-form-group">
                 <label htmlFor="phone">Số điện thoại</label>
-                <Field type="text" name="phone" />
+                <Field type="text" name="phone"/>
                 <ErrorMessage
                   name="phone"
                   component="div"
@@ -114,7 +116,7 @@ export default function ContactPage() {
 
             <div className="contact-form-group">
               <label htmlFor="message">Tin nhắn</label>
-              <Field as="textarea" name="message" rows={5} />
+              <Field as="textarea" name="message" rows={5}/>
               <ErrorMessage
                 name="message"
                 component="div"

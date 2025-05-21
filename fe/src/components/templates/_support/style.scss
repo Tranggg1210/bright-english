@@ -1,0 +1,70 @@
+.support {
+  .h1-title {
+    font-size: 1rem;
+    font-weight: 700;
+    line-height: 1.25rem;
+    font-family: "Quicksand", sans-serif;
+    margin: 0;
+    color: #3f4254;
+  }
+}
+
+.support-contact-title,
+.support-faq-title {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+.support-infor-card-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 1.5rem;
+  gap: 1.25rem;
+
+  @media (max-width: 1024px) {
+    flex-wrap: wrap;
+  }
+  .support-infor-card {
+    width: 50%;
+    border-radius: 2rem;
+    border: 2px solid #fff3e0;
+    box-shadow: 0 2px 0 0 #fff3e0;
+    padding: 1.5rem 2rem;
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+
+    @media (max-width: 1024px) {
+      width: 100%;
+    }
+
+    @media (max-width: 1024px) {
+      padding: 1rem;
+      h2 {
+        font-size: 12px !important;
+      }
+    }
+    h1 {
+      color: #3f4254;
+      font-size: 1rem;
+      text-decoration: none;
+    }
+
+    h2 {
+      margin-top: 0.5rem;
+      color: #ff8400;
+      font-size: 1.25rem;
+      font-weight: 500;
+    }
+  }
+}
+
+.support-faq {
+  margin-top: 32px;
+}
+
+a {
+  text-decoration: none !important;
+  border: none;
+}

@@ -1,0 +1,24 @@
+.truncate-text{
+    font-weight: 700px;
+    color: #3F4254;
+    line-height: 1.65rem;
+    .more-text{
+        background-color: transparent;
+        border: none;
+        padding: 0;
+        margin: 0;
+        font: {
+            weight: 700;
+            family: "Quicksand", sans-serif;
+            size: 0.875rem;
+        }
+        line-height: 1.25rem;
+        color: #ff8400;
+        cursor: pointer;
+        margin-left: 2px;
+
+        &:hover{
+            color: #ffb700;
+        }
+    }
+}
