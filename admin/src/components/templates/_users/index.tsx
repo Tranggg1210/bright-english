@@ -53,9 +53,10 @@ function UsersManagement() {
   }, [currentUser]);
 
   useEffect(() => {
-    if (_.isEmpty(userInfor)) router.push("/login");
-    loaderDataUser(page);
-  }, [page]);
+    if (!_.isEmpty(userInfor)) {
+      loaderDataUser(page);
+    };
+  }, [page, userInfor]);
 
   const loaderDataUser = async (page: number) => {
     try {
