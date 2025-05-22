@@ -3,7 +3,7 @@
 import { Provider } from "react-redux";
 import { ToastContainer } from "react-toastify";
 import store from "@src/services";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import LocalStorage from "@src/helpers/local-storage";
 import { useAppDispatch, useAppSelector } from "@src/hooks/useHookReducers";
 import { getCurrentUser } from "@src/services/auth";
@@ -12,7 +12,11 @@ import useNotification from "@src/hooks/useNotification";
 import { useRouter } from "next/navigation";
 import CookieStorage from "@src/helpers/cookies";
 import _ from "lodash";
-import { getTrackingTime, updateTrackingTime } from "@src/services/users";
+import {
+  getTrackingTime,
+  increaseTodayTimeLearn,
+  updateTrackingTime,
+} from "@src/services/users";
 
 function ProviderComponent({ main }: { main: React.ReactNode }) {
   return (
@@ -27,6 +31,8 @@ function InnerProvider({ main }: { main: React.ReactNode }) {
   const { notify } = useNotification();
   const router = useRouter();
   const { userInfor } = useAppSelector((state) => state.auth);
+  const { dataStudy } = useAppSelector((state) => state.users);
+  const lastMinuteRef = useRef<number | null>(null);
 
   const loaderCurrentUser = async () => {
     try {
@@ -50,21 +56,20 @@ function InnerProvider({ main }: { main: React.ReactNode }) {
   const updateStudyTrackingTime = async () => {
     try {
       if (!_.isEmpty(userInfor)) {
-        const res = await dispatch(
+        await dispatch(
           updateTrackingTime({
             userId: userInfor?._id,
-            timeLearn: 1,
+            timeLearn: dataStudy?.[dataStudy?.length - 1]?.timeLearn ?? 1,
             date: new Date(),
           })
         ).unwrap();
-        if (res) {
-          await dispatch(
-            getTrackingTime({
-              id: userInfor?._id || "",
-              parmas: {},
-            })
-          );
-        }
+
+        await dispatch(
+          getTrackingTime({
+            id: userInfor?._id || "",
+            parmas: {},
+          })
+        ).unwrap();
       }
     } catch (error) {
       console.log(error);
@@ -74,15 +79,12 @@ function InnerProvider({ main }: { main: React.ReactNode }) {
   const loaderStudyTrackTime = async () => {
     try {
       if (!_.isEmpty(userInfor)) {
-        const res = await dispatch(
+        await dispatch(
           getTrackingTime({
             id: userInfor?._id || "",
             parmas: {},
           })
         ).unwrap();
-        if (res && res?.data?.records.length === 0) {
-          updateStudyTrackingTime();
-        }
       }
     } catch (error) {
       console.log(error);
@@ -97,6 +99,52 @@ function InnerProvider({ main }: { main: React.ReactNode }) {
 
   useEffect(() => {
     loaderStudyTrackTime();
+  }, [userInfor]);
+
+  useEffect(() => {
+    let interval: NodeJS.Timeout | null = null;
+
+    const startInterval = () => {
+      lastMinuteRef.current = new Date().getMinutes();
+      interval = setInterval(() => {
+        const currentMinute = new Date().getMinutes();
+        if (lastMinuteRef.current !== currentMinute) {
+          lastMinuteRef.current = currentMinute;
+          dispatch(increaseTodayTimeLearn());
+        }
+      }, 1000);
+    };
+
+    const stopInterval = () => {
+      if (interval) {
+        clearInterval(interval);
+        interval = null;
+      }
+    };
+
+    const handleVisibilityChange = () => {
+      if (document.hidden) {
+        stopInterval();
+      } else {
+        startInterval();
+      }
+    };
+
+    if (!document.hidden) startInterval();
+
+    document.addEventListener("visibilitychange", handleVisibilityChange);
+
+    return () => {
+      stopInterval();
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
+    };
+  }, [dispatch]);
+
+  useEffect(() => {
+    window.addEventListener("beforeunload", updateStudyTrackingTime);
+    return () => {
+      window.removeEventListener("beforeunload", updateStudyTrackingTime);
+    };
   }, [userInfor]);
 
   return (

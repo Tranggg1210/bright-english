@@ -9,6 +9,7 @@ import SecurityIcon from "@public/icons/security-icon.svg";
 import SupportIcon from "@public/icons/support-icon.svg";
 import HomeBanner from "@public/icons/home-banner.svg";
 import FAQIcon from "@public/icons/faq-icon.svg";
+import FlashcardIcon from "@public/icons/flashcard-icon.svg"
 
 export {
     CloseIcon,
@@ -21,5 +22,6 @@ export {
     SecurityIcon,
     SupportIcon,
     HomeBanner,
-    FAQIcon
+    FAQIcon,
+    FlashcardIcon
 }

@@ -30,7 +30,7 @@ export interface IUser {
   googleId?: string;
   isLocked: boolean;
   avatar?: string;
-  role: 'user' | 'admin' ; 
+  role: 'user' | 'admin';
 }
 
 
@@ -40,4 +40,12 @@ export interface IHomeCard {
   description: string;
   image: any;
   handleClick: () => void;
+}
+
+
+
+
+export interface ITopic {
+  _id: string;
+  name: string;
 }
