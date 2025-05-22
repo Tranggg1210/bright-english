@@ -31,3 +31,12 @@ export interface IUser {
   avatar?: string;
   role: 'user' | 'admin' ; 
 }
+
+
+export interface IHomeCard {
+  id: number;
+  title: string;
+  description: string;
+  image: any;
+  handleClick: () => void;
+}

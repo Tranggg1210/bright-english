@@ -1,9 +1,75 @@
-import React from "react";
+"use client";
+
+import "./style.scss";
+import HomeCard from "@src/components/atoms/home/home-card";
+import { IHomeCard } from "@src/types/interface";
+import Bear1 from "@public/images/mascot/bear-ok.png";
+import Bear2 from "@public/images/mascot/bear-shock.png";
+import Bear3 from "@public/images/mascot/bear-tara.png";
+import Bear4 from "@public/images/mascot/bear-try.png";
+import Bear5 from "@public/images/mascot/bear-normal.png";
+import { useRouter } from "next/navigation";
 
 function ListCardStudy() {
+  const router = useRouter();
+
+  const listCardStudy: IHomeCard[] = [
+    {
+      id: 1,
+      title: "Học từ vựng",
+      description: "Ghi nhớ từ mới nhanh hơn qua hình ảnh trực quan.",
+      image: Bear1,
+      handleClick: () => {
+        router.push("/vocabulary");
+      },
+    },
+    {
+      id: 2,
+      title: "Học ngữ pháp",
+      description: "Hiểu nhanh, nắm chắc các điểm ngữ pháp quan trọng.",
+      image: Bear2,
+      handleClick: () => {
+        router.push("/grammar");
+      },
+    },
+    {
+      id: 3,
+      title: "Làm bài tập",
+      description: "Luyện tập kiến thức với các bài tập đa dạng.",
+      image: Bear3,
+      handleClick: () => {
+        router.push("/exercises");
+      },
+    },
+    {
+      id: 4,
+      title: "Luyện nói",
+      description: "Phát âm chuẩn hơn với các bài luyện nói cùng AI.",
+      image: Bear4,
+      handleClick: () => {
+        router.push("/speaking");
+      },
+    },
+    {
+      id: 5,
+      title: "Theo dõi tiến độ",
+      description: "Xem lại quá trình học và đánh giá sự tiến bộ.",
+      image: Bear5,
+      handleClick: () => {
+        router.push("/progress");
+      },
+    },
+  ];
+
   return (
     <div className="list-card-study">
-      <h2 className="">Cùng học ngay</h2>
+      <h2 className="title">Cùng học ngay</h2>
+
+      <div className="list-card-study__container">
+        {listCardStudy.map((item, index) => (
+          <HomeCard item={item} key={index} />
+        ))}
+      </div>
     </div>
   );
 }

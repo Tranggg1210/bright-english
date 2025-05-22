@@ -1,0 +1,25 @@
+.list-card-study{
+    margin-top: 40px;
+    .title{
+        font-size: 20px;
+        font-weight: 700;
+    }
+
+    .list-card-study__container{
+        margin-top: 20px;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: start;
+        align-items: center;
+        gap: 24px;
+    }
+}
+
+
+@media (max-width: 768px){
+    .list-card-study{
+        .list-card-study__container{
+            justify-content: center;
+        }
+    }
+}

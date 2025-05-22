@@ -8,7 +8,7 @@ type BannerProps = {
 };
 
 function BannerHome({
-  title = "Học tập giúp bạn cải thiện cuộc sống của mình và tạo ra sự khác biệt đáng kể",
+  title = "Học cho vui vẻ, sống khỏe mỗi ngày, tương lai sáng láng, chẳng ngán chông gai!",
 }: BannerProps) {
   return (
     <div className="banner-home">
