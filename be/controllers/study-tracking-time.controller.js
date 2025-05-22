@@ -4,32 +4,43 @@ const ApiError = require('../utils/ApiError');
 const catchAsync = require('../utils/catchAsync');
 const mongoose = require('mongoose');
 
-const createStudyTrackingTime = catchAsync(async (req, res) => {
+const createOrUpdateTodayStudyTime = catchAsync(async (req, res) => {
   const { userId, timeLearn, date } = req.body;
 
-  const existing = await StudyTrackingTime.findOne({
-    userId,
-    date: new Date(date.toDateString ? date.toDateString() : date), // reset giờ phút giây
-  });
+  if (!userId || typeof timeLearn !== 'number' || !date) {
+    return res.status(400).json({ message: 'Thiếu userId, timeLearn hoặc date' });
+  }
+
+  const parsedDate = new Date(date);
+  if (isNaN(parsedDate)) {
+    return res.status(400).json({ message: 'Ngày không hợp lệ' });
+  }
+
+  const dateOnly = new Date(parsedDate.toDateString()); 
+
+  const existing = await StudyTrackingTime.findOne({ userId, date: dateOnly });
 
   if (existing) {
-    existing.timeLearn += timeLearn;
+    existing.timeLearn = timeLearn;
     await existing.save();
-    return res.status(httpStatus.OK).json({
-      code: httpStatus.OK,
+
+    return res.status(200).json({
+      code: 200,
       message: 'Cập nhật thời gian học thành công',
       data: { studyTrackingTime: existing },
     });
   }
 
-  const newRecord = await StudyTrackingTime.create({ userId, timeLearn, date });
+  const newRecord = await StudyTrackingTime.create({ userId, timeLearn, date: dateOnly });
 
-  res.status(httpStatus.CREATED).json({
-    code: httpStatus.CREATED,
+  res.status(201).json({
+    code: 201,
     message: 'Tạo bản ghi thời gian học thành công',
     data: { studyTrackingTime: newRecord },
   });
 });
+
+
 
 const getStudyTrackingTimesByUser = catchAsync(async (req, res) => {
   const { userId } = req.params;
@@ -44,10 +55,25 @@ const getStudyTrackingTimesByUser = catchAsync(async (req, res) => {
   start.setDate(end.getDate() - 6);
   start.setHours(0, 0, 0, 0);
 
-  const records = await StudyTrackingTime.find({
+  let records = await StudyTrackingTime.find({
     userId,
     date: { $gte: start, $lte: end },
   }).sort({ date: 1 });
+
+  const todayDate = new Date(new Date().toDateString()); // reset giờ phút giây
+  const hasToday = records.some(
+    (r) => r.date.getTime() === todayDate.getTime()
+  );
+
+  if (!hasToday) {
+    const newRecord = await StudyTrackingTime.create({
+      userId,
+      date: todayDate,
+      timeLearn: 0,
+    });
+    records.push(newRecord);
+    records = records.sort((a, b) => a.date - b.date);
+  }
 
   res.status(httpStatus.OK).json({
     code: httpStatus.OK,
@@ -56,7 +82,8 @@ const getStudyTrackingTimesByUser = catchAsync(async (req, res) => {
   });
 });
 
+
 module.exports = {
-  createStudyTrackingTime,
+  createOrUpdateTodayStudyTime,
   getStudyTrackingTimesByUser,
 };
