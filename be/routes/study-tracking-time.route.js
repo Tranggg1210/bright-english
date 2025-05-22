@@ -13,7 +13,7 @@ router
     auth,
     author([USER_ROLE_ENUM.ADMIN, USER_ROLE_ENUM.USER]),
     validate(studyTrackingTimeValidation.createStudyTrackingTime),
-    studyTrackingTimeController.createStudyTrackingTime,
+    studyTrackingTimeController.createOrUpdateTodayStudyTime,
   );
 
 router

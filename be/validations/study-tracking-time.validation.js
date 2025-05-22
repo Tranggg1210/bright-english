@@ -4,10 +4,10 @@ const { objectId } = require('./custom.validation');
 const createStudyTrackingTime = {
   body: joi.object().keys({
     userId: joi.string().required().custom(objectId),
-    timeLearn: joi.number().required().min(1).messages({
+    timeLearn: joi.number().required().min(0).messages({
       'any.required': 'Vui lòng cung cấp thời gian học',
       'number.base': 'Thời gian học phải là số',
-      'number.min': 'Thời gian học phải lớn hơn 0',
+      'number.min': 'Thời gian học phải lớn hơn hoặc bằng 0',
     }),
     date: joi.date().required().messages({
       'any.required': 'Vui lòng cung cấp ngày học',
