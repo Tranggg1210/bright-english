@@ -2,7 +2,6 @@
 
 @import "tailwindcss";
 
-
 * {
   padding: 0;
   margin: 0;
@@ -25,4 +24,14 @@ body {
   @media (max-width: 768px) {
     padding: 12px 16px;
   }
+}
+
+.h1-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  line-height: 1.25rem;
+  font-family: "Quicksand", sans-serif;
+  margin: 0;
+  color: #3f4254;
+  margin-bottom: 32px;
 }

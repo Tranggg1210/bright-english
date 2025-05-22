@@ -13,7 +13,7 @@ const HeaderComponent = () => {
   );
 
   return (
-    <header className="header">
+    <header className="header container-page">
       <div className="header-left">
         <div
           style={{

@@ -52,7 +52,7 @@ const navData: NavGroupType[] = [
         children_id: "a2",
         icon: ChartIcon,
         title: "Tiến trình học tập",
-        to: "/learning-progress",
+        to: "/progress",
       },
     ],
   },

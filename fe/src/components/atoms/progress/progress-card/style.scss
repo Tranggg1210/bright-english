@@ -1,0 +1,122 @@
+.progress-card {
+  color: #3f4254;
+  padding: 1.5rem;
+  border-radius: 1rem;
+  width: 48%;
+  box-shadow: 0 0 2px rgba(0, 0, 0, 0.3);
+  position: relative;
+
+
+  .progress-header h2 {
+    font-size: 1.25rem;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+  }
+
+  .progress-bar-container {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .progress-bar {
+    flex: 1;
+    background-color: #fff8e6;
+    height: 8px;
+    border-radius: 4px;
+    overflow: hidden;
+  }
+
+  .progress-fill {
+    background-color: #ffc535;
+    height: 100%;
+    transition: width 0.3s ease;
+  }
+
+  .progress-text {
+    font-size: 0.875rem;
+  }
+
+  .progress-content {
+    display: flex;
+    align-items: center;
+    justify-content: start;
+
+    margin: 1rem 0;
+    gap: 24px;
+  }
+
+  .greeting-bubble {
+    background-color: #111;
+    padding: 0.5rem 1rem;
+    border-radius: 10px;
+    color: #fff;
+    max-width: 60%;
+    font-size: 1rem;
+    position: relative;
+  }
+
+  .greeting-bubble::before {
+    content: "";
+    position: absolute;
+    top: 10px;
+    left: -10px;
+    width: 0;
+    height: 0;
+    border-top: 10px solid transparent;
+    border-bottom: 10px solid transparent;
+    border-right: 10px solid #111;
+  }
+
+  .owl-img {
+    width: 60px;
+    height: 60px;
+  }
+
+  .continue-button {
+    width: 36px;
+    height: 36px;
+    background-color: rgb(151, 174, 67);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    flex-shrink: 0;
+  }
+
+  .progress-bottom{
+    display: flex;
+    justify-content: space-between;
+    align-items: end;
+    gap: 16px;
+  }
+}
+
+@media (max-width: 1024px) {
+  .progress-card {
+    width: 80%;
+    margin: auto;
+  }
+}
+
+@media (max-width: 768px) {
+  .progress-card {
+    width: 90%;
+    margin: auto;
+  }
+}
+
+
+@media (max-width: 500px) {
+  .progress-card {
+    width: 100%;
+
+    .greeting-bubble {
+      max-width: 100%;
+    }
+
+    .owl-img {
+      align-self: center;
+    }
+  }
+}

@@ -113,7 +113,7 @@ const authSlice = createSlice({
     });
     builder.addCase(getCurrentUser.fulfilled, (state, action) => {
       state.isFetching = false;
-      state.userInfor = action.payload;
+      state.userInfor = action.payload?.data?.user;
       state.error = {};
     });
     builder.addCase(getCurrentUser.rejected, (state, action) => {

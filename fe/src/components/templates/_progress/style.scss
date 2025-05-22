@@ -1,0 +1,47 @@
+.learning-progress {
+  padding-bottom: 20px;
+  .h1-title {
+    font-size: 16px;
+    margin-bottom: 20px;
+  }
+
+  .learning-progress-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: start;
+    gap: 16px;
+    margin-bottom: 60px;
+  }
+
+  &-chart {
+    max-height: 400px;
+    height: 400px;
+    overflow: hidden;
+    background-image: url("../../../../public/images/chart-progres-bg.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+    padding: 1.5rem 2rem;
+    border-radius: 1.5rem;
+    > canvas {
+      width: 100% !important;
+      height: 100% !important;
+    }
+    @media (max-width: 768px) {
+      padding: 1rem 0.5rem 0.25rem;
+    }
+  }
+  &-list-card {
+    margin-top: 4rem;
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+    flex-wrap: wrap;
+    .learning-progress-card {
+      width: 32%;
+
+      @media (max-width: 1024px) {
+        width: 100%;
+      }
+    }
+  }
+}
