@@ -7,6 +7,7 @@ import {
   BookIcon,
   ChartIcon,
   FAQIcon,
+  FlashcardIcon,
   InforIcon,
   SupportIcon,
 } from "@src/components/svgs";
@@ -21,6 +22,8 @@ import { setIsFullSidebar } from "@src/services/sidebar";
 import useWindowSize from "@src/hooks/useWindowSize";
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
+import ExerciseIcon from "@public/images/homework-icon.png";
+import ConversationIcon from "@public/images/conversation-icon.png";
 
 type NavItemType = {
   children_id: string;
@@ -53,6 +56,24 @@ const navData: NavGroupType[] = [
         icon: ChartIcon,
         title: "Tiến trình học tập",
         to: "/progress",
+      },
+      {
+        children_id: "a3",
+        icon: FlashcardIcon,
+        title: "Flashcard",
+        to: "/flashcard",
+      },
+      {
+        children_id: "a4",
+        icon: ExerciseIcon,
+        title: "Bài tập",
+        to: "/exercises",
+      },
+      {
+        children_id: "a5",
+        icon: ConversationIcon,
+        title: "Hội thoại",
+        to: "/speaking",
       },
     ],
   },

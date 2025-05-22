@@ -1,0 +1,9 @@
+.flashcard{
+    .flashcard-container{
+        display: flex;
+        justify-content: start;
+        align-items: center;
+        gap: 24px;
+        flex-wrap: wrap;
+    }
+}

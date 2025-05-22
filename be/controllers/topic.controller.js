@@ -34,25 +34,40 @@ const getTopics = catchAsync(async (req, res) => {
             $getField: {
               input: {
                 $regexFind: {
-                  input: "$name",
-                  regex: /(?<=TOPIC\s)\d+/
-                }
+                  input: '$name',
+                  regex: /(?<=TOPIC\s)\d+/,
+                },
               },
-              field: "match"
-            }
-          }
-        }
-      }
+              field: 'match',
+            },
+          },
+        },
+        idStr: { $toString: '$_id' },
+      },
     },
     { $sort: { topicNumber: 1 } },
-    { $skip: skip },
-    { $limit: +limit },
+    {
+      $lookup: {
+        from: 'vocabularies',
+        localField: 'idStr', 
+        foreignField: 'topicId',
+        as: 'vocabList',
+      },
+    },
+    {
+      $addFields: {
+        numVocab: { $size: '$vocabList' },
+      },
+    },
     {
       $project: {
         _id: 1,
-        name: 1
-      }
-    }
+        name: 1,
+        numVocab: 1,
+      },
+    },
+    { $skip: skip },
+    { $limit: +limit },
   ]);
 
   const totalResults = await Topic.countDocuments();
@@ -69,7 +84,6 @@ const getTopics = catchAsync(async (req, res) => {
     },
   });
 });
-
 
 const getTopicById = catchAsync(async (req, res) => {
   const topic = await Topic.findById(req.params.topicId);
@@ -100,19 +114,6 @@ const updateTopicById = catchAsync(async (req, res) => {
     data: { topic },
   });
 });
-
-// const deleteTopicById = catchAsync(async (req, res) => {
-//   const topic = await Topic.findByIdAndDelete(req.params.topicId);
-//   if (!topic) {
-//     throw new ApiError(httpStatus.NOT_FOUND, 'Không tìm thấy chủ đề!');
-//   }
-
-//   res.status(httpStatus.OK).json({
-//     message: 'Xoá chủ đề thành công!',
-//     code: httpStatus.OK,
-//     data: { topic },
-//   });
-// });
 
 const deleteTopicById = catchAsync(async (req, res) => {
   const { topicId } = req.params;
