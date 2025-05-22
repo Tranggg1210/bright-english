@@ -18,6 +18,14 @@ import {
   ScriptableContext,
 } from "chart.js";
 
+import Bear1 from "@public/images/mascot/bear-ok.png";
+import Bear2 from "@public/images/mascot/bear-normal.png";
+import Bear3 from "@public/images/mascot/bear-tara.png";
+import ProgressCard from "@src/components/atoms/progress/progress-card";
+import { useGetProgress } from "@src/hooks/useGetProgress";
+import { useRouter } from "next/navigation";
+import { useAppSelector } from "@src/hooks/useHookReducers";
+
 ChartJS.register(
   CategoryScale,
   LinearScale,
@@ -29,26 +37,17 @@ ChartJS.register(
   Filler
 );
 
-import Bear1 from "@public/images/mascot/bear-ok.png";
-import Bear2 from "@public/images/mascot/bear-normal.png";
-import Bear3 from "@public/images/mascot/bear-tara.png";
-import ProgressCard from "@src/components/atoms/progress/progress-card";
-import { useGetProgress } from "@src/hooks/useGetProgress";
-import { useRouter } from "next/navigation";
-import { useAppSelector } from "@src/hooks/useHookReducers";
-
 function LearningProgress() {
   const chartRef = useRef<ChartJS<"line">>(null);
   const router = useRouter();
   const progresData: any = useGetProgress();
-  const {dataStudy} = useAppSelector(state => state.users);
+  const { dataStudy } = useAppSelector((state) => state.users);
 
   const getGradient = (
     ctx: CanvasRenderingContext2D,
     chartArea: ChartArea | null
   ) => {
-    if (!chartArea) return null;
-
+    if (!chartArea) return;
     const gradient = ctx.createLinearGradient(
       0,
       chartArea.bottom,
@@ -57,32 +56,75 @@ function LearningProgress() {
     );
     gradient.addColorStop(1, "rgba(255, 243, 216, 0.8)");
     gradient.addColorStop(0, "rgba(255, 210, 97, 0)");
-
     return gradient;
   };
-console.log(dataStudy)
-  const data = {
-    labels: ["18/02", "19/02", "20/02", "21/02", "22/02", "23/02"],
-    datasets: [
-      {
-        data: [1, 2, 1.5, 2.5, 2, 5, 6],
-        label: "Điểm",
-        borderColor: "#FFC535",
-        borderWidth: 1,
-        backgroundColor: function (
-          context: ScriptableContext<"line">
-        ): string | CanvasGradient | undefined {
-          const chart = context.chart;
-          const { ctx, chartArea } = chart;
 
-          if (!chartArea) {
-            return undefined;
-          }
-          return getGradient(ctx, chartArea) || undefined;
+  const chartData = useMemo(() => {
+    const labels: string[] = [];
+    const values: number[] = [];
+
+    (dataStudy || []).forEach((item) => {
+      let label = item.timeText || "N/A";
+
+      if (label !== "Hôm nay") {
+        const [day, month] = label.split("/");
+        label = `${day}/${month}`;
+      }
+
+      labels.push(label);
+      values.push(item.timeLearn || 0);
+    });
+
+    return {
+      labels,
+      datasets: [
+        {
+          data: values,
+          label: "Thời gian học",
+          borderColor: "#FFC535",
+          borderWidth: 1,
+          backgroundColor: function (
+            context: ScriptableContext<"line">
+          ): string | CanvasGradient | undefined {
+            const chart = context.chart;
+            return getGradient(chart.ctx, chart.chartArea) || undefined;
+          },
+          fill: true,
         },
-        fill: true,
+      ],
+    };
+  }, [dataStudy]);
+
+  const chartOptions: ChartOptions<"line"> = {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      title: { display: false },
+      tooltip: {
+        enabled: true,
+        callbacks: {
+          label: (context) => `${context.parsed.y ?? context.raw} phút`,
+        },
       },
-    ],
+      legend: { display: false },
+    },
+    scales: {
+      x: {
+        grid: { color: "#B2DEE0" },
+        ticks: {
+          color: "white",
+          font: { family: "Quicksand", size: 12 },
+          padding: 12,
+        },
+        border: { display: false },
+      },
+      y: {
+        beginAtZero: true,
+        min: 0,
+        max: 600,
+        display: false,
+      },
+    },
   };
 
   const learningProgressData = useMemo(
@@ -90,7 +132,7 @@ console.log(dataStudy)
       {
         partTitle: "Từ vựng",
         progress: progresData?.vocabulary?.done || 0,
-        total: progresData?.vocabulary?.total ||  461,
+        total: progresData?.vocabulary?.total || 461,
         greeting: "Học từ vựng nào!",
         image: Bear1,
         onClick: () => router.push("/flashcard"),
@@ -98,10 +140,10 @@ console.log(dataStudy)
       {
         partTitle: "Bài tập",
         progress: progresData?.exercise?.done || 0,
-        total:  progresData?.exercise?.total || 0,
+        total: progresData?.exercise?.total || 0,
         greeting: "Làm bài tập nhé!",
         image: Bear2,
-        onClick: () =>  router.push("/exercises"),
+        onClick: () => router.push("/exercises"),
       },
       {
         partTitle: "Hội thoại",
@@ -115,65 +157,28 @@ console.log(dataStudy)
     [progresData]
   );
 
-  const options: ChartOptions<"line"> = {
-    responsive: true,
-    maintainAspectRatio: false,
-    plugins: {
-      title: { display: false },
-      tooltip: {
-        enabled: true,
-        callbacks: {
-          label: (context) =>
-            `${context.parsed.y ?? context.parsed ?? context.raw} điểm`,
-        },
-      },
-      legend: { display: false },
-    },
-    scales: {
-      x: {
-        type: "category",
-        grid: {
-          color: "#B2DEE0",
-        },
-        ticks: {
-          color: "white",
-          font: {
-            family: "Quicksand",
-            size: 12,
-          },
-          padding: 12,
-        },
-        border: { display: false },
-      },
-      y: {
-        type: "linear",
-        beginAtZero: true,
-        min: 0,
-        max: 10,
-        display: false,
-      },
-    },
-  };
-
   return (
     <div className="learning-progress">
-      <div>
-        <h1 className="h1-title">📊 Kết quả học</h1>
-        <div className="learning-progress-wrapper">
-          {learningProgressData.map((item, index) => (
-            <ProgressCard item={item} key={index} />
-          ))}
-        </div>
+      <h1 className="h1-title">📊 Kết quả học</h1>
+      <div className="learning-progress-wrapper">
+        {learningProgressData.map((item, index) => (
+          <ProgressCard key={index} item={item} />
+        ))}
       </div>
-      <>
-        <h1 className="h1-title">⏰ Thời gian học</h1>
-        <div
-          className="learning-progress-chart"
-          style={{ position: "relative", height: "400px" }}
-        >
-          <Line ref={chartRef} data={data} options={options} />
-        </div>
-      </>
+
+      <h1 className="h1-title">⏰ Thời gian học</h1>
+      <div
+        className="learning-progress-chart"
+        style={{ position: "relative", height: "400px" }}
+      >
+        {chartData?.labels?.length ? (
+          <Line ref={chartRef} data={chartData} options={chartOptions} />
+        ) : (
+          <p style={{ color: "white", textAlign: "center" }}>
+            Chưa có dữ liệu học
+          </p>
+        )}
+      </div>
     </div>
   );
 }

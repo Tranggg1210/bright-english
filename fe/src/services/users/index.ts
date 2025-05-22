@@ -71,14 +71,14 @@ export const updateTrackingTime = createAsyncThunk(
 );
 
 export interface UserInfoState {
-  isFetching: boolean;
-  error: any; 
-  dataStudy: any[];
+    isFetching: boolean;
+    error: any;
+    dataStudy: any[];
 }
 const initialState: UserInfoState = {
-  isFetching: false,
-  error: {},
-  dataStudy: [],
+    isFetching: false,
+    error: {},
+    dataStudy: [],
 };
 
 
@@ -86,7 +86,12 @@ const usersSlice = createSlice({
     name: "users",
     initialState,
     reducers: {
-        // updateTrackingTime
+        increaseTodayTimeLearn: (state) => {
+            const todayItem = state.dataStudy.find(item => item.timeText === "Hôm nay");
+            if (todayItem) {
+                todayItem.timeLearn += 1;
+            }
+        },
     },
     extraReducers: (builder) => {
         builder.addCase(getTrackingTime.pending, (state) => {
@@ -106,6 +111,6 @@ const usersSlice = createSlice({
 });
 
 const usersReducer = usersSlice.reducer;
-export const { } = usersSlice.actions;
+export const { increaseTodayTimeLearn } = usersSlice.actions;
 
 export default usersReducer;
