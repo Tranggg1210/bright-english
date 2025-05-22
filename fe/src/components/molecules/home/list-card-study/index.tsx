@@ -20,7 +20,7 @@ function ListCardStudy() {
       description: "Ghi nhớ từ mới nhanh hơn qua hình ảnh trực quan.",
       image: Bear1,
       handleClick: () => {
-        router.push("/vocabulary");
+        router.push("/flashcard");
       },
     },
     {
