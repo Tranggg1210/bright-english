@@ -35,11 +35,13 @@ import Bear3 from "@public/images/mascot/bear-tara.png";
 import ProgressCard from "@src/components/atoms/progress/progress-card";
 import { useGetProgress } from "@src/hooks/useGetProgress";
 import { useRouter } from "next/navigation";
+import { useAppSelector } from "@src/hooks/useHookReducers";
 
 function LearningProgress() {
   const chartRef = useRef<ChartJS<"line">>(null);
   const router = useRouter();
   const progresData: any = useGetProgress();
+  const {dataStudy} = useAppSelector(state => state.users);
 
   const getGradient = (
     ctx: CanvasRenderingContext2D,
@@ -58,7 +60,7 @@ function LearningProgress() {
 
     return gradient;
   };
-
+console.log(dataStudy)
   const data = {
     labels: ["18/02", "19/02", "20/02", "21/02", "22/02", "23/02"],
     datasets: [

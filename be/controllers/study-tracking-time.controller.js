@@ -16,7 +16,7 @@ const createOrUpdateTodayStudyTime = catchAsync(async (req, res) => {
     return res.status(400).json({ message: 'Ngày không hợp lệ' });
   }
 
-  const dateOnly = new Date(parsedDate.toDateString()); 
+  const dateOnly = new Date(parsedDate.toDateString());
 
   const existing = await StudyTrackingTime.findOne({ userId, date: dateOnly });
 
@@ -40,10 +40,9 @@ const createOrUpdateTodayStudyTime = catchAsync(async (req, res) => {
   });
 });
 
-
-
 const getStudyTrackingTimesByUser = catchAsync(async (req, res) => {
   const { userId } = req.params;
+
   if (!mongoose.Types.ObjectId.isValid(userId)) {
     throw new ApiError(httpStatus.BAD_REQUEST, 'userId không hợp lệ');
   }
@@ -58,30 +57,46 @@ const getStudyTrackingTimesByUser = catchAsync(async (req, res) => {
   let records = await StudyTrackingTime.find({
     userId,
     date: { $gte: start, $lte: end },
-  }).sort({ date: 1 });
+  });
 
-  const todayDate = new Date(new Date().toDateString()); // reset giờ phút giây
-  const hasToday = records.some(
-    (r) => r.date.getTime() === todayDate.getTime()
-  );
+  const recordsMap = new Map(records.map((r) => [new Date(r.date).toDateString(), r.timeLearn]));
 
-  if (!hasToday) {
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+  const todayKey = today.toDateString();
+
+  if (!recordsMap.has(todayKey)) {
     const newRecord = await StudyTrackingTime.create({
       userId,
-      date: todayDate,
+      date: today,
       timeLearn: 0,
     });
-    records.push(newRecord);
-    records = records.sort((a, b) => a.date - b.date);
+    recordsMap.set(todayKey, newRecord.timeLearn);
+  }
+
+  const result = [];
+
+  for (let i = 6; i >= 0; i--) {
+    const d = new Date();
+    d.setDate(today.getDate() - i);
+    d.setHours(0, 0, 0, 0);
+
+    const key = d.toDateString();
+    const timeLearn = recordsMap.get(key) || 0;
+
+    result.push({
+      date: d.toLocaleDateString('vi-VN'),
+      timeLearn,
+      timeText: d.getTime() === today.getTime() ? 'Hôm nay' : d.toLocaleDateString('vi-VN'),
+    });
   }
 
   res.status(httpStatus.OK).json({
     code: httpStatus.OK,
     message: 'Lấy dữ liệu thời gian học 7 ngày gần nhất thành công',
-    data: { records },
+    data: { records: result },
   });
 });
-
 
 module.exports = {
   createOrUpdateTodayStudyTime,
