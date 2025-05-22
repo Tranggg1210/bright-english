@@ -3,6 +3,9 @@ const User = require('../models/user.model');
 const Log = require('../models/log.model');
 const UserConversation = require('../models/user_conversation.model');
 const UserVocabulary = require('../models/user_vocabularies.models');
+const Exercise = require('../models/exercise.model');
+const Vocabulary = require('../models/vocabulary.model');
+const Conversation = require('../models/conversation.model');
 const ApiError = require('../utils/ApiError');
 const catchAsync = require('../utils/catchAsync');
 const { cloudinary } = require('../configs/cloudinary.config');
@@ -135,6 +138,44 @@ const lockUserById = catchAsync(async (req, res) => {
   });
 });
 
+
+const getUserProgress = catchAsync(async (req, res) => {
+  const { userId } = req.params;
+
+  const totalExercise = await Exercise.countDocuments();
+
+  const doneExerciseAgg = await Log.aggregate([
+    { $match: { userId: userId, status: true } },
+    { $group: { _id: '$exerciseId' } },
+    { $count: 'count' },
+  ]);
+  const doneExercise = doneExerciseAgg.length ? doneExerciseAgg[0].count : 0;
+
+  const totalVocab = await Vocabulary.countDocuments();
+
+  const doneVocab = await UserVocabulary.countDocuments({
+    userId: userId,
+    isLearn: true,
+  });
+
+  const totalConver = await Conversation.countDocuments();
+
+  const doneConver = await UserConversation.countDocuments({
+    userId: userId,
+    $or: [{ writingScore: { $gt: 0 } }, { speakingScore: { $gt: 0 } }],
+  });
+
+  res.status(httpStatus.OK).json({
+    code: httpStatus.OK,
+    message: 'Lấy tiến độ học tập thành công',
+    data: {
+      exercise: { done: doneExercise, total: totalExercise },
+      vocabulary: { done: doneVocab, total: totalVocab },
+      conversation: { done: doneConver, total: totalConver },
+    },
+  });
+});
+
 module.exports = {
   createUser,
   getUsers,
@@ -142,4 +183,5 @@ module.exports = {
   updateUserById,
   deleteUserById,
   lockUserById,
+  getUserProgress
 };
