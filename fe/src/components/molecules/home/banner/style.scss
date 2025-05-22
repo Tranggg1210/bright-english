@@ -2,11 +2,14 @@
   border-radius: 24px;
   background: #FF8944 url("../../../../../public//images/banner-bg.png");
   display: flex;
-  justify-content: space-around;
+  justify-content: start;
   align-items: center;
+  padding: 32px;
   padding-top: 40px;
   min-height: 300px;
   overflow: hidden;
+  position: relative;
+  
  
   @media (max-width: 768px) {
     height: max-content;
@@ -19,19 +22,22 @@
   }
 }
 .banner-content {
-  margin-top: -40px;
   color: #fff;
   line-height: 48px;
-  width: 50%;
+  width: 60%;
   font: {
     weight: 700;
     size: 2.375rem;
   }
-  
-  @media (max-width: 1024px) {
-    width: 80%;
-    padding: 1.5rem;
+
+  @media (max-width: 1290px) {
+    width: 48%;
     font-size: 2rem;
+  }
+  
+  @media (max-width: 1185px) {
+    width: 100%;
+    padding: 1.5rem;
     text-align: center;
   }
   @media (max-width: 768px) {
@@ -41,15 +47,20 @@
   }
   @media (max-width: 500px) {
     width: 100%;
-    padding: 1rem;
+    padding: 2rem;
     font-size: 1.5rem;
     line-height: 2.2rem;
   }
   
 }
 .banner-image {
-  margin-bottom: -6px;
-  @media (max-width: 1024px) {
+  position: absolute;
+  bottom: 0;
+  right: 32px;
+  width: 48%;
+  display: flex;
+  justify-content: end;
+  @media (max-width: 1185px) {
     display: none;
   }
 }

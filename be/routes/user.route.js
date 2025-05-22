@@ -31,4 +31,8 @@ userRoute
   .delete(auth, author([USER_ROLE_ENUM.ADMIN, USER_ROLE_ENUM.USER]), validate(userValidation.deleteUserById), userController.deleteUserById)
   .patch(auth, author([USER_ROLE_ENUM.ADMIN]), validate(userValidation.lockUserById), userController.lockUserById);
 
+userRoute
+  .route('/progress/:userId')
+  .get(auth, author([USER_ROLE_ENUM.ADMIN, USER_ROLE_ENUM.USER]), validate(userValidation.getUserById), userController.getUserProgress)
+
 module.exports = userRoute;
