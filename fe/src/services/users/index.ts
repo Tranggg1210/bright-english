@@ -2,25 +2,20 @@ import apiConstant from "@src/constants/api.constant";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { RequestMethod } from "@src/hooks/useHookReducers";
 
-export const getListUser = createAsyncThunk(
-    "users/getListUser",
-    async (parmas: object, { rejectWithValue }) => {
+
+export const getProgressUser = createAsyncThunk(
+    "users/getProgressUser",
+    async ({
+        id,
+        parmas
+    }: {
+        id: string;
+        parmas: object
+    }, { rejectWithValue }) => {
         try {
-            const response = await RequestMethod.get(apiConstant.users.init, {
+            const response = await RequestMethod.get(apiConstant.users.progress(id), {
                 params: parmas
             });
-            return response.data;
-        } catch (err) {
-            return rejectWithValue(err);
-        }
-    }
-);
-
-export const createUser = createAsyncThunk(
-    "users/createUser",
-    async (data: object, { rejectWithValue }) => {
-        try {
-            const response = await RequestMethod.post(apiConstant.users.init, data, true);
             return response.data;
         } catch (err) {
             return rejectWithValue(err);
@@ -43,11 +38,19 @@ export const updateUser = createAsyncThunk(
     }
 );
 
-export const deleteUser = createAsyncThunk(
-    "users/deleteUser",
-    async (parmas: any, { rejectWithValue }) => {
+export const getTrackingTime = createAsyncThunk(
+    "users/getTrackingTime",
+    async ({
+        id,
+        parmas
+    }: {
+        id: string;
+        parmas: object
+    }, { rejectWithValue }) => {
         try {
-            const response = await RequestMethod.delete(apiConstant.users.id(parmas._id), parmas);
+            const response = await RequestMethod.get(apiConstant.studyTrackingTime.id(id), {
+                params: parmas
+            });
             return response.data;
         } catch (err) {
             return rejectWithValue(err);
@@ -55,24 +58,50 @@ export const deleteUser = createAsyncThunk(
     }
 );
 
-export const lockedUser = createAsyncThunk(
-    "users/lockedUser",
-    async (parmas: any, { rejectWithValue }) => {
+export const updateTrackingTime = createAsyncThunk(
+    "users/updateTrackingTime",
+    async (parmas: object, { rejectWithValue }) => {
         try {
-            const response = await RequestMethod.patch(apiConstant.users.id(parmas._id), parmas);
+            const response = await RequestMethod.post(apiConstant.studyTrackingTime.post, parmas);
             return response.data;
         } catch (err) {
             return rejectWithValue(err);
         }
     }
 );
+
+export interface UserInfoState {
+  isFetching: boolean;
+  error: any; 
+  dataStudy: any[];
+}
+const initialState: UserInfoState = {
+  isFetching: false,
+  error: {},
+  dataStudy: [],
+};
+
 
 const usersSlice = createSlice({
     name: "users",
-    initialState: {
-    },
+    initialState,
     reducers: {
-
+        // updateTrackingTime
+    },
+    extraReducers: (builder) => {
+        builder.addCase(getTrackingTime.pending, (state) => {
+            state.isFetching = true;
+        });
+        builder.addCase(getTrackingTime.fulfilled, (state, action) => {
+            state.isFetching = false;
+            state.dataStudy = action.payload?.data?.records;
+            state.error = {};
+        });
+        builder.addCase(getTrackingTime.rejected, (state, action) => {
+            state.isFetching = true;
+            state.error = action.error;
+            state.dataStudy = [];
+        });
     },
 });
 

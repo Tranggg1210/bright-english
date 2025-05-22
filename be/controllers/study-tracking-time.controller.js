@@ -37,15 +37,17 @@ const getStudyTrackingTimesByUser = catchAsync(async (req, res) => {
     throw new ApiError(httpStatus.BAD_REQUEST, 'userId không hợp lệ');
   }
 
-  const today = new Date();
-  today.setHours(0, 0, 0, 0);
-  const sevenDaysAgo = new Date(today);
-  sevenDaysAgo.setDate(today.getDate() - 6); // 7 ngày tính cả hôm nay
+  const end = new Date();
+  end.setHours(23, 59, 59, 999);
+
+  const start = new Date(end);
+  start.setDate(end.getDate() - 6);
+  start.setHours(0, 0, 0, 0);
 
   const records = await StudyTrackingTime.find({
     userId,
-    date: { $gte: sevenDaysAgo, $lte: today },
-  }).sort({ date: 1 }); 
+    date: { $gte: start, $lte: end },
+  }).sort({ date: 1 });
 
   res.status(httpStatus.OK).json({
     code: httpStatus.OK,

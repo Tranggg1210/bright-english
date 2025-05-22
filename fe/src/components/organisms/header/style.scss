@@ -1,5 +1,4 @@
 .header {
-  padding: 4px 53px;
   background-color: #fff;
   position: sticky;
   top: 0;
@@ -12,9 +11,6 @@
   height: 72px;
   // box-shadow: 0 1px 4px rgba(0, 0, 0, .16);
 
-  @media (max-width: 500px) {
-    padding: 4px 16px;
-  }
 }
 .header-left {
   &__title {

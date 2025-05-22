@@ -31,6 +31,14 @@ const useBreadcrumb = () => {
     };
   }
 
+   if (pathname === "/progress") {
+    return {
+      title: "Tiến trình học tập",
+      to: "/progress",
+    };
+  }
+
+
   return null;
 };
 

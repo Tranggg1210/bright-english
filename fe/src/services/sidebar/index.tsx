@@ -3,7 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const sidebarSlice = createSlice({
     name: "sidebar",
     initialState: {
-        isFullSidebar: true
+        isFullSidebar: false
     },
     reducers: {
         setIsFullSidebar: (state, action) => {
