@@ -8,6 +8,7 @@ import contactsReducer from "./contact";
 import exercisesReducer from "./exercise";
 import uploadReducer from "./upload";
 import conversationsReducer from "./conversation";
+import grammarsReducer from "./grammar";
 
 const stores = configureStore({
     reducer: {
@@ -19,7 +20,8 @@ const stores = configureStore({
         contact: contactsReducer,
         exercise: exercisesReducer,
         upload: uploadReducer,
-        conversation: conversationsReducer
+        conversation: conversationsReducer,
+        grammar: grammarsReducer
     }
 });
 

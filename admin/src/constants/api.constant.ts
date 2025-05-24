@@ -35,6 +35,10 @@ const apiConstant = {
         init: "/conversations",
         id: (id: string) => `/conversations/${id}`,
         seachByTopicId: (id: string) => `/conversations/topic/${id}` 
+    },
+    grammars: {
+        init: "/grammar",
+        id: (id: string) => `/grammar/${id}` 
     }
 }
 export default apiConstant;

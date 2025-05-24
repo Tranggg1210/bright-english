@@ -11,6 +11,7 @@ import {
   ExclamationCircleOutlined,
   FormOutlined,
   MessageOutlined,
+  ReadOutlined
 } from "@ant-design/icons";
 import type { MenuProps } from "antd";
 import { Layout, Menu, theme, Button } from "antd";
@@ -42,6 +43,7 @@ const items: MenuItem[] = [
   getItem("Người dùng", "/", <UserOutlined />),
   getItem("Chủ đề", "/topic", <BookOutlined />),
   getItem("Từ vựng", "/vocabulary", <SnippetsOutlined />),
+  getItem("Ngữ pháp", "/grammar", <ReadOutlined />),
   getItem("Liên hệ", "/contact", <MailOutlined />),
   getItem("Báo cáo", "/report", <ExclamationCircleOutlined />),
   getItem("Bài tập", "/exercise", <FormOutlined />),

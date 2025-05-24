@@ -1,52 +1,42 @@
-import React, { useState } from "react";
+import React from "react";
 import {
   Space,
   Table,
   TableProps,
   Tooltip,
   Modal,
-  Form,
-  Input,
   Button,
 } from "antd";
 import { EditOutlined, DeleteOutlined, PlusOutlined } from "@ant-design/icons";
-import { TopicManagementProps, TopicType } from "@src/types/interface";
+import { GrammarManagementProps, GrammarType } from "@src/types/interface";
 import Image from "next/image";
 import Warning from "@public/images/warning.png";
 import Delete from "@public/images/delete.png";
 
 function TopicManagementUI({
   handleEdit,
-  handleDelete,
-  handleCancel,
-  handleOk,
-  isModalOpen,
-  form,
   confirmAction,
   confirmTitle,
   isConfirmOpen,
   setIsConfirmOpen,
-  handleAddTopic,
-  topics,
-  currentTopic,
-}: TopicManagementProps) {
-  const [currentPage, setCurrentPage] = useState(1);
-  const columns: TableProps<TopicType>["columns"] = [
+  grammars,
+  handleAdd,
+  handleDelete,
+  handlePageChange,
+  page,
+  total
+}: GrammarManagementProps) {
+  const columns: TableProps<GrammarType>["columns"] = [
     {
       title: "ID",
       dataIndex: "_id",
       key: "_id",
     },
     {
-      title: "Tên chủ đề",
-      dataIndex: "name",
-      key: "name",
-      sorter: (a, b) => a.name.localeCompare(b.name),
-    },
-    {
-      title: "Số lượng từ vựng",
-      dataIndex: "numVocab",
-      key: "numVocab",
+      title: "Tiêu đề",
+      dataIndex: "title",
+      key: "title",
+      sorter: (a, b) => a.title.localeCompare(b.title),
     },
     {
       title: "Hành động",
@@ -75,51 +65,28 @@ function TopicManagementUI({
     <div className="users-management">
       <div className="w-full flex justify-between gap-2">
         <h1 className="font-bold text-[24px] text-primary mb-3">
-          Quản lý chủ đề
+          Quản lý ngữ pháp
         </h1>
         <Button
           type="primary"
           icon={<PlusOutlined />}
-          onClick={handleAddTopic}
+          onClick={handleAdd}
           style={{ marginBottom: 16 }}
         >
-          Thêm chủ đề
+          Thêm bài
         </Button>
       </div>
-      <Table<TopicType>
+      <Table<GrammarType>
         columns={columns}
-        dataSource={topics.slice((currentPage - 1) * 10, currentPage * 10)}
+        dataSource={grammars}
         rowKey="_id"
         pagination={{
-          current: currentPage,
+          current: page,
           pageSize: 10,
-          total: topics.length,
-          onChange: (page) => setCurrentPage(page),
+          total: total,
+          onChange: handlePageChange,
         }}
       />
-      <Modal
-        title={currentTopic ? "Cập nhật chủ đề" : "Thêm chủ đề"}
-        open={isModalOpen}
-        onOk={handleOk}
-        onCancel={handleCancel}
-        okText={currentTopic ? "Cập nhật" : "Thêm"}
-        cancelText="Hủy"
-        centered
-      >
-        <Form form={form} layout="vertical">
-          <Form.Item
-            label="Tên chủ đề"
-            name="name"
-            rules={[
-              { required: true, message: "Vui lòng nhập tên chủ đề của bạn!" },
-              { min: 2, message: "Tên chủ đề phải có ít nhất 2 ký tự!" },
-              { max: 45, message: "Tên chủ đề không được vượt quá 45 ký tự!" },
-            ]}
-          >
-            <Input placeholder="Nhập tên chủ đề của bạn" />
-          </Form.Item>
-        </Form>
-      </Modal>
       <Modal
         open={isConfirmOpen}
         onOk={async () => {

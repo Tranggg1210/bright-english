@@ -11,6 +11,7 @@ import { getCurrentUser, updateUserInfor } from "@src/services/auth";
 import { useAppDispatch } from "@src/hooks/useHookReducers";
 import _ from "lodash";
 import LocalStorage from "@src/helpers/local-storage";
+import CookieStorage from "@src/helpers/cookies";
 
 function ProviderComponent({ main }: { main: React.ReactNode }) {
   return (
@@ -28,17 +29,26 @@ function InnerProvider({ main }: { main: React.ReactNode }) {
   const loadUserInfo = async () => {
     try {
       const res = await dispatch(getCurrentUser({})).unwrap();
-      if(!_.isEmpty(res)){
-        if(res?.data?.user?.role !== "admin"){
-          toast.error("Bạn không phải admin! Hãy đăng nhập với quyền admin bạn nhé!");
-          return;
-        }else{
+      if (!_.isEmpty(res)) {
+        if (res?.data?.user?.role !== "admin") {
+          toast.error(
+            "Bạn không phải admin! Hãy đăng nhập với quyền admin bạn nhé!"
+          );
+          LocalStorage.removeLocalStorage(undefined, true);
+          CookieStorage.removeCookie(undefined, true);
+
+          if (!pathname.includes("/login")) {
+            setTimeout(() => {
+              router.push("/login");
+            }, 100);
+          }
+          
+        } else {
           updateUserInfor(res?.data?.user);
           router.push(pathname);
           return;
         }
       }
-
     } catch (error: any) {
       console.error(error);
     }

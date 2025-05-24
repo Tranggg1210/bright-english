@@ -244,6 +244,35 @@ interface ConversationManagementProps {
     confirmAction: () => void;
 }
 
+interface GrammarType {
+    _id?: string;
+    title: string;
+    description?: string;
+    content: string;
+    source?: string;
+    createdAt?: string;
+    updatedAt?: string;
+    __v?: any
+}
+
+interface GrammarManagementProps {
+    handleEdit: (value: GrammarType) => void;
+    handleAdd: () => void;
+    grammars: GrammarType[];
+    isConfirmOpen: boolean;
+    setIsConfirmOpen: (open: boolean) => void;
+    handleDelete: (value: GrammarType) => void;
+    confirmTitle: {
+        title: string,
+        subTitle: string,
+        isDelete: boolean
+    };
+    confirmAction: () => void;
+    page: number;
+    handlePageChange: (page: number) => void;
+    total: number;
+}
+
 export type {
     UserType,
     UserManagementProps,
@@ -261,5 +290,7 @@ export type {
     ExerciseHeaderTopic,
     ExerciseQuestion,
     ConversationType,
-    ConversationManagementProps
+    ConversationManagementProps,
+    GrammarType,
+    GrammarManagementProps
 }

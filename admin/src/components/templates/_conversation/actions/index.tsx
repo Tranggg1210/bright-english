@@ -109,10 +109,10 @@ function ActionsConversation() {
             id: searchParams.get("q") || "",
             conversation: newConversation,
           })
-        );
+        ).unwrap();
         toast.success("Chỉnh sửa bài hội thoại thành công!");
       } else {
-        await dispatch(createConversation(newConversation));
+        await dispatch(createConversation(newConversation)).unwrap();
         toast.success("Tạo bài hội thoại thành công!");
       }
 
