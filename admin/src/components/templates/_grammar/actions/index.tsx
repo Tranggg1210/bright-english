@@ -6,7 +6,6 @@ import { LeftOutlined } from "@ant-design/icons";
 import { useEffect, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { toast } from "react-toastify";
-import ReactQuill from "react-quill-new";
 import "react-quill-new/dist/quill.snow.css";
 import { GrammarType } from "@src/types/interface";
 import PreviewGrammarModal from "@src/components/molecules/grammar/grammar-preview";
@@ -17,6 +16,9 @@ import {
   updateGrammar,
 } from "@src/services/grammar";
 import _ from "lodash";
+import dynamic from "next/dynamic";
+
+const ReactQuill = dynamic(() => import('react-quill-new'), { ssr: false })
 
 function GrammarAction() {
   const router = useRouter();
