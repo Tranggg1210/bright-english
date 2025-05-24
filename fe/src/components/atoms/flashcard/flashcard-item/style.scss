@@ -3,12 +3,10 @@
   border: 2px solid #ffe6b0;
   border-radius: 16px;
   padding: 16px 20px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
   transition: transform 0.2s ease, box-shadow 0.2s ease;
   cursor: pointer;
-  width: 100%;
-  max-width: 300px;
-  text-align: center;
+  width: 48%;
+  min-width: 320px;
 
   &:hover {
     transform: translateY(-4px);
@@ -16,23 +14,48 @@
   }
 
   h2 {
-    font-size: 18px;
+    font-size: 16px;
     font-weight: 700;
     color: #ff8400;
     margin-bottom: 8px;
   }
 
-  p {
-    font-size: 14px;
+  .num-vocab {
+    font-size: 10px;
     margin-bottom: 16px;
     color: #333;
+    background-color: #ffe5c8;
+    width: max-content;
+    padding: 2px 12px;
+    border-radius: 48px;
+    font-weight: 500;
   }
+
+  .author{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 6px;
+
+    >div{
+      border: 2px solid pink;
+    }
+
+    p{
+      font-size: 12px;
+      font-weight: 600;
+      opacity: 0.6;
+      margin: 0;
+    }
+  }
+
 }
 
 
 @media (max-width: 600px) {
   .flashcard-item {
     max-width: 100%;
+    width: 100%;
     padding: 12px 16px;
   }
 }

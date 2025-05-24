@@ -48,4 +48,5 @@ export interface IHomeCard {
 export interface ITopic {
   _id: string;
   name: string;
+  numVocab?: number;
 }

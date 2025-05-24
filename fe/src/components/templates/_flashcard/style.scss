@@ -1,9 +1,17 @@
-.flashcard{
-    .flashcard-container{
-        display: flex;
-        justify-content: start;
-        align-items: center;
-        gap: 24px;
-        flex-wrap: wrap;
+.flashcard {
+  .flashcard-container {
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    gap: 24px;
+    flex-wrap: wrap;
+  }
+}
+
+@media (max-width: 768px) {
+  .flashcard {
+    .flashcard-container {
+      justify-content: center;
     }
+  }
 }

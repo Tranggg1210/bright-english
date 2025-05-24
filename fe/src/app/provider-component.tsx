@@ -31,7 +31,6 @@ function InnerProvider({ main }: { main: React.ReactNode }) {
   const { notify } = useNotification();
   const router = useRouter();
   const { userInfor } = useAppSelector((state) => state.auth);
-  const { dataStudy } = useAppSelector((state) => state.users);
   const lastMinuteRef = useRef<number | null>(null);
 
   const loaderCurrentUser = async () => {
@@ -55,18 +54,22 @@ function InnerProvider({ main }: { main: React.ReactNode }) {
 
   const updateStudyTrackingTime = async () => {
     try {
-      if (!_.isEmpty(userInfor)) {
+      const start = Number(sessionStorage.getItem("startTimeLearn"));
+      const now = Date.now();
+      const diffInMinutes = Math.floor((now - start) / 60000);
+
+      if (!_.isEmpty(userInfor) && diffInMinutes > 0) {
         await dispatch(
           updateTrackingTime({
-            userId: userInfor?._id,
-            timeLearn: dataStudy?.[dataStudy?.length - 1]?.timeLearn ?? 1,
+            userId: userInfor._id,
+            timeLearn: diffInMinutes,
             date: new Date(),
           })
         ).unwrap();
 
         await dispatch(
           getTrackingTime({
-            id: userInfor?._id || "",
+            id: userInfor._id || "",
             parmas: {},
           })
         ).unwrap();
@@ -94,6 +97,8 @@ function InnerProvider({ main }: { main: React.ReactNode }) {
   useEffect(() => {
     if (LocalStorage.getLocalStorage("access-token")) {
       loaderCurrentUser();
+      const now = Date.now();
+      sessionStorage.setItem("startTimeLearn", now.toString());
     }
   }, []);
 
