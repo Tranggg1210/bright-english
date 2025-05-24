@@ -13,6 +13,7 @@ import FlashcardIcon from "@public/icons/flashcard-icon.svg";
 import Setting from "@public/icons/setting.svg";
 import Logout from "@public/icons/logout.svg";
 import Cancel from "@public/icons/cancel.svg";
+import Book from "@public/icons/book.svg";
 
 export {
     CloseIcon,
@@ -29,5 +30,6 @@ export {
     FlashcardIcon,
     Logout,
     Setting,
-    Cancel
+    Cancel,
+    Book
 }

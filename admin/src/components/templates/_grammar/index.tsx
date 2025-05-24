@@ -28,7 +28,7 @@ function GrammarManagement() {
     if (!_.isEmpty(userInfor)) {
       loaderData();
     }
-  }, [userInfor]);
+  }, [userInfor, page]);
 
   const loaderData = async () => {
     try {

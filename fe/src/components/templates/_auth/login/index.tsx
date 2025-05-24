@@ -48,6 +48,10 @@ const Login: FC = () => {
           return;
         }
 
+        if (data?.data?.user) {
+          dispatch(updateUserInfor(data?.data?.user));
+        }
+
         LocalStorage.setLocalStorage("access-token", data.data.accessToken);
         CookieStorage.setCookie("refresh-token", data.data.refreshToken);
         router.push("/app");
@@ -78,8 +82,8 @@ const Login: FC = () => {
         return;
       }
 
-      if(result?.user){
-        await dispatch(updateUserInfor(result.user))
+      if (result?.user) {
+        await dispatch(updateUserInfor(result.user));
       }
 
       LocalStorage.setLocalStorage("access-token", result.accessToken);
