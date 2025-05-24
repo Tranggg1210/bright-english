@@ -17,7 +17,7 @@ userRoute
     validate(userValidation.createUser),
     userController.createUser,
   )
-  .get(auth, author([USER_ROLE_ENUM.ADMIN, USER_ROLE_ENUM.USER]), validate(userValidation.getUsers), userController.getUsers);
+  .get(auth, author([USER_ROLE_ENUM.ADMIN]), validate(userValidation.getUsers), userController.getUsers);
 userRoute
   .route('/:userId')
   .get(auth, author([USER_ROLE_ENUM.ADMIN, USER_ROLE_ENUM.USER]), validate(userValidation.getUserById), userController.getUserById)

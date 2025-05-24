@@ -2,7 +2,6 @@
 
 import React, { useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "@src/hooks/useHookReducers";
-import { useRouter } from "next/navigation";
 import { Form } from "antd";
 import { TopicType } from "@src/types/interface";
 import TopicManagementUI from "./ui";
@@ -17,7 +16,6 @@ import { toast } from "react-toastify";
 
 function TopicManagement() {
   const dispatch = useAppDispatch();
-  const router = useRouter();
   const [form] = Form.useForm();
   const { topics } = useAppSelector((state) => state.topics);
   const [isModalOpen, setIsModalOpen] = useState(false);

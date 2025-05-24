@@ -14,13 +14,11 @@ import {
   lockedUser,
 } from "@src/services/users";
 import _ from "lodash";
-import { useRouter } from "next/navigation";
 import UserManagementUI from "./ui";
 import dayjs from "dayjs";
 
 function UsersManagement() {
   const dispatch = useAppDispatch();
-  const router = useRouter();
   const [form] = Form.useForm();
   const [users, setUsers] = useState<UserType[]>([]);
   const [totalUsers, setTotalUsers] = useState(0);
@@ -66,7 +64,7 @@ function UsersManagement() {
         page,
       };
       const res = await dispatch(getListUser(params)).unwrap();
-      if (!_.isEmpty(res.data.users)) {
+      if (!_.isEmpty(res.data)) {
         setUsers(res.data.users);
         setTotalUsers(res.data.totalResults);
       }

@@ -92,7 +92,7 @@ class Request {
       // Dùng instance axios của class để đồng bộ baseURL
       const response = await this.axios.post("/auth/refresh-token", { refreshToken });
       if (response.status === 200) {
-        return response.data.accessToken;
+        return response.data.data.accessToken;
       }
       return null;
     } catch (error) {

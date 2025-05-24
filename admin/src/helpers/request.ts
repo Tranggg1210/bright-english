@@ -49,7 +49,6 @@ class Request {
 
     const originalRequest = error.config as any;
 
-    // Đánh dấu retry để tránh loop
     if (
       ((status === 401) || (data.code === 500 && data.message === "jwt expired")) &&
       !originalRequest._retry
@@ -57,6 +56,7 @@ class Request {
       originalRequest._retry = true;
       try {
         const refreshedToken = await this.refreshAccessToken();
+        console.log(refreshedToken)
         if (refreshedToken) {
           LocalStorage.setLocalStorage("access-token", refreshedToken);
           if (originalRequest.headers) {
@@ -92,7 +92,7 @@ class Request {
       // Dùng instance axios của class để đồng bộ baseURL
       const response = await this.axios.post("/auth/refresh-token", { refreshToken });
       if (response.status === 200) {
-        return response.data.accessToken;
+        return response.data.data.accessToken;
       }
       return null;
     } catch (error) {
