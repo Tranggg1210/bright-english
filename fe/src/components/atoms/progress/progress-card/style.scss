@@ -8,9 +8,10 @@
 
 
   .progress-header h2 {
-    font-size: 1.25rem;
+    font-size: 1.15rem;
     margin-bottom: 0.5rem;
     font-weight: 600;
+    color: #ff8400;
   }
 
   .progress-bar-container {
@@ -22,8 +23,8 @@
   .progress-bar {
     flex: 1;
     background-color: #fff8e6;
-    height: 8px;
-    border-radius: 4px;
+    height: 10px;
+    border-radius: 12px;
     overflow: hidden;
   }
 
@@ -35,6 +36,8 @@
 
   .progress-text {
     font-size: 0.875rem;
+    color: #ffc535;
+    font-weight: 600;
   }
 
   .progress-content {
@@ -47,7 +50,7 @@
   }
 
   .greeting-bubble {
-    background-color: #111;
+    background-color: darkseagreen;
     padding: 0.5rem 1rem;
     border-radius: 10px;
     color: #fff;
@@ -65,7 +68,7 @@
     height: 0;
     border-top: 10px solid transparent;
     border-bottom: 10px solid transparent;
-    border-right: 10px solid #111;
+    border-right: 10px solid darkseagreen;
   }
 
   .owl-img {

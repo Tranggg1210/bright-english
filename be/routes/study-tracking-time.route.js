@@ -5,24 +5,20 @@ const studyTrackingTimeValidation = require('../validations/study-tracking-time.
 const { auth, author } = require('../middlewares/auth.middleware');
 const { USER_ROLE_ENUM } = require('../constants');
 
-const router = express.Router();
+const studyTrackTimeRoute = express.Router();
 
-router
+studyTrackTimeRoute
   .route('/')
   .post(
     auth,
     author([USER_ROLE_ENUM.ADMIN, USER_ROLE_ENUM.USER]),
     validate(studyTrackingTimeValidation.createStudyTrackingTime),
     studyTrackingTimeController.createOrUpdateTodayStudyTime,
-  );
-
-router
-  .route('/:userId')
+  )
   .get(
     auth,
     author([USER_ROLE_ENUM.ADMIN, USER_ROLE_ENUM.USER]),
-    validate(studyTrackingTimeValidation.getStudyTrackingTimesByUser),
     studyTrackingTimeController.getStudyTrackingTimesByUser,
   );
 
-module.exports = router;
+module.exports = studyTrackTimeRoute;

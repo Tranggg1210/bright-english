@@ -25,6 +25,7 @@ import ProgressCard from "@src/components/atoms/progress/progress-card";
 import { useGetProgress } from "@src/hooks/useGetProgress";
 import { useRouter } from "next/navigation";
 import { useAppSelector } from "@src/hooks/useHookReducers";
+import Loading from "@src/components/atoms/loading";
 
 ChartJS.register(
   CategoryScale,
@@ -40,8 +41,8 @@ ChartJS.register(
 function LearningProgress() {
   const chartRef = useRef<ChartJS<"line">>(null);
   const router = useRouter();
-  const progresData: any = useGetProgress();
-  const { dataStudy } = useAppSelector((state) => state.users);
+  const {progresData, loading}: any = useGetProgress();
+  const { dataStudy, isFetching } = useAppSelector((state) => state.users);
 
   const getGradient = (
     ctx: CanvasRenderingContext2D,
@@ -159,6 +160,7 @@ function LearningProgress() {
 
   return (
     <div className="learning-progress">
+      {(isFetching || loading) && <Loading/>}
       <h1 className="h1-title">📊 Kết quả học</h1>
       <div className="learning-progress-wrapper">
         {learningProgressData.map((item, index) => (

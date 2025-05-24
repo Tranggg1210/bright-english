@@ -5,19 +5,24 @@ import { getProgressUser } from "@src/services/users";
 const useGetProgress = () => {
     const dispatch = useAppDispatch();
     const { userInfor }: any = useAppSelector(state => state.auth);
-    const [progress, setProgress] = useState(null);
+    const [progressData, setProgressData] = useState(null);
+    const [loading, setLoading] = useState(false);
+    
 
     const loaderProgressByUserId = async () => {
         if (!userInfor?._id) return;
 
         try {
+            setLoading(true);
             const res = await dispatch(getProgressUser({
                 id: userInfor._id,
                 parmas: {}
             })).unwrap();
-            setProgress(res?.data);
+            setProgressData(res?.data);
         } catch (err) {
             console.error(err);
+        }finally{
+            setLoading(false)
         }
     };
 
@@ -25,7 +30,10 @@ const useGetProgress = () => {
         loaderProgressByUserId();
     }, [userInfor]);
 
-    return progress;
+    return {
+        progressData,
+        loading
+    };
 };
 
 export { useGetProgress };

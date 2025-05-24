@@ -31,10 +31,17 @@ const useBreadcrumb = () => {
     };
   }
 
-   if (pathname === "/progress") {
+  if (pathname === "/progress") {
     return {
       title: "Tiến trình học tập",
       to: "/progress",
+    };
+  }
+
+  if (pathname === "/flashcard") {
+    return {
+      title: "Flashcard",
+      to: "/flashcard",
     };
   }
 
