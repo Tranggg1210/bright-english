@@ -176,9 +176,9 @@ function LearningProgress() {
         {chartData?.labels?.length ? (
           <Line ref={chartRef} data={chartData} options={chartOptions} />
         ) : (
-          <p style={{ color: "white", textAlign: "center" }}>
-            Chưa có dữ liệu học
-          </p>
+          <div className="text-login" onClick={() => router.push('/auth')}>
+            Bạn chưa đăng nhập, vui lòng đăng nhập để sử dụng tính năng ^_^
+          </div>
         )}
       </div>
     </div>

@@ -5,7 +5,6 @@ import {
   ArrowLeft,
   ArrowRight,
   BookIcon,
-  ChartIcon,
   FAQIcon,
   FlashcardIcon,
   InforIcon,
@@ -23,6 +22,7 @@ import useWindowSize from "@src/hooks/useWindowSize";
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import ExerciseIcon from "@public/images/homework-icon.png";
+import GrammarIcon from "@public/images/grammar.png";
 import ConversationIcon from "@public/images/conversation-icon.png";
 
 type NavItemType = {
@@ -53,9 +53,9 @@ const navData: NavGroupType[] = [
       },
       {
         children_id: "a2",
-        icon: ChartIcon,
-        title: "Tiến trình học tập",
-        to: "/progress",
+        icon: GrammarIcon,
+        title: "Ngữ pháp",
+        to: "/grammar",
       },
       {
         children_id: "a3",

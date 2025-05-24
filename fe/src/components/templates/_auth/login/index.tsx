@@ -4,7 +4,7 @@ import { Formik, Form, Field } from "formik";
 import { loginValidate } from "@src/types/validates";
 import { GoogleLogin } from "@react-oauth/google";
 import { useAppDispatch } from "@src/hooks/useHookReducers";
-import { postLogin } from "@src/services/auth";
+import { postLogin, updateUserInfor } from "@src/services/auth";
 import { useRouter } from "next/navigation";
 import ButtonComponent from "@src/components/atoms/button";
 import useNotification from "@src/hooks/useNotification";
@@ -71,19 +71,25 @@ const Login: FC = () => {
       ).unwrap();
 
       if (result?.user?.isLocked) {
-          notify(
-            "error",
-            "Tài khoản đã bị khóa vui lòng liện hệ với dùng tôi, hoặc đăng nhập tài khoản khác!"
-          );
-          return;
-        }
+        notify(
+          "error",
+          "Tài khoản đã bị khóa vui lòng liện hệ với dùng tôi, hoặc đăng nhập tài khoản khác!"
+        );
+        return;
+      }
 
-        LocalStorage.setLocalStorage("access-token", result.accessToken);
-        CookieStorage.setCookie("refresh-token", result.refreshToken);
-        router.push("/app");
+      if(result?.user){
+        await dispatch(updateUserInfor(result.user))
+      }
 
+      LocalStorage.setLocalStorage("access-token", result.accessToken);
+      CookieStorage.setCookie("refresh-token", result.refreshToken);
+      router.push("/app");
     } catch (error: any) {
-      notify("error", error?.message || "Không thể đăng nhập, vui lòng thử lại sau!");
+      notify(
+        "error",
+        error?.message || "Không thể đăng nhập, vui lòng thử lại sau!"
+      );
     } finally {
       setLoading(false);
     }
@@ -208,7 +214,7 @@ const Login: FC = () => {
               borderRadius="48px"
               color="#fff"
               fontSize="14px"
-              onClick={() =>{}}
+              onClick={() => {}}
               padding="14px 16px"
               title="ĐĂNG NHẬP"
               type="submit"

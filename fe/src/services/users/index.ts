@@ -40,17 +40,9 @@ export const updateUser = createAsyncThunk(
 
 export const getTrackingTime = createAsyncThunk(
     "users/getTrackingTime",
-    async ({
-        id,
-        parmas
-    }: {
-        id: string;
-        parmas: object
-    }, { rejectWithValue }) => {
+    async (param: any, { rejectWithValue }) => {
         try {
-            const response = await RequestMethod.get(apiConstant.studyTrackingTime.id(id), {
-                params: parmas
-            });
+            const response = await RequestMethod.get(apiConstant.studyTrackingTime.init, param);
             return response.data;
         } catch (err) {
             return rejectWithValue(err);
@@ -62,7 +54,32 @@ export const updateTrackingTime = createAsyncThunk(
     "users/updateTrackingTime",
     async (parmas: object, { rejectWithValue }) => {
         try {
-            const response = await RequestMethod.post(apiConstant.studyTrackingTime.post, parmas);
+            const response = await RequestMethod.post(apiConstant.studyTrackingTime.init, parmas);
+            return response.data;
+        } catch (err) {
+            return rejectWithValue(err);
+        }
+    }
+);
+
+
+export const changeInfor = createAsyncThunk(
+    "users/changeInfor",
+    async (parmas: object, { rejectWithValue }) => {
+        try {
+            const response = await RequestMethod.put(apiConstant.users.changeInfor, parmas, true);
+            return response.data;
+        } catch (err) {
+            return rejectWithValue(err);
+        }
+    }
+);
+
+export const changePassword = createAsyncThunk(
+    "users/changePassword",
+    async (parmas: object, { rejectWithValue }) => {
+        try {
+            const response = await RequestMethod.post(apiConstant.users.changePassword, parmas);
             return response.data;
         } catch (err) {
             return rejectWithValue(err);

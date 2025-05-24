@@ -16,7 +16,7 @@ function ListCardStudy() {
   const listCardStudy: IHomeCard[] = [
     {
       id: 1,
-      title: "Học từ vựng",
+      title: "Từ vựng",
       description: "Ghi nhớ từ mới nhanh hơn qua hình ảnh trực quan.",
       image: Bear1,
       handleClick: () => {
@@ -25,7 +25,7 @@ function ListCardStudy() {
     },
     {
       id: 2,
-      title: "Học ngữ pháp",
+      title: "Ngữ pháp",
       description: "Hiểu nhanh, nắm chắc các điểm ngữ pháp quan trọng.",
       image: Bear2,
       handleClick: () => {
@@ -52,7 +52,7 @@ function ListCardStudy() {
     },
     {
       id: 5,
-      title: "Theo dõi tiến độ",
+      title: "Tiến trình học tập",
       description: "Xem lại quá trình học và đánh giá sự tiến bộ.",
       image: Bear5,
       handleClick: () => {

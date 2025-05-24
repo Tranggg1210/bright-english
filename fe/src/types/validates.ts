@@ -6,7 +6,7 @@ export const loginValidate = () =>
     password: Yup.string()
       .required('Vui lòng nhập mật khẩu')
       .min(8, 'Password phải lớn hơn 8 ký tự')
-      .test('password-complexity', 'Mật khẩu phải chứa ít nhất 1 ký tự chữ hoa, 1 ký tự chữ thường và 1 số', (value) => 
+      .test('password-complexity', 'Mật khẩu phải chứa ít nhất 1 ký tự chữ hoa, 1 ký tự chữ thường và 1 số', (value) =>
         /[a-z]/.test(value) && /[A-Z]/.test(value) && /\d/.test(value)
       ),
   })
@@ -18,7 +18,7 @@ export const registerValidate = () =>
     password: Yup.string()
       .required('Vui lòng nhập mật khẩu')
       .min(8, 'Password phải lớn hơn 8 ký tự')
-      .test('password-complexity', 'Mật khẩu phải chứa ít nhất 1 ký tự chữ hoa, 1 ký tự chữ thường và 1 số', (value) => 
+      .test('password-complexity', 'Mật khẩu phải chứa ít nhất 1 ký tự chữ hoa, 1 ký tự chữ thường và 1 số', (value) =>
         /[a-z]/.test(value) && /[A-Z]/.test(value) && /\d/.test(value)
       ),
     password_confirm: Yup.string()
@@ -36,7 +36,7 @@ export const createPasswordValidate = () =>
     password: Yup.string()
       .required('Vui lòng nhập mật khẩu')
       .min(8, 'Password phải lớn hơn 8 ký tự')
-      .test('password-complexity', 'Mật khẩu phải chứa ít nhất 1 ký tự chữ hoa, 1 ký tự chữ thường và 1 số', (value) => 
+      .test('password-complexity', 'Mật khẩu phải chứa ít nhất 1 ký tự chữ hoa, 1 ký tự chữ thường và 1 số', (value) =>
         /[a-z]/.test(value) && /[A-Z]/.test(value) && /\d/.test(value)
       ),
     repeatPassword: Yup.string()
@@ -49,7 +49,7 @@ export const resetPasswordValidate = () =>
     password: Yup.string()
       .required('Vui lòng nhập mật khẩu mới')
       .min(8, 'Password phải lớn hơn 8 ký tự')
-      .test('password-complexity', 'Mật khẩu phải chứa ít nhất 1 ký tự chữ hoa, 1 ký tự chữ thường và 1 số', (value) => 
+      .test('password-complexity', 'Mật khẩu phải chứa ít nhất 1 ký tự chữ hoa, 1 ký tự chữ thường và 1 số', (value) =>
         /[a-z]/.test(value) && /[A-Z]/.test(value) && /\d/.test(value)
       ),
     repeatPassword: Yup.string()
@@ -61,6 +61,25 @@ export const changeInforValidate = () =>
   Yup.object({
     fullname: Yup.string().required('Vui lòng nhập họ và tên'),
     dob: Yup.date()
-      .required('Vui lòng chọn ngày sinh')
+      .optional()
       .max(new Date(), 'Ngày sinh không được lớn hơn hôm nay'),
+  })
+
+export const changePasswordValidate = () =>
+  Yup.object({
+    oldPassword: Yup.string()
+      .required('Vui lòng nhập mật khẩu mới')
+      .min(8, 'Password phải lớn hơn 8 ký tự')
+      .test('password-complexity', 'Mật khẩu phải chứa ít nhất 1 ký tự chữ hoa, 1 ký tự chữ thường và 1 số', (value) =>
+        /[a-z]/.test(value) && /[A-Z]/.test(value) && /\d/.test(value)
+      ),
+    newPassword: Yup.string()
+      .required('Vui lòng nhập mật khẩu mới')
+      .min(8, 'Password phải lớn hơn 8 ký tự')
+      .test('password-complexity', 'Mật khẩu phải chứa ít nhất 1 ký tự chữ hoa, 1 ký tự chữ thường và 1 số', (value) =>
+        /[a-z]/.test(value) && /[A-Z]/.test(value) && /\d/.test(value)
+      ),
+    repeatPassword: Yup.string()
+      .required('Vui lòng nhập lại mật khẩu mới')
+      .oneOf([Yup.ref('newPassword')], 'Mật khẩu không khớp'),
   })
