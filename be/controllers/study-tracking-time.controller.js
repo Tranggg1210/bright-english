@@ -1,93 +1,86 @@
 const httpStatus = require('http-status');
 const StudyTrackingTime = require('../models/study_tracking_time.model');
-const ApiError = require('../utils/ApiError');
 const catchAsync = require('../utils/catchAsync');
-const mongoose = require('mongoose');
 
 const createOrUpdateTodayStudyTime = catchAsync(async (req, res) => {
-  const { userId, timeLearn, date } = req.body;
+  const { timeLearn } = req.body;
+  const userId = req.user.id;
 
-  if (!userId || typeof timeLearn !== 'number' || !date) {
-    return res.status(400).json({ message: 'Thiếu userId, timeLearn hoặc date' });
-  }
-
-  const parsedDate = new Date(date);
-  if (isNaN(parsedDate)) {
-    return res.status(400).json({ message: 'Ngày không hợp lệ' });
-  }
-
-  const dateOnly = new Date(parsedDate.toDateString());
-
-  const existing = await StudyTrackingTime.findOne({ userId, date: dateOnly });
-
-  if (existing) {
-    existing.timeLearn = timeLearn;
-    await existing.save();
-
-    return res.status(200).json({
-      code: 200,
-      message: 'Cập nhật thời gian học thành công',
-      data: { studyTrackingTime: existing },
+  if (typeof timeLearn !== 'number' || timeLearn < 0) {
+    return res.status(400).json({
+      code: 400,
+      message: 'Thời gian học không hợp lệ',
     });
   }
 
-  const newRecord = await StudyTrackingTime.create({ userId, timeLearn, date: dateOnly });
+  const now = new Date();
+  // Tạo ngày chỉ có phần ngày, theo UTC 0h0p0s
+  const todayUTC = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate()));
 
-  res.status(201).json({
-    code: 201,
-    message: 'Tạo bản ghi thời gian học thành công',
-    data: { studyTrackingTime: newRecord },
+  let record = await StudyTrackingTime.findOne({ userId, date: todayUTC });
+
+  if (record) {
+    record.timeLearn = timeLearn;
+    await record.save();
+  } else {
+    record = await StudyTrackingTime.create({
+      userId,
+      timeLearn,
+      date: todayUTC,
+    });
+  }
+
+  res.status(record.createdAt.getTime() === record.updatedAt.getTime() ? 201 : 200).json({
+    code: record.createdAt.getTime() === record.updatedAt.getTime() ? 201 : 200,
+    message: record.createdAt.getTime() === record.updatedAt.getTime()
+      ? 'Tạo bản ghi thời gian học thành công'
+      : 'Cập nhật thời gian học thành công',
+    data: {
+      studyTrackingTime: {
+        ...record.toObject(),
+        date: todayUTC.toISOString().split('T')[0], 
+      },
+    },
   });
 });
 
+
 const getStudyTrackingTimesByUser = catchAsync(async (req, res) => {
-  const { userId } = req.params;
+  const userId = req.user.id;
+  const now = new Date();
 
-  if (!mongoose.Types.ObjectId.isValid(userId)) {
-    throw new ApiError(httpStatus.BAD_REQUEST, 'userId không hợp lệ');
-  }
+  const todayUTC = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate()));
 
-  const end = new Date();
-  end.setHours(23, 59, 59, 999);
-
-  const start = new Date(end);
-  start.setDate(end.getDate() - 6);
-  start.setHours(0, 0, 0, 0);
+  const startDateUTC = new Date(todayUTC);
+  startDateUTC.setUTCDate(startDateUTC.getUTCDate() - 6);
 
   let records = await StudyTrackingTime.find({
     userId,
-    date: { $gte: start, $lte: end },
-  });
+    date: { $gte: startDateUTC, $lte: todayUTC },
+  }).sort({ date: 1 });
 
-  const recordsMap = new Map(records.map((r) => [new Date(r.date).toDateString(), r.timeLearn]));
-
-  const today = new Date();
-  today.setHours(0, 0, 0, 0);
-  const todayKey = today.toDateString();
-
-  if (!recordsMap.has(todayKey)) {
+  const hasToday = records.some(r => r.date.getTime() === todayUTC.getTime());
+  if (!hasToday) {
     const newRecord = await StudyTrackingTime.create({
       userId,
-      date: today,
+      date: todayUTC,
       timeLearn: 0,
     });
-    recordsMap.set(todayKey, newRecord.timeLearn);
+    records.push(newRecord);
   }
 
+  const recordsMap = new Map(records.map(r => [r.date.getTime(), r.timeLearn]));
+
   const result = [];
-
   for (let i = 6; i >= 0; i--) {
-    const d = new Date();
-    d.setDate(today.getDate() - i);
-    d.setHours(0, 0, 0, 0);
-
-    const key = d.toDateString();
-    const timeLearn = recordsMap.get(key) || 0;
+    const d = new Date(todayUTC);
+    d.setUTCDate(d.getUTCDate() - i);
+    d.setUTCHours(0, 0, 0, 0);
 
     result.push({
       date: d.toLocaleDateString('vi-VN'),
-      timeLearn,
-      timeText: d.getTime() === today.getTime() ? 'Hôm nay' : d.toLocaleDateString('vi-VN'),
+      timeLearn: recordsMap.get(d.getTime()) || 0,
+      timeText: d.getTime() === todayUTC.getTime() ? 'Hôm nay' : d.toLocaleDateString('vi-VN'),
     });
   }
 
@@ -97,6 +90,7 @@ const getStudyTrackingTimesByUser = catchAsync(async (req, res) => {
     data: { records: result },
   });
 });
+
 
 module.exports = {
   createOrUpdateTodayStudyTime,
