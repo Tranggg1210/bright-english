@@ -1,0 +1,49 @@
+.dialog-component {
+  width: 360px;
+  overflow: hidden;
+  
+  .modal-content{
+    border-radius: 24px;
+  }
+
+  .modal__title {
+    text-align: center;
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 22px;
+    color: #3f4254;
+  }
+  .modal-image {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 12px;
+  }
+
+  .modal__description {
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 22px;
+    color: #3f4254;
+    text-align: center;
+    span {
+      font-size: 14px;
+      font-style: normal;
+      font-weight: 700;
+      line-height: 22px;
+      color: #3f4254;
+    }
+  }
+  p {
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 22px;
+    color: #8d8e9b;
+  }
+  .content-btn{
+    text-transform: unset !important;
+  }
+}

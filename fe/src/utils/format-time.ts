@@ -22,7 +22,32 @@ const formatDateToVN = (date: string | Date | null | undefined, format: string =
     }).format(new Date(date));
 };
 
+function formatDateIn(
+  dateInput: string | Date | undefined,
+  toSeparator = '/'
+): string | null {
+  if (!dateInput) return null;
+
+  let date: Date;
+
+  if (typeof dateInput === 'string') {
+    date = new Date(dateInput);
+    if (isNaN(date.getTime())) return null; 
+  } else if (dateInput instanceof Date) {
+    date = dateInput;
+  } else {
+    return null;
+  }
+
+  const day = date.getUTCDate().toString().padStart(2, '0');
+  const month = (date.getUTCMonth() + 1).toString().padStart(2, '0'); 
+  const year = date.getUTCFullYear();
+
+  return `${month}${toSeparator}${day}${toSeparator}${year}`;
+}
+
 
 export {
-    formatDateToVN
+    formatDateToVN,
+    formatDateIn
 }

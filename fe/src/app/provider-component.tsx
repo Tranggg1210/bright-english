@@ -31,7 +31,7 @@ function InnerProvider({ main }: { main: React.ReactNode }) {
   const { notify } = useNotification();
   const router = useRouter();
   const { userInfor } = useAppSelector((state) => state.auth);
-  const lastMinuteRef = useRef<number | null>(null);
+  const timeLearnRef = useRef<number>(0);
 
   const loaderCurrentUser = async () => {
     try {
@@ -43,62 +43,50 @@ function InnerProvider({ main }: { main: React.ReactNode }) {
         );
         LocalStorage.removeLocalStorage(undefined, true);
         CookieStorage.removeCookie(undefined, true);
-        setTimeout(() => {
-          router.push("/contact");
-        }, 500);
+        router.push("/contact");
       }
     } catch (error) {
-      console.log(error);
-    }
-  };
-
-  const updateStudyTrackingTime = async () => {
-    try {
-      const start = Number(sessionStorage.getItem("startTimeLearn"));
-      const now = Date.now();
-      const diffInMinutes = Math.floor((now - start) / 60000);
-
-      if (!_.isEmpty(userInfor) && diffInMinutes > 0) {
-        await dispatch(
-          updateTrackingTime({
-            userId: userInfor._id,
-            timeLearn: diffInMinutes,
-            date: new Date(),
-          })
-        ).unwrap();
-
-        await dispatch(
-          getTrackingTime({
-            id: userInfor._id || "",
-            parmas: {},
-          })
-        ).unwrap();
-      }
-    } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   };
 
   const loaderStudyTrackTime = async () => {
     try {
       if (!_.isEmpty(userInfor)) {
-        await dispatch(
+        const res = await dispatch(
           getTrackingTime({
-            id: userInfor?._id || "",
+            id: userInfor._id,
             parmas: {},
+          })
+        ).unwrap();
+
+        if (res?.data?.records?.length) {
+          timeLearnRef.current =
+            res.data.records[res.data.records.length - 1]?.timeLearn || 0;
+        }
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const updateStudyTrackingTime = _.throttle(async () => {
+    try {
+      if (!_.isEmpty(userInfor) && timeLearnRef.current > 0) {
+        await dispatch(
+          updateTrackingTime({
+            timeLearn: timeLearnRef.current,
           })
         ).unwrap();
       }
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
-  };
+  }, 60000); 
 
   useEffect(() => {
     if (LocalStorage.getLocalStorage("access-token")) {
       loaderCurrentUser();
-      const now = Date.now();
-      sessionStorage.setItem("startTimeLearn", now.toString());
     }
   }, []);
 
@@ -107,50 +95,16 @@ function InnerProvider({ main }: { main: React.ReactNode }) {
   }, [userInfor]);
 
   useEffect(() => {
-    let interval: NodeJS.Timeout | null = null;
+    if (_.isEmpty(userInfor)) return;
 
-    const startInterval = () => {
-      lastMinuteRef.current = new Date().getMinutes();
-      interval = setInterval(() => {
-        const currentMinute = new Date().getMinutes();
-        if (lastMinuteRef.current !== currentMinute) {
-          lastMinuteRef.current = currentMinute;
-          dispatch(increaseTodayTimeLearn());
-        }
-      }, 1000);
-    };
+    const interval = setInterval(() => {
+      timeLearnRef.current++;
+      dispatch(increaseTodayTimeLearn());
+      updateStudyTrackingTime();
+    }, 60000);
 
-    const stopInterval = () => {
-      if (interval) {
-        clearInterval(interval);
-        interval = null;
-      }
-    };
-
-    const handleVisibilityChange = () => {
-      if (document.hidden) {
-        stopInterval();
-      } else {
-        startInterval();
-      }
-    };
-
-    if (!document.hidden) startInterval();
-
-    document.addEventListener("visibilitychange", handleVisibilityChange);
-
-    return () => {
-      stopInterval();
-      document.removeEventListener("visibilitychange", handleVisibilityChange);
-    };
-  }, [dispatch]);
-
-  useEffect(() => {
-    window.addEventListener("beforeunload", updateStudyTrackingTime);
-    return () => {
-      window.removeEventListener("beforeunload", updateStudyTrackingTime);
-    };
-  }, [userInfor]);
+    return () => clearInterval(interval);
+  }, [dispatch, userInfor]);
 
   return (
     <>

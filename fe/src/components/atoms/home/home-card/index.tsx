@@ -4,14 +4,8 @@ import "./style.scss";
 import { IHomeCard } from "@src/types/interface";
 import ButtonComponent from "../../button";
 import Image from "next/image";
-import { pastelColors } from "@src/helpers/contant.contant";
 
 function HomeCard({ item }: { item: IHomeCard }) {
-  const getRandomPastel = () => {
-    return pastelColors[Math.floor(Math.random() * pastelColors.length)];
-
-  };
-
   return (
     <div className="home-card">
       <div className="home-card__image">
@@ -28,7 +22,7 @@ function HomeCard({ item }: { item: IHomeCard }) {
         <div className="flex justify-end">
           <ButtonComponent
             className="home-card__button opacity-100"
-            background={getRandomPastel()}
+            background={"#ff8400"}
             color="#fff"
             borderRadius="48px"
             fontSize="12px"

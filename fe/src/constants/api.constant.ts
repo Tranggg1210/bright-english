@@ -12,6 +12,8 @@ const apiConstant = {
         init: "/users",
         id: (id: string) => `/users/${id}`,
         progress: (id: string) => `/users/progress/${id}`,
+        changeInfor: `/auth/change-profile`,
+        changePassword: `/auth/change-password`
     },
     topics: {
         init: "/topics",
@@ -23,9 +25,7 @@ const apiConstant = {
     },
     contact: "/contact",
     studyTrackingTime: {
-        post: "/study-trackingtime",
-        id: (id: string) => `/study-trackingtime/${id}`
-
+        init: "/study-trackingtime",
     }
 }
 export default apiConstant;

@@ -43,10 +43,50 @@ export interface IHomeCard {
 }
 
 
-
+export interface DialogProps {
+  show: boolean;
+  setIsOpen: any;
+  image: any;
+  title: string;
+  description?: string;
+  textButtonLeft?: string;
+  textButtonRight: string;
+  colorButtonLeft?: string;
+  colorButtonRight: string;
+  handleCloseModal?: () => void;
+  handleButtonRight: () => void;
+  bgRight: string;
+  bgLeft?: string;
+  isLoading?: boolean;
+  className?: string;
+  isDisableCloseModalInOverlay?: boolean;
+  classNameBtnLeft?: string;
+  classNameBtnRight?: string;
+  sizeImage?: number,
+  classNameInContentBtn?: string;
+}
 
 export interface ITopic {
   _id: string;
   name: string;
   numVocab?: number;
+}
+
+
+export interface ModalComponentProps {
+  isShow: boolean;
+  setIsShow: (value: boolean) => void;
+  titleModal: string;
+  children: any;
+  sizeBtnClose?: string;
+  classNameModal?: string;
+  classNameTitle?: string;
+  classNameContentContainer?: string;
+  borderRadius?: number;
+  bgOverlay?: string;
+  isDisableCloseAtOverlay?: boolean;
+  bgBtnClose?: string;
+  classNameHeader?: string;
+  classNameBtnClose?: string;
+  dialogClassName?: string;
 }
