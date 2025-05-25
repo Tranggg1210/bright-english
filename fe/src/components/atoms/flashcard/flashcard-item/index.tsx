@@ -3,8 +3,11 @@ import "./style.scss";
 import ButtonComponent from "../../button";
 import Image from "next/image";
 import Logo from "@public/images/testimonials-3.jpg";
+import { useRouter } from "next/navigation";
 
 function FlashcardItem({ item }: { item: ITopic }) {
+  const router = useRouter();
+
   return (
     <div className="flashcard-item">
       <h2>{item.name}</h2>
@@ -21,7 +24,7 @@ function FlashcardItem({ item }: { item: ITopic }) {
           borderRadius="48px"
           color="#fff"
           fontSize="12px"
-          onClick={() => {}}
+          onClick={() => router.push(`/detail-flashcard/${item._id}?n=${item.name}`)}
           padding="6px 16px"
           title="HỌC NGAY"
         />

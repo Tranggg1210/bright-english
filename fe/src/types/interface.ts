@@ -72,15 +72,26 @@ export interface ITopic {
   numVocab?: number;
 }
 
+export interface IVocabulary {
+  _id: string;
+  topicId: string;
+  word: string;
+  translate: string;
+  transcription: string;
+  image: string;
+  description: string;
+  isLearn?: boolean;
+}
+
 export interface IGrammar {
-    _id?: string;
-    title: string;
-    description?: string;
-    content: string;
-    source?: string;
-    createdAt?: string;
-    updatedAt?: string;
-    __v?: any
+  _id?: string;
+  title: string;
+  description?: string;
+  content: string;
+  source?: string;
+  createdAt?: string;
+  updatedAt?: string;
+  __v?: any
 }
 
 

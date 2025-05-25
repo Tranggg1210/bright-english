@@ -45,6 +45,19 @@ const useBreadcrumb = () => {
     };
   }
 
+  if (pathname === "/grammar") {
+    return {
+      title: "Ngữ pháp",
+      to: "/grammar",
+    };
+  }
+
+   if (pathname.includes("/detail-flashcard")) {
+    return {
+      title: "Chi tiết flashcard",
+      to: "/detail-flashcard",
+    };
+  }
 
   return null;
 };

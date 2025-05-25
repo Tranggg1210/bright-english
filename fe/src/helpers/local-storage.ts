@@ -1,4 +1,4 @@
-type LocalStorageType = "access-token";
+type LocalStorageType = "access-token" | "recently-flashcard";
 
 const isBrowser = typeof window !== "undefined";
 
