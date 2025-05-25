@@ -1,3 +1,5 @@
+"use client";
+
 import { IGrammar } from "@src/types/interface";
 import "./style.scss";
 import Link from "next/link";

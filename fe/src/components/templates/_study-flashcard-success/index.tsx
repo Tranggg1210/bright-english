@@ -7,24 +7,51 @@ import LocalStorage from "@src/helpers/local-storage";
 import ButtonComponent from "@src/components/atoms/button";
 import { useRouter } from "next/navigation";
 import Session from "@src/helpers/session";
+import { useEffect, useState } from "react";
 
 function StudyFlashcardSucess() {
   const router = useRouter();
-  const localRecently: any = LocalStorage.getLocalStorage(
-    "recently-flashcard",
-    null
-  );
+  const [localRecently, setLocalRecently] = useState<{
+    id: string;
+    name: string;
+    total: number;
+    learned: number;
+  } | null>(null);
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const data = LocalStorage.getLocalStorage("recently-flashcard", null);
+      setLocalRecently(data);
+    }
+  }, []);
 
   const handleBack = () => {
-    router.push(
-      `/detail-flashcard/${localRecently.id}?n=${localRecently.name}`
-    );
+    if (!localRecently) return;
+    router.push(`/detail-flashcard/${localRecently.id}?n=${localRecently.name}`);
   };
 
   const handleContinue = () => {
+    if (!localRecently) return;
     Session.removeSession("list-flashcard");
     Session.removeSession("word-count");
     router.push(`/study-flashcard/${localRecently.id}?n=${localRecently.name}`);
+  };
+
+  const renderMessage = () => {
+    if (!localRecently) return <p>Bạn đã học tất cả thẻ từ vựng của chủ đề</p>;
+
+    const { total = 0, learned = 0, name = "" } = localRecently;
+
+    if (total <= learned) {
+      return <p>Bạn đã học tất cả thẻ từ vựng của chủ đề {name}</p>;
+    }
+
+    return (
+      <p>
+        Bạn đã học được {learned} thẻ trong chủ đề <b>{name}</b> và còn{" "}
+        <b>{total - learned}</b> thẻ để hoàn thiện.
+      </p>
+    );
   };
 
   return (
@@ -32,22 +59,7 @@ function StudyFlashcardSucess() {
       <div className="content">
         <Image src={SuccessImage} alt="icon" />
         <h1 className="h1-title">Thật tuyệt vời</h1>
-        {localRecently ? (
-          localRecently.total === localRecently.learned ? (
-            <p>
-              Bạn đã học tất cả thẻ từ vựng của chủ đề {localRecently?.name}
-            </p>
-          ) : (
-            <p>
-              Bạn đã học được {localRecently.learned} của chủ đề{" "}
-              {localRecently?.name} và bạn còn{" "}
-              {localRecently.total - localRecently.learned} để hoàn thiện chủ
-              đề.
-            </p>
-          )
-        ) : (
-          <p>Bạn đã học tất cả thẻ từ vựng của chủ đề</p>
-        )}
+        {renderMessage()}
 
         <div className="btn-actions">
           <ButtonComponent
@@ -59,17 +71,18 @@ function StudyFlashcardSucess() {
             padding="12px 16px"
             title="QUAY LẠI CHỦ ĐỀ"
           />
-          {localRecently.total !== localRecently.learned && (
-            <ButtonComponent
-              background="#ff8400"
-              borderRadius="48px"
-              color="#fff"
-              fontSize="16px"
-              onClick={handleContinue}
-              padding="12px 16px"
-              title="TIẾP TỤC HỌC"
-            />
-          )}
+          {localRecently &&
+            localRecently.total > localRecently.learned && (
+              <ButtonComponent
+                background="#ff8400"
+                borderRadius="48px"
+                color="#fff"
+                fontSize="16px"
+                onClick={handleContinue}
+                padding="12px 16px"
+                title="TIẾP TỤC HỌC"
+              />
+            )}
         </div>
       </div>
     </div>
