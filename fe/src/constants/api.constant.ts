@@ -26,6 +26,10 @@ const apiConstant = {
     contact: "/contact",
     studyTrackingTime: {
         init: "/study-trackingtime",
+    },
+    grammar: {
+        init: "/grammar",
+        id: (id: string) => `/grammar/${id}`
     }
 }
 export default apiConstant;

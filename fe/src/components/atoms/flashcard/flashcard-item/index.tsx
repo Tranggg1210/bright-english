@@ -20,7 +20,7 @@ function FlashcardItem({ item }: { item: ITopic }) {
           background="#ff8400"
           borderRadius="48px"
           color="#fff"
-          fontSize="10px"
+          fontSize="12px"
           onClick={() => {}}
           padding="6px 16px"
           title="HỌC NGAY"

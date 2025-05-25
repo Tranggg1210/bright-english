@@ -1,19 +1,19 @@
 import { configureStore } from "@reduxjs/toolkit";
 import authReducer from "./auth";
 import usersReducer from "./users";
-import vocabularysReducer from "./vocabulary";
 import contactReducer from "./contact";
 import sidebarReducer from "./sidebar";
 import flashcardReducer from "./flashcard";
+import grammarReducer from "./grammar";
 
 const stores = configureStore({
     reducer: {
         auth: authReducer,
         users: usersReducer,
         flashcard: flashcardReducer,
-        vocabulary: vocabularysReducer,
         conatct: contactReducer,
-        sidebar: sidebarReducer
+        sidebar: sidebarReducer,
+        grammar: grammarReducer
     }
 });
 

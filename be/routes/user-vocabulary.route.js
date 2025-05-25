@@ -13,13 +13,13 @@ userVocabularyRoute
     auth,
     author([USER_ROLE_ENUM.USER, USER_ROLE_ENUM.ADMIN]),
     validate(userVocabularyValidation.upsertUserVocabulary),
-    userVocabularyController.upsertUserVocabulary
+    userVocabularyController.upsertUserVocabulary,
   )
   .get(
     auth,
     author([USER_ROLE_ENUM.USER, USER_ROLE_ENUM.ADMIN]),
     validate(userVocabularyValidation.getUserVocabularies),
-    userVocabularyController.getUserVocabularies
+    userVocabularyController.getUserVocabularies,
   );
 
 userVocabularyRoute
@@ -28,13 +28,31 @@ userVocabularyRoute
     auth,
     author([USER_ROLE_ENUM.USER, USER_ROLE_ENUM.ADMIN]),
     validate(userVocabularyValidation.getUserVocabularyByVocabId),
-    userVocabularyController.getUserVocabularyByVocabId
+    userVocabularyController.getUserVocabularyByVocabId,
   )
   .delete(
     auth,
     author([USER_ROLE_ENUM.USER, USER_ROLE_ENUM.ADMIN]),
     validate(userVocabularyValidation.deleteUserVocabulary),
-    userVocabularyController.deleteUserVocabulary
+    userVocabularyController.deleteUserVocabulary,
+  );
+
+userVocabularyRoute
+  .route('/status/:topicId')
+  .get(
+    auth,
+    author([USER_ROLE_ENUM.USER, USER_ROLE_ENUM.ADMIN]),
+    validate(userVocabularyValidation.getVocabByTopicWithLearnStatus),
+    userVocabularyController.getVocabByTopicWithLearnStatus,
+  );
+
+userVocabularyRoute
+  .route('/reset-learned/:topicId')
+  .delete(
+    auth,
+    author([USER_ROLE_ENUM.USER, USER_ROLE_ENUM.ADMIN]),
+    validate(userVocabularyValidation.getVocabByTopicWithLearnStatus),
+    userVocabularyController.resetLearnedVocabulary,
   );
 
 module.exports = userVocabularyRoute;

@@ -72,6 +72,17 @@ export interface ITopic {
   numVocab?: number;
 }
 
+export interface IGrammar {
+    _id?: string;
+    title: string;
+    description?: string;
+    content: string;
+    source?: string;
+    createdAt?: string;
+    updatedAt?: string;
+    __v?: any
+}
+
 
 export interface ModalComponentProps {
   isShow: boolean;

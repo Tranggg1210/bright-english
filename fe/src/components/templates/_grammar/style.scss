@@ -1,0 +1,14 @@
+.grammar{
+    .grammar-container{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 32px;
+        position: relative;
+
+        @media (max-width: 1200px){
+            flex-direction: column-reverse;
+            gap: 0;
+        }
+    }
+}
