@@ -1,6 +1,6 @@
 .flashcard-item {
   background-color: #fffbea;
-  border: 2px solid #ffe6b0;
+  border: 1px solid #ffe6b0;
   border-radius: 16px;
   padding: 16px 20px;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
@@ -8,10 +8,6 @@
   width: 48%;
   min-width: 320px;
 
-  &:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
-  }
 
   h2 {
     font-size: 16px;

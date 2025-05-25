@@ -28,6 +28,15 @@ const getUserVocabularyByVocabId = {
   }),
 };
 
+const getVocabByTopicWithLearnStatus = {
+  params: Joi.object({
+    topicId: Joi.string().required().custom(objectId).messages({
+      'any.required': 'Vui lòng truyền mã từ vựng',
+    }),
+  }),
+};
+
+
 const deleteUserVocabulary = {
   params: Joi.object({
     vocabId: Joi.string().required().custom(objectId).messages({
@@ -41,4 +50,5 @@ module.exports = {
   getUserVocabularies,
   getUserVocabularyByVocabId,
   deleteUserVocabulary,
+  getVocabByTopicWithLearnStatus
 };

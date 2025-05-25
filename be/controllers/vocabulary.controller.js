@@ -66,7 +66,13 @@ const getVocabularyById = catchAsync(async (req, res) => {
 });
 
 const getVocabularyByTopicId = catchAsync(async (req, res) => {
-  const vocabularies = await Vocabulary.find({ topicId: req.params.topicId }).lean();
+  const topicId = req.params.topicId;
+
+  const vocabularies = await Vocabulary.find({
+    $expr: {
+      $eq: [{ $toString: '$topicId' }, topicId],
+    },
+  }).lean();
 
   if (vocabularies.length === 0) {
     throw new ApiError(httpStatus.NOT_FOUND, 'Không tìm thấy danh sách từ vựng theo topic!');
