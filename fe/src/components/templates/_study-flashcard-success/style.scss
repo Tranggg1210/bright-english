@@ -1,0 +1,76 @@
+.study-flashcard-sucess {
+  background-color: #ff8944;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+
+  .content {
+    width: 100%;
+    margin: 0 auto;
+    position: relative;
+    z-index: 5;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+
+    > img {
+      width: 40%;
+
+      @media (max-width: 1100px) {
+        width: 60%;
+      }
+
+      @media (max-width: 640px) {
+        width: 80%;
+      }
+    }
+
+    .h1-title {
+      margin-top: 52px;
+      margin-bottom: 12px;
+    }
+
+    p {
+      font-size: 14px;
+      font-weight: 600;
+      color: rgb(179, 179, 179);
+      text-align: center;
+      width: 90%;
+      margin: 0 auto;
+    }
+
+    .btn-actions {
+      width: 40%;
+      margin: 24px auto;
+
+      @media (max-width: 768px) {
+        width: 80%;
+      }
+
+      > button {
+        width: 100%;
+        margin-bottom: 20px;
+      }
+    }
+  }
+
+  &::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 60%;
+    border-radius: 12px 12px 0 0;
+    background-color: #fff;
+
+    @media (max-width: 640px) {
+        height: 100%;
+    }
+  }
+}

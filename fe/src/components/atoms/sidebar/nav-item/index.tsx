@@ -27,7 +27,8 @@ export const NavCard: FC<NavCardProps> = ({
   const getClassName = (to: string): string => {
     if (!to) return ''
     if (pathname === to) return 'nav-active'
-    if (pathname.includes('/detail-book') && to === '/') return 'nav-active'
+    if (pathname.includes('/progress') && to === '/app') return 'nav-active'
+    if (pathname.includes('/detail-flashcard') && to === '/flashcard') return 'nav-active'
     return ''
   }
 

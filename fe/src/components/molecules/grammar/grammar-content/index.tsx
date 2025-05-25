@@ -10,7 +10,7 @@ function GrammarContent({ grammarItem }: { grammarItem: IGrammar }) {
       <div dangerouslySetInnerHTML={{ __html: grammarItem.content }}></div>
       {grammarItem.source && (
         <p className="gc-source">
-          Linh nguồn:
+          Link nguồn:
           <Link href={grammarItem.source}>{grammarItem.title}</Link>
         </p>
       )}

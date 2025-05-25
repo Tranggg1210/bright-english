@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 
-function MotionLayoutShare({ children, height = "100%", style }: any) {
+function MotionLayout({ children, height = "100%", style }: any) {
   return (
     <motion.div
       initial={{ opacity: 0, x: -100 }}
@@ -14,4 +14,4 @@ function MotionLayoutShare({ children, height = "100%", style }: any) {
   );
 }
 
-export default MotionLayoutShare;
+export default MotionLayout;

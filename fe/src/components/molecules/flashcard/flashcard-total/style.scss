@@ -1,0 +1,107 @@
+.flashcard-total {
+  margin-top: 2rem;
+  border-radius: 1.5rem;
+  border-width: 1px;
+  border-style: solid;
+  border-color: #ffe5b4;
+  background-color: rgb(255 248 230);
+  padding: 1rem 1.25rem 1rem 1rem;
+  min-height: 157px;
+
+  .h1-title {
+    font-size: 20px;
+    margin-bottom: 24px;
+
+    @media (max-width: 360px) {
+      text-align: center;
+    }
+  }
+
+  .flashcard-total__wapper {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    width: 100%;
+
+    @media (max-width: 768px) {
+      align-items: start;
+      gap: 12px;
+    }
+  }
+
+  .book-container {
+    width: 60px;
+    height: 60px;
+    flex-shrink: 0;
+    background-color: #fff;
+    border-radius: 12px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    > img {
+      margin-top: -4px;
+      width: 40px;
+    }
+
+    @media (max-width: 360px) {
+      display: none;
+    }
+  }
+
+  .book-text {
+    flex-grow: 1;
+  }
+
+  .bc-title {
+    margin-bottom: 0.5rem;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 1.25rem;
+    color: #3f4254;
+    margin-bottom: 10px;
+    @media (max-width: 360px) {
+      text-align: center;
+    }
+  }
+
+  .bc-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 1.5rem;
+    color: #3f4254;
+
+    p {
+      margin-bottom: 0;
+    }
+
+    @media (max-width: 768px) {
+      flex-direction: column;
+      align-items: start;
+      gap: 8px;
+    }
+
+    @media (max-width: 360px) {
+      align-items: center;
+    }
+  }
+
+  .btn-wapper {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 16px;
+    margin-top: 24px;
+
+    > button {
+      @media (max-width: 360px) {
+        width: 100%;
+      }
+    }
+  }
+}

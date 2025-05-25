@@ -1,0 +1,35 @@
+.study-flashcard{
+    .sf-container{
+        width: 80%;
+        margin: 0 auto;
+        padding: 12px;
+        padding-bottom: 0;
+    }
+
+    .sfc-header{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 16px;
+
+        h1{
+            margin-bottom: 0;
+        }
+    }
+
+    .sfc-footer{
+        display: flex;
+        justify-content: center;
+        button{
+            width: 30%;
+        }
+    }
+
+    .actions-btn{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 16px;
+        width: 100%;
+    }
+}
