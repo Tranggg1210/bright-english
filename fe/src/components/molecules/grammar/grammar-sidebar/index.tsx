@@ -5,8 +5,8 @@ import "./style.scss";
 import { IGrammar } from "@src/types/interface";
 import { Book } from "@src/components/svgs";
 import { formatDateToVN } from "@src/utils/format-time";
-import React from "react";
-import 'bootstrap/dist/js/bootstrap.bundle.min';
+import React, { useState } from "react";
+import { Offcanvas, Button } from "react-bootstrap";
 
 function SidebarGrammar({
   grammars,
@@ -17,6 +17,11 @@ function SidebarGrammar({
   grammarActiveIndex: number;
   setGrammarActiveIndex: React.Dispatch<React.SetStateAction<number>>;
 }) {
+  const [show, setShow] = useState(false);
+
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+
   const renderList = () => (
     <>
       {grammars.map((item, index) => (
@@ -25,46 +30,38 @@ function SidebarGrammar({
             grammarActiveIndex === index ? "sidebar-grammar-active" : ""
           }`}
           key={item._id}
-          onClick={() => setGrammarActiveIndex(index)}
+          onClick={() => {
+            setGrammarActiveIndex(index);
+            handleClose(); // Đóng offcanvas khi chọn item
+          }}
+          style={{ cursor: "pointer" }}
         >
           <Image src={Book} alt="icon" />
           <h2 className="sgi-title">{item.title}</h2>
           {item?.updatedAt && (
-            <div className="sgi-date">
-              Ngày tạo: {formatDateToVN(item.updatedAt)}
-            </div>
+            <div className="sgi-date">Ngày tạo: {formatDateToVN(item.updatedAt)}</div>
           )}
         </div>
       ))}
     </>
   );
 
-  return grammars && grammars.length > 0 ? (
-    <>
-      <div className="gs-mobile">
-        <button
-          className="btn btn-primary gs-mobile-btn m-2"
-          data-bs-toggle="offcanvas"
-          data-bs-target="#grammarMenu"
-        >
-          ☰
-        </button>
+  if (!grammars || grammars.length === 0) return null;
 
-        <div
-          className="offcanvas offcanvas-start sidebar-grammar"
-          tabIndex={-1}
-          id="grammarMenu"
-        >
-          <div className="offcanvas-header">
-            <h5 className="offcanvas-title">Danh sách ngữ pháp</h5>
-            <button
-              type="button"
-              className="btn-close"
-              data-bs-dismiss="offcanvas"
-            ></button>
-          </div>
-          <div className="offcanvas-body">{renderList()}</div>
-        </div>
+  return (
+    <>
+      {/* Mobile */}
+      <div className="gs-mobile">
+        <Button className="btn-primary gs-mobile-btn m-2" onClick={handleShow}>
+          ☰
+        </Button>
+
+        <Offcanvas show={show} onHide={handleClose} className="sidebar-grammar">
+          <Offcanvas.Header closeButton>
+            <Offcanvas.Title>Danh sách ngữ pháp</Offcanvas.Title>
+          </Offcanvas.Header>
+          <Offcanvas.Body>{renderList()}</Offcanvas.Body>
+        </Offcanvas>
       </div>
 
       {/* Desktop */}
@@ -72,7 +69,7 @@ function SidebarGrammar({
         <div className="sidebar-grammar">{renderList()}</div>
       </div>
     </>
-  ) : null;
+  );
 }
 
 export default SidebarGrammar;
