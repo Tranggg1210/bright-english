@@ -25,15 +25,19 @@ const apiConstant = {
     },
     userVocabulary: {
         topicId: (id: string) => `/user-vocabularies/status/${id}`,
-        reset: (id: string) => `/user-vocabularies/reset-learned/${id}`
+        reset: (id: string) => `/user-vocabularies/reset-learned/${id}`,
+        init: "/user-vocabularies"
     },
     contact: "/contact",
     studyTrackingTime: {
-        init: "/study-trackingtime",    
+        init: "/study-trackingtime",
     },
     grammar: {
         init: "/grammar",
         id: (id: string) => `/grammar/${id}`
-    }
+    },
+    report: {
+        init: "/report",
+    },
 }
 export default apiConstant;

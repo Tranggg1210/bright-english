@@ -42,6 +42,11 @@ export interface IHomeCard {
   handleClick: () => void;
 }
 
+export interface IReport {
+  title: string;
+  message: string;
+}
+
 
 export interface DialogProps {
   show: boolean;

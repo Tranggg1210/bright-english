@@ -5,6 +5,8 @@ import contactReducer from "./contact";
 import sidebarReducer from "./sidebar";
 import flashcardReducer from "./flashcard";
 import grammarReducer from "./grammar";
+import reportsReducer from "./report";
+import userVocabularysReducer from "./user-vocabulary";
 
 const stores = configureStore({
     reducer: {
@@ -13,7 +15,9 @@ const stores = configureStore({
         flashcard: flashcardReducer,
         conatct: contactReducer,
         sidebar: sidebarReducer,
-        grammar: grammarReducer
+        grammar: grammarReducer,
+        report: reportsReducer,
+        userVocabulary: userVocabularysReducer
     }
 });
 

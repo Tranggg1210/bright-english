@@ -4,12 +4,17 @@ import ButtonComponent from "../../button";
 import Image from "next/image";
 import Logo from "@public/images/testimonials-3.jpg";
 import { useRouter } from "next/navigation";
+import LocalStorage from "@src/helpers/local-storage";
 
 function FlashcardItem({ item }: { item: ITopic }) {
   const router = useRouter();
 
   return (
-    <div className="flashcard-item">
+    <div className="flashcard-item"
+      style={{
+        backgroundColor: LocalStorage.getLocalStorage('recently-flashcard', null) ? "#fff" : "#fffbea"
+      }}
+    >
       <h2>{item.name}</h2>
       <div className="num-vocab">📚 {item?.numVocab || 0} từ vựng</div>
       <div className="flex justify-between items-center gap-2">

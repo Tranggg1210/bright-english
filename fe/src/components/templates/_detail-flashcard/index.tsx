@@ -58,6 +58,7 @@ function DetailFlashcard() {
           learned: learned,
           total: res.data.length || 0,
           name: searchParmas.get("n"),
+          id: Array.isArray(params.id) ? params.id[0] : params.id || "",
         });
       }
     } catch (error) {
@@ -70,9 +71,11 @@ function DetailFlashcard() {
 
   const handleReset = async () => {
     try {
-      await resetListVocabularyByTopicId({
-        id: Array.isArray(params.id) ? params.id[0] : params.id || "",
-      });
+      await dispatch(
+        resetListVocabularyByTopicId({
+          id: Array.isArray(params.id) ? params.id[0] : params.id || "",
+        })
+      ).unwrap();
       await loaderFlashcards();
     } catch (error) {
       notify("error", "Lỗi không thể học lại!");
@@ -94,7 +97,12 @@ function DetailFlashcard() {
       {loading && <Loading />}
 
       <h1 className="h1-title">{searchParmas.get("n") || "Không xác định"}</h1>
-      <FlashcardTotal total={total.total} learned={total.learned} />
+      <FlashcardTotal
+        total={total.total}
+        learned={total.learned}
+        name={searchParmas.get("n") || ""}
+        id={Array.isArray(params.id) ? params.id[0] : params.id || ""}
+      />
 
       {flashcards ? (
         <div className="df-wapper">
