@@ -1,0 +1,64 @@
+.dictation-exercise {
+  padding: 1rem;
+  width: 80%;
+  background-color: #fff;
+    border-radius: 12px;
+  margin: 0 auto;
+
+  audio {
+    display: block;
+    margin-bottom: 0.5rem;
+  }
+
+  .form-control {
+    border-radius: 12px;
+    border: 1px solid #ccc;
+    padding: 0.5rem 1rem;
+    font-size: 16px;
+    transition: border-color 0.2s;
+
+    &:focus {
+      border-color: #ff8400;
+      box-shadow: none;
+    }
+  }
+
+  input{
+    width: 100%;
+    padding: 0.5rem 1rem;
+    border-radius: 12px;
+    border: 1px solid #ccc;
+    font-size: 16px;
+    color: #3f4254;
+    background-color: transparent !important;
+    outline: none;
+    font-weight: 600;
+
+    &:focus {
+      box-shadow: none;
+      background-color: transparent !important;
+      border-color: #ff8400;
+    }
+  }
+
+  .btn-submit-dictation {
+    margin-top: 1.5rem;
+    display: inline-block;
+    opacity: 1;
+    transition: opacity 0.2s, background-color 0.2s;
+
+    &:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      background-color: #ccc !important;
+    }
+  }
+
+  .mb-4 {
+    margin-bottom: 1.5rem;
+  }
+
+  .font-semibold {
+    font-weight: 600;
+  }
+}

@@ -1,46 +1,47 @@
 .detail-exerise {
-  min-height: 90vh;
   background: linear-sgradient(120deg, #fdfbfb 0%, #ebedee 100%);
   background-image: url("https://www.transparenttextures.com/patterns/white-wall-3.png");
   background-repeat: repeat;
   background-size: 200px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
   position: absolute;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
+  padding: 20px 32px 0;
+  height: max-content;
+  min-height: 95vh;
 
-  .exercise-card {
-    width: 100%;
-    max-width: 700px;
-    background-color: #ffffff;
-    border-radius: 24px;
-    padding: 32px;
-    height: 90vh;
-    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.1);
+  .exercise-close{
+    width: 32px;
+    height: 32px;
+    background-color: rgb(207, 207, 207);
+    position: absolute;
+    top: 16px;
+    left: 16px;
+    border-radius: 50%;
     display: flex;
-    flex-direction: column;
-    gap: 24px;
-    animation: fadeIn 0.4s ease;
-    border: 1px solid #f2f2f2;
-    position: relative;
-    overflow: hidden;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    &:hover {
+      background-color: crimson;
+    }
   }
 
-  .exercise-header {
+  .exercise-title {
     display: flex;
     align-items: center;
-    gap: 12px;
+    gap: 10px;
+    justify-content: center;
 
     .emoji {
-      font-size: 20px;
+      font-size: 18px;
     }
 
     h2 {
-      font-size: 20px;
+      font-size: 16px;
       color: #4b0082;
       font-weight: 700;
       margin: 0;
@@ -48,13 +49,17 @@
   }
 
   .exercise-text-box {
+    width: 50%;
     background-color: #f9f0ff;
+    border: 1px solid #c084fc;
     border-left: 6px solid #c084fc;
     padding: 16px 20px;
     border-radius: 12px;
     display: flex;
     align-items: flex-start;
     gap: 10px;
+    min-width: 400px;
+    flex-shrink: 0;
 
     .emoji {
       font-size: 20px;
@@ -65,37 +70,45 @@
       font-size: 16px;
       color: #444;
       margin: 0;
+      height: 76vh;
+      text-align: justify;
+      overflow-y: auto;
+      &::-webkit-scrollbar {
+        display: none;
+      }
     }
   }
 
   .exercise-content {
-    height: 80vh;
-    overflow-x: auto;
+    margin: 20px 0;
+    gap: 26px;
+    display: flex;
+    justify-content: space-between;
+    align-items: start;
 
     &::-webkit-scrollbar {
       display: none;
     }
   }
 
-  .exercise-actions{
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    padding: 12px 32px 24px;
-    background-color: #ffffff;
-    z-index: 30;
+  .btn-submit-exercise {
+    width: 100%;
+    margin: 40px auto 0;
   }
 }
 
-// Animation
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
+@media (max-width: 940px) {
+  .detail-exerise {
+    padding: 20px;
+    .exercise-content {
+      flex-direction: column;
+      align-items: center;
+    }
+    .exercise-text-box {
+      width: 100%;
+      p{
+        height: max-content;
+      }
+    }
   }
 }

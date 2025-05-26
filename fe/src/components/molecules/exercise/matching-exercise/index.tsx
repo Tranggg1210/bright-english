@@ -1,19 +1,29 @@
 "use client";
 
+import "./style.scss";
 import { useState } from "react";
-import Image from "next/image";
 import { Button } from "react-bootstrap";
 import { MatchedPair, MatchItem } from "@src/types/interface";
-import "./style.scss";
+import Image from "next/image";
+import ButtonComponent from "@src/components/atoms/button";
 
 interface Props {
   dataLeft: MatchItem[];
   dataRight: MatchItem[];
   matchedPairs: MatchedPair[];
   setMatchedPairs: React.Dispatch<React.SetStateAction<MatchedPair[]>>;
+  isLearned?: boolean;
+  handleSubmit: () => void;
 }
 
-export default function MatchingExercise({ dataLeft, dataRight, matchedPairs, setMatchedPairs }: Props) {
+export default function MatchingExercise({
+  dataLeft,
+  dataRight,
+  matchedPairs,
+  setMatchedPairs,
+  isLearned = true,
+  handleSubmit
+}: Props) {
   const [selectedLeft, setSelectedLeft] = useState<string | null>(null);
   const [selectedRight, setSelectedRight] = useState<string | null>(null);
 
@@ -40,14 +50,18 @@ export default function MatchingExercise({ dataLeft, dataRight, matchedPairs, se
     const rightItem = findRightItem(selectedRight);
     if (!leftItem || !rightItem) return;
 
-    setMatchedPairs((prev) => [...prev, { left: leftItem, right: rightItem }]);
+    setTimeout(() => {
+      setMatchedPairs((prev) => [
+        ...prev,
+        { left: leftItem, right: rightItem },
+      ]);
+    }, 100);
     setSelectedLeft(null);
     setSelectedRight(null);
   };
 
   const removePair = (leftId: string, rightId: string, isCorrect?: boolean) => {
-
-    if(isCorrect !== undefined) return;
+    if (isCorrect !== undefined) return;
 
     setMatchedPairs((prev) =>
       prev.filter((p) => !(p.left.id === leftId && p.right.id === rightId))
@@ -57,17 +71,17 @@ export default function MatchingExercise({ dataLeft, dataRight, matchedPairs, se
   const clearAllPairs = () => setMatchedPairs([]);
 
   const filteredLeft = dataLeft.filter(
-    (item) => !matchedPairs.some((p) => p.left.id === item.id)
+    (item) => !matchedPairs.some((p) => p.left?.id === item?.id)
   );
   const filteredRight = dataRight.filter(
-    (item) => !matchedPairs.some((p) => p.right.id === item.id)
+    (item) => !matchedPairs.some((p) => p.right?.id === item?.id)
   );
 
   tryMakePair();
 
-  return (
+  return dataLeft.length > 0 && dataRight.length > 0 ? (
     <div className="matching-exercise">
-      {matchedPairs.length > 0 && (
+      {matchedPairs.length > 0 && !isLearned && (
         <div className="btn-actions">
           <Button variant="danger" onClick={clearAllPairs}>
             Bỏ nối tất cả
@@ -93,7 +107,11 @@ export default function MatchingExercise({ dataLeft, dataRight, matchedPairs, se
 
           return (
             <div key={left.id + right.id} className={`pair ${resultClass}`}>
-              <div className={`item ${left.image ? "with-image" : ""} ${resultClassIcon}`}>
+              <div
+                className={`item ${
+                  left.image ? "with-image" : ""
+                } ${resultClassIcon}`}
+              >
                 {left.image && (
                   <Image
                     src={left.image}
@@ -121,7 +139,11 @@ export default function MatchingExercise({ dataLeft, dataRight, matchedPairs, se
                 )}
               </button>
 
-              <div className={`item ${right.image ? "with-image" : ""} ${resultClassIcon}`}>
+              <div
+                className={`item ${
+                  right.image ? "with-image" : ""
+                } ${resultClassIcon}`}
+              >
                 {right.image && (
                   <Image
                     src={right.image}
@@ -146,13 +168,13 @@ export default function MatchingExercise({ dataLeft, dataRight, matchedPairs, se
               <div
                 key={item.id}
                 onClick={() => handleSelectLeft(item.id)}
-                className={`item ${item.image ? "with-image" : ""} ${
+                className={`item ${item?.image ? "with-image" : ""} ${
                   selected ? "selected" : ""
                 }`}
               >
                 {item.image && (
                   <Image
-                    src={item.image}
+                    src={item?.image}
                     alt={item.content}
                     width={80}
                     height={80}
@@ -178,7 +200,7 @@ export default function MatchingExercise({ dataLeft, dataRight, matchedPairs, se
               >
                 {item.image && (
                   <Image
-                    src={item.image}
+                    src={item?.image}
                     alt={item.content}
                     width={80}
                     height={80}
@@ -191,6 +213,20 @@ export default function MatchingExercise({ dataLeft, dataRight, matchedPairs, se
           })}
         </div>
       </div>
+      <div className="btn-container">
+        <ButtonComponent
+          background="#ff8400"
+          borderRadius="48px"
+          color="#fff"
+          fontSize="14px"
+          onClick={handleSubmit}
+          padding="10px 24px"
+          title={isLearned ? "Làm lại" : "Nộp bài"}
+          className="btn-submit-exercise"
+          type="submit"
+          disabled={matchedPairs?.length !== dataLeft?.length}
+        />
+      </div>
     </div>
-  );
+  ) : null;
 }

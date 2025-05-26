@@ -128,18 +128,18 @@ export interface MatchItem {
 }
 
 export interface ExerciseQuestion {
-  _id?: string;
+  _id: string;
   id?: string;
-  prompt?: string;
-  audio?: string;
-  dataLeft?: MatchItem[];
-  dataRight?: MatchItem[];
+  prompt: string;
+  audio: string;
+  dataLeft: MatchItem[];
+  dataRight: MatchItem[];
   answer: any;
   content?: string[];
 }
 
 export interface IExercise {
-  _id?: string;
+  _id: string;
   topicId: string;
   type: 'write' | 'match' | 'dictation' | 'multiple_choice';
   name: string;

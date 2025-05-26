@@ -1,0 +1,43 @@
+.write-exercise {
+  flex-grow: 1;
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  height: 80.5vh;
+  overflow-y: auto;
+  position: relative;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+  
+
+  input {
+    background-color: transparent !important;
+    outline: none;
+    font-weight: 600;
+    color: #3f4254;
+  }
+
+  input:focus {
+    box-shadow: none;
+    outline: none;
+    background-color: transparent !important;
+  }
+
+  .text-explain {
+    color: #3f4254;
+    line-height: 28px;
+  }
+
+  .btn-submit-exercise:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+}
+
+@media (max-width: 940px) {
+  .write-exercise {
+    width: 100%;
+  }
+}
