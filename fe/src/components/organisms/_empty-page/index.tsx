@@ -26,7 +26,7 @@ function EmptyPage({
 }) {
   return (
     <div
-      className={`empty-data flex flex-col items-center justify-center  ${
+      className={`empty-page flex flex-col items-center justify-center  ${
         isNoData ? "!h-max my-11" : ""
       }`}
     >

@@ -50,7 +50,6 @@ function Exercise() {
           id: topicId,
         })
       ).unwrap();
-      console.log(res.data.exercises);
       setExercisesByTopic((prev) => ({
         ...prev,
         [topicId]: res.data.exercises,
@@ -68,7 +67,7 @@ function Exercise() {
   };
 
   if (loadingTopics) return <Loading />;
-  if (!topics.length)
+  if (topics.length === 0)
     return (
       <EmptyPage
         title="Không có chủ đề"

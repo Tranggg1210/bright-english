@@ -2,10 +2,14 @@
 
 import "./style.scss";
 import { useAppDispatch, useAppSelector } from "@src/hooks/useHookReducers";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { IExercise, MatchedPair, MatchItem } from "@src/types/interface";
 import { useParams, useRouter } from "next/navigation";
-import { getExerciseById, getLogByExerciseId } from "@src/services/exercise";
+import {
+  getExerciseById,
+  getLogByExerciseId,
+  updateLogsById,
+} from "@src/services/exercise";
 import useNotification from "@src/hooks/useNotification";
 import Loading from "@src/components/atoms/loading";
 import _, { get } from "lodash";
@@ -21,6 +25,7 @@ function DetailExerise() {
   const [loading, setLoading] = useState(false);
   const { userInfor } = useAppSelector((state) => state.auth);
   const [matchedPairs, setMatchedPairs] = useState<MatchedPair[]>([]);
+  const logsExer = useRef<any>(null);
 
   const loaderExercise = async () => {
     try {
@@ -35,7 +40,15 @@ function DetailExerise() {
         getLogByExerciseId({ _id: `${params.id}` })
       ).unwrap();
 
-      console.log("logs", logs);
+      if (logs && logs?.data) {
+        logsExer.current = logs?.data?.log || {};
+
+        if (res?.data?.exercise?.type === "match") {
+          const matchedPairs =
+            logs?.data?.log?.questions?.[0]?.userAnswers || [];
+          setMatchedPairs(matchedPairs);
+        }
+      }
 
       if (res && res?.data) {
         setExercise(res?.data?.exercise);
@@ -54,29 +67,61 @@ function DetailExerise() {
     }
   }, [userInfor]);
 
-  const handleSubmit = () => {
-    if (exercise && exercise.questions && exercise.questions.length > 0) {
-      if (exercise.type === "match") {
-        if (
-          matchedPairs.length === exercise?.questions?.[0]?.dataLeft?.length
-        ) {
-          setMatchedPairs((prev) =>
-            prev.map(({ left, right }) => ({
-              left,
-              right,
-              isCorrect: left.key === right.key,
-            }))
-          );
+  const handleSubmit = async () => {
+    try {
+      if (!exercise || !exercise.questions || exercise.questions.length === 0)
+        return;
 
-          notify("success", "Nộp bài thành công!");
-          // router.back();
-        } else {
+      if (exercise.type === "match") {
+        const question = exercise.questions[0];
+        const dataLeftLength = question?.dataLeft?.length || 0;
+
+        if (matchedPairs.length !== dataLeftLength) {
           notify(
             "error",
             "Vui lòng hoàn thành tất cả các cặp trước khi nộp bài!"
           );
+          return;
         }
+
+        const newData = matchedPairs.map(({ left, right }) => ({
+          left,
+          right,
+          isCorrect: left.key === right.key,
+        }));
+
+        const allCorrect = newData.every((pair) => pair.isCorrect);
+
+        const logData = {
+          questions: [
+            {
+              questionId: question._id,
+              userAnswers: [
+                {
+                  content: newData,
+                  isCorrect: allCorrect,
+                },
+              ],
+            },
+          ],
+          status: allCorrect,
+        };
+
+        const res = await dispatch(
+          updateLogsById({
+            id: logsExer.current._id,
+            data: logData,
+          })
+        );
+
+        console.log(res)
+
+        setMatchedPairs(newData);
+        notify("success", "Nộp bài thành công!");
       }
+    } catch (error) {
+      notify("error", "Không thể nộp bài tập!");
+      return;
     }
   };
 

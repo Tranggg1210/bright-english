@@ -32,7 +32,7 @@ logRoute
   )
   .put(
     auth,
-    author([USER_ROLE_ENUM.ADMIN]),
+    author([USER_ROLE_ENUM.ADMIN, USER_ROLE_ENUM.USER]),
     validate(logValidation.updateLog),
     logController.updateLogById,
   )

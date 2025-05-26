@@ -46,20 +46,7 @@ export const getLogByExerciseId = createAsyncThunk(
         _id: string;
     }, { rejectWithValue }) => {
         try {
-            const response = await RequestMethod.get(apiConstant.logs.id(_id), {});
-            return response.data;
-        } catch (err) {
-            return rejectWithValue(err);
-        }
-    }
-);
-
-
-export const createLogsById = createAsyncThunk(
-    "exercises/createLogsById",
-    async (data: object, { rejectWithValue }) => {
-        try {
-            const response = await RequestMethod.post(apiConstant.logs.init, data);
+            const response = await RequestMethod.get(apiConstant.logs.exerId(_id), {});
             return response.data;
         } catch (err) {
             return rejectWithValue(err);
