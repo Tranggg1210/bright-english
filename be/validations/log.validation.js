@@ -44,7 +44,7 @@ const updateLog = {
               .array()
               .items(
                 joi.object({
-                  content: joi.string().required().messages({
+                  content: joi.any().required().messages({
                     'any.required': 'Vui lòng cung cấp câu trả lời',
                   }),
                   isCorrect: joi.boolean().required().messages({
