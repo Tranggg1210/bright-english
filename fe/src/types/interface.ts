@@ -117,3 +117,39 @@ export interface ModalComponentProps {
   classNameBtnClose?: string;
   dialogClassName?: string;
 }
+
+
+export interface MatchItem {
+  id: string;
+  image: string;
+  content: string;
+  key: string;
+  index: number;
+}
+
+export interface ExerciseQuestion {
+  _id?: string;
+  id?: string;
+  prompt?: string;
+  audio?: string;
+  dataLeft?: MatchItem[];
+  dataRight?: MatchItem[];
+  answer: any;
+  content?: string[];
+}
+
+export interface IExercise {
+  _id?: string;
+  topicId: string;
+  type: 'write' | 'match' | 'dictation' | 'multiple_choice';
+  name: string;
+  text?: string;
+  questions: ExerciseQuestion[];
+  createdAt?: Date;
+  updatedAt?: Date;
+}
+export interface MatchedPair {
+  left: MatchItem;
+  right: MatchItem;
+  isCorrect?: boolean;
+}

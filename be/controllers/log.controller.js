@@ -82,16 +82,33 @@ const getLogById = catchAsync(async (req, res) => {
 
 const getLogByExerciseId = catchAsync(async (req, res) => {
   const { exerciseId } = req.params;
+  const userId = req.user._id;
 
   const exercise = await Exercise.findById(exerciseId);
   if (!exercise) {
     throw new ApiError(httpStatus.NOT_FOUND, 'Không tìm thấy bài tập!');
   }
 
-  const log = await Log.findOne({ exerciseId });
+  let log = await Log.findOne({ exerciseId, userId });
 
   if (!log) {
-    throw new ApiError(httpStatus.NOT_FOUND, 'Không tìm thấy log cho bài tập này!');
+    if (req.user.isLocked) {
+      return res.status(httpStatus.FORBIDDEN).json({
+        code: httpStatus.FORBIDDEN,
+        message: 'Tài khoản đã bị khoá!',
+      });
+    }
+    const formattedQuestions = exercise.questions.map((q) => ({
+      questionId: q._id,
+      userAnswers: [],
+    }));
+
+    log = await Log.create({
+      exerciseId,
+      userId,
+      questions: formattedQuestions,
+      status: null,
+    });
   }
 
   res.status(httpStatus.OK).json({

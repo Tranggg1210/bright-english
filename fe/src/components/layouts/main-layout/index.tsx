@@ -13,8 +13,8 @@ type MainLayoutProps = {
 const MainLayout = ({ main }: MainLayoutProps) => {
   const pathName = usePathname();
 
-  const isShowHeader = !pathName.includes("/study-flashcard");
-  const isShowSidebar = !pathName.includes("/study-flashcard");
+  const isShowHeader = !(pathName.includes("/study-flashcard") || pathName.includes("/detail-exercise"));
+  const isShowSidebar = !(pathName.includes("/study-flashcard"));
 
   return (
     <div className="main-layout">

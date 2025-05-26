@@ -1,0 +1,101 @@
+.detail-exerise {
+  min-height: 90vh;
+  background: linear-sgradient(120deg, #fdfbfb 0%, #ebedee 100%);
+  background-image: url("https://www.transparenttextures.com/patterns/white-wall-3.png");
+  background-repeat: repeat;
+  background-size: 200px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+
+  .exercise-card {
+    width: 100%;
+    max-width: 700px;
+    background-color: #ffffff;
+    border-radius: 24px;
+    padding: 32px;
+    height: 90vh;
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    animation: fadeIn 0.4s ease;
+    border: 1px solid #f2f2f2;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .exercise-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    .emoji {
+      font-size: 20px;
+    }
+
+    h2 {
+      font-size: 20px;
+      color: #4b0082;
+      font-weight: 700;
+      margin: 0;
+    }
+  }
+
+  .exercise-text-box {
+    background-color: #f9f0ff;
+    border-left: 6px solid #c084fc;
+    padding: 16px 20px;
+    border-radius: 12px;
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+
+    .emoji {
+      font-size: 20px;
+      margin-top: 2px;
+    }
+
+    p {
+      font-size: 16px;
+      color: #444;
+      margin: 0;
+    }
+  }
+
+  .exercise-content {
+    height: 80vh;
+    overflow-x: auto;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  }
+
+  .exercise-actions{
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 12px 32px 24px;
+    background-color: #ffffff;
+    z-index: 30;
+  }
+}
+
+// Animation
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

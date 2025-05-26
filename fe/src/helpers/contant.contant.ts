@@ -32,7 +32,14 @@ const pastelColors = [
 ];
 
 
+const typeMap: Record<string, string> = {
+  write: "Viết",
+  match: "Nối",
+  dictation: "Nghe - Chép chính tả",
+  multiple_choice: "Trắc nghiệm",
+};
 
 export {
-    pastelColors
+  pastelColors,
+  typeMap
 }
