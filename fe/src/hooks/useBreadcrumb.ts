@@ -52,10 +52,17 @@ const useBreadcrumb = () => {
     };
   }
 
-   if (pathname.includes("/detail-flashcard")) {
+  if (pathname.includes("/detail-flashcard")) {
     return {
       title: "Chi tiết flashcard",
       to: "/detail-flashcard",
+    };
+  }
+
+  if (pathname.includes("/exercises") || pathname.includes("/detail-exercise")) {
+    return {
+      title: "Bài tập",
+      to: "/exercises",
     };
   }
 

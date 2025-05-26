@@ -39,5 +39,15 @@ const apiConstant = {
     report: {
         init: "/report",
     },
+    exercises: {
+        init: "/exercises",
+        id: (id: string) => `/exercises/${id}`,
+        seachByTopicId: (id: string) => `/exercises/topic/${id}`
+    },
+    logs: {
+        init: "/logs",
+        id: (id: string) => `/logs/${id}`,
+        exerId: (id: string) => `/logs/exercise/${id}`,
+    },
 }
 export default apiConstant;
