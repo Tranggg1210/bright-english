@@ -1,16 +1,17 @@
-.exercise {
+.conversation {
   width: 100%;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  flex-direction: row-reverse;
   gap: 32px;
 
-  .exercise-left {
+  .conversation-left {
     width: 44%;
     height: 78vh;
     border-radius: 24px;
     overflow: hidden;
-    background-image: url("../../../../public/images/exam-banner.png");
+    background-image: url("../../../../public/images/conversation-banner.png");
     background-repeat: no-repeat;
     background-size: cover;
     box-shadow: 0 0 5px rgba(0 0 0 /10%);
@@ -18,7 +19,7 @@
     background-position: top center;
   }
 
-  .exercise-right {
+  .conversation-right {
     flex-grow: 1;
     height: 78vh;
     overflow-y: auto;
@@ -66,7 +67,7 @@
       gap: 12px;
       padding: 16px;
 
-      .exercise-not {
+      .conversation-not {
         color: #3f4254;
         font-weight: 700;
         font-size: 14px;
@@ -90,7 +91,7 @@
           flex-direction: column;
           cursor: pointer;
 
-          .exercise-name {
+          .conversation-name {
             font-size: 14px;
             font-weight: 700;
 
@@ -100,7 +101,7 @@
             }
           }
 
-          .exercise-type {
+          .conversation-type {
             font-size: 14px;
             color: #6c757d;
             margin-top: 4px;
@@ -126,7 +127,7 @@
 
 
 @media (max-width: 890px){
-  .exercise-left{
+  .conversation-left{
     display: none;
   }
 }

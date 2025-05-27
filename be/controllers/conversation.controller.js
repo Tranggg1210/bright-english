@@ -65,10 +65,15 @@ const getConversationByTopicId = catchAsync(async (req, res) => {
     throw new ApiError(httpStatus.NOT_FOUND, 'Không tìm thấy hội thoại theo chủ đề!');
   }
 
+  const flashcardConversation = conversations.map(({ _id, name }) => ({
+    _id,
+    name
+  }));
+
   res.status(httpStatus.OK).json({
     code: httpStatus.OK,
     message: 'Lấy danh sách hội thoại theo chủ đề thành công!',
-    data: { conversations },
+    data: { conversations: flashcardConversation },
   });
 });
 

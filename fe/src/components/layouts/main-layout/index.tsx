@@ -26,7 +26,7 @@ const MainLayout = ({ main }: MainLayoutProps) => {
 
       <div className="main-layout__content"
         style={{
-          marginLeft: isShowSidebar ? 0 : "16px"
+          marginLeft: isShowSidebar ? 0 : "16px",
         }}
       >
         {isShowHeader && <HeaderComponent />}

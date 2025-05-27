@@ -1,54 +1,70 @@
 .detail-exerise {
-  min-height: 90vh;
   background: linear-sgradient(120deg, #fdfbfb 0%, #ebedee 100%);
-  background-image: url("https://www.transparenttextures.com/patterns/white-wall-3.png");
-  background-repeat: repeat;
-  background-size: 200px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  background-image: url("../../../../public/images/exercise-bg.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
   position: absolute;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
+  padding: 0px 32px 0;
+  height: max-content;
+  min-height: 95.4vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 
-  .exercise-card {
-    width: 100%;
-    max-width: 700px;
-    background-color: #ffffff;
-    border-radius: 24px;
-    padding: 32px;
+  .exercise-main {
     height: 90vh;
-    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.1);
-    display: flex;
-    flex-direction: column;
-    gap: 24px;
-    animation: fadeIn 0.4s ease;
-    border: 1px solid #f2f2f2;
-    position: relative;
-    overflow: hidden;
+    width: 64%;
+    min-width: 600px;
+    background-color: #fff;
+    margin: 0 auto;
+    border-radius: 24px;
+    border: 4px solid #ffda9f;
+    padding: 20px;
   }
 
   .exercise-header {
     display: flex;
+    justify-content: space-between;
     align-items: center;
-    gap: 12px;
+    gap: 24px;
+    margin-bottom: 12px;
 
-    .emoji {
-      font-size: 20px;
+    .exercise-title {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      justify-content: start;
+
+      .emoji {
+        font-size: 18px;
+      }
+
+      h2 {
+        font-size: 16px;
+        color: #4b0082;
+        font-weight: 700;
+        margin: 0;
+      }
     }
+  }
 
-    h2 {
-      font-size: 20px;
-      color: #4b0082;
-      font-weight: 700;
-      margin: 0;
+  .exercise-content {
+    height: 68vh;
+    overflow-x: hidden;
+    overflow-y: auto;
+
+    &::-webkit-scrollbar {
+      display: none;
     }
   }
 
   .exercise-text-box {
     background-color: #f9f0ff;
+    border: 1px solid #c084fc;
     border-left: 6px solid #c084fc;
     padding: 16px 20px;
     border-radius: 12px;
@@ -65,37 +81,64 @@
       font-size: 16px;
       color: #444;
       margin: 0;
+      text-align: justify;
     }
   }
 
-  .exercise-content {
-    height: 80vh;
-    overflow-x: auto;
+  .btn-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+  }
 
-    &::-webkit-scrollbar {
-      display: none;
+  .exercise-close {
+    width: 40px;
+    height: 40px;
+    flex-shrink: 0;
+    background-color: #ff8400;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    opacity: 0.6;
+    &:hover {
+      opacity: 1;
+    }
+
+    &:disabled {
+      background-color: rgb(207, 207, 207);
     }
   }
 
-  .exercise-actions{
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    padding: 12px 32px 24px;
-    background-color: #ffffff;
-    z-index: 30;
+  .btn-submit-exercise {
+    width: 100%;
+    margin: 10px auto;
+
+    &:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
   }
 }
 
-// Animation
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(10px);
+@media (max-width: 800px) {
+  .detail-exerise {
+    .exercise-main{
+      width: 100%;
+      min-width: unset;
+    }
   }
-  to {
-    opacity: 1;
-    transform: translateY(0);
+}
+
+@media (max-width: 500px) {
+  .detail-exerise {
+    border-radius: 0;
+    min-height: 100vh;
+    bottom: 0;
+    background-image: none;
+    margin-right: -16px;
   }
 }

@@ -49,5 +49,10 @@ const apiConstant = {
         id: (id: string) => `/logs/${id}`,
         exerId: (id: string) => `/logs/exercise/${id}`,
     },
+    conversations: {
+        init: "/conversations",
+        id: (id: string) => `/conversations/${id}`,
+        seachByTopicId: (id: string) => `/conversations/topic/${id}`
+    },
 }
 export default apiConstant;

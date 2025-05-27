@@ -4,24 +4,23 @@ import "./style.scss";
 import { Accordion } from "react-bootstrap";
 import { useEffect, useState } from "react";
 import { getListTopic } from "@src/services/flashcard";
-import { ITopic, IExercise } from "@src/types/interface";
+import { ITopic, IConversation } from "@src/types/interface";
 import Loading from "@src/components/atoms/loading";
 import useNotification from "@src/hooks/useNotification";
 import EmptyPage from "@src/components/organisms/_empty-page";
 import { useAppDispatch } from "@src/hooks/useHookReducers";
-import { getListExerciseByTopicId } from "@src/services/exercise";
-import { typeMap } from "@src/helpers/contant.contant";
 import { useRouter } from "next/navigation";
 import Session from "@src/helpers/session";
+import { getListConversationByTopicId } from "@src/services/conversation";
 
-function Exercise() {
+function Conversations() {
   const { notify } = useNotification();
   const dispatch = useAppDispatch();
   const [topics, setTopics] = useState<ITopic[]>([]);
   const [loadingTopics, setLoadingTopics] = useState(false);
   const router = useRouter();
-  const [exercisesByTopic, setExercisesByTopic] = useState<
-    Record<string, IExercise[]>
+  const [conversationsByTopic, setConversationsByTopic] = useState<
+    Record<string, IConversation[]>
   >({});
   const [loadingTopicId, setLoadingTopicId] = useState<string | null>(null);
 
@@ -42,31 +41,35 @@ function Exercise() {
     fetchTopics();
   }, []);
 
-  const handleLoadExercises = async (topicId: string) => {
-    if (exercisesByTopic[topicId]) return;
+  const handleLoadConversations = async (topicId: string) => {
+    if (conversationsByTopic[topicId]) return;
     try {
       setLoadingTopicId(topicId);
       const res = await dispatch(
-        getListExerciseByTopicId({
+        getListConversationByTopicId({
           id: topicId,
         })
       ).unwrap();
-      setExercisesByTopic((prev) => ({
+      setConversationsByTopic((prev) => ({
         ...prev,
-        [topicId]: res.data.exercises,
+        [topicId]: res.data.conversations,
       }));
     } catch (err) {
-      notify("error", "Lỗi khi tải bài tập!");
+      setConversationsByTopic((prev) => ({
+        ...prev,
+        [topicId]: [],
+      }));
+      // notify("error", "Lỗi khi tải bài tập!");
     } finally {
       setLoadingTopicId(null);
     }
   };
 
-  const handleOpenExercise = (id: string, idTopic: string, indx: number) => {
+  const handleOpenConversation = (id: string, idTopic: string, indx: number) => {
     if (!id) return;
-    const allIds = exercisesByTopic[idTopic].map(item => item._id);
-    Session.setSession("list-exercise", allIds);
-    router.push(`/detail-exercise/${id}?i=${indx}`);
+    const allIds = conversationsByTopic[idTopic].map(item => item._id);
+    Session.setSession("list-conversation", allIds);
+    router.push(`/detail-conversation/${id}?i=${indx}`);
   };
 
   if (loadingTopics) return <Loading />;
@@ -80,36 +83,33 @@ function Exercise() {
     );
 
   return (
-    <div className="exercise">
-      <div className="exercise-left"></div>
-      <div className="exercise-right">
+    <div className="conversation">
+      <div className="conversation-left"></div>
+      <div className="conversation-right">
         <Accordion>
           {topics.map((topic, idx) => (
             <Accordion.Item eventKey={String(idx)} key={topic._id}>
-              <Accordion.Header onClick={() => handleLoadExercises(topic._id)}>
+              <Accordion.Header onClick={() => handleLoadConversations(topic._id)}>
                 {topic.name}
               </Accordion.Header>
               <Accordion.Body>
                 {loadingTopicId === topic._id ? (
                   <Loading />
-                ) : exercisesByTopic[topic._id]?.length ? (
+                ) : conversationsByTopic[topic._id]?.length ? (
                   <ul>
-                    {exercisesByTopic[topic._id].map((ex, indx) => (
+                    {conversationsByTopic[topic._id].map((ex, indx) => (
                       <li
                         key={ex._id}
                         onClick={() =>
-                          handleOpenExercise(ex._id || "", topic._id, indx)
+                          handleOpenConversation(ex._id || "", topic._id, indx)
                         }
                       >
-                        <div className="exercise-name">{ex.name}</div>
-                        <div className="exercise-type">
-                          Dạng bài: {typeMap[ex.type] || ex.type}
-                        </div>
+                        <div className="conversation-name">{ex.name}</div>
                       </li>
                     ))}
                   </ul>
                 ) : (
-                  <p className="exercise-not">Không có bài tập.</p>
+                  <p className="conversation-not">Không có bài hội thoại.</p>
                 )}
               </Accordion.Body>
             </Accordion.Item>
@@ -120,4 +120,4 @@ function Exercise() {
   );
 }
 
-export default Exercise;
+export default Conversations;
