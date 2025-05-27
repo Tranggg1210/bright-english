@@ -94,12 +94,17 @@ const getExercisesByTopicId = catchAsync(async (req, res) => {
 
   const exercises = await Exercise.find({ topicId: req.params.topicId });
 
+   const filteredExercises = exercises.map(({ _id, type, name }) => ({
+    _id,
+    type,
+    name,
+  }));
+
   res.status(httpStatus.OK).json({
     code: httpStatus.OK,
     message: 'Lấy danh sách bài tập thành công!',
     data: {
-      exercises,
-      topicName: topic.name,
+      exercises: filteredExercises,
     },
   });
 });

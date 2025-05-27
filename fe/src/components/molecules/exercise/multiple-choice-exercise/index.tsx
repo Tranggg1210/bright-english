@@ -1,6 +1,8 @@
+"use client";
 import "./style.scss";
 import { useState, useEffect } from "react";
-import ButtonComponent from "@src/components/atoms/button";
+import Image from "next/image";
+import { CancelX, CheckCorrect } from "@src/components/svgs";
 
 type Option = {
   id: string;
@@ -28,66 +30,58 @@ type Answer = {
 type Props = {
   questions: Question[];
   onChangeAnswers: (answers: Answer[]) => void;
-  handleSubmit: () => void;
   isLearned?: boolean;
+  isSubmitted?: boolean;
   multipleAnswers: Answer[];
   resetFlag: boolean;
-  onResetDone?: () => void; 
+  onResetDone?: () => void;
 };
 
 export default function MultipleChoiceExercise({
   questions,
   onChangeAnswers,
-  handleSubmit,
   isLearned = false,
+  isSubmitted = false,
   multipleAnswers = [],
   resetFlag,
   onResetDone,
 }: Props) {
-  const [selectedOptions, setSelectedOptions] = useState<Record<string, string>>(
-    () =>
-      questions.reduce((acc, q) => {
-        const matched = multipleAnswers.find((a) => a.questionId === q._id);
-        acc[q._id] = matched?.userAnswers?.[0]?.content || "";
-        return acc;
-      }, {} as Record<string, string>)
+  const [selectedOptions, setSelectedOptions] = useState<Record<string, string>>(() =>
+    questions.reduce((acc, q) => {
+      const matched = multipleAnswers.find((a) => a.questionId === q._id);
+      acc[q._id] = matched?.userAnswers?.[0]?.content || "";
+      return acc;
+    }, {} as Record<string, string>)
   );
 
-  const [isSubmitted, setIsSubmitted] = useState(false);
-
-  // Reset khi resetFlag thay đổi
+  // Reset lại khi cần
   useEffect(() => {
     if (resetFlag) {
       setSelectedOptions({});
-      setIsSubmitted(false);
       onResetDone?.();
     }
   }, [resetFlag, onResetDone]);
 
-  const handleOptionClick = (questionId: string, content: string) => {
-    if (isSubmitted || isLearned) return;
-    setSelectedOptions((prev) => ({
-      ...prev,
-      [questionId]: content,
-    }));
-  };
-
-  const handleFinalSubmit = () => {
+  // Cập nhật state cho component cha
+  useEffect(() => {
     const answers: Answer[] = questions.map((q) => {
       const selectedId = selectedOptions[q._id];
-      const isCorrect =
-        q.answer.options.find((o) => o.id === selectedId)?.isCorrect || false;
+      const isCorrect = q.answer.options.find((o) => o.id === selectedId)?.isCorrect || false;
       return {
         questionId: q._id,
-        userAnswers: [{ content: selectedId, isCorrect }],
+        userAnswers: selectedId ? [{ content: selectedId, isCorrect }] : [],
       };
     });
     onChangeAnswers(answers);
-    handleSubmit();
-    setIsSubmitted(true);
-  };
+  }, [selectedOptions, questions, onChangeAnswers]);
 
-  const isAllEmpty = questions.every((q) => !selectedOptions[q._id]);
+  const handleOptionClick = (questionId: string, optionId: string) => {
+    if (isSubmitted || isLearned) return;
+    setSelectedOptions((prev) => ({
+      ...prev,
+      [questionId]: optionId,
+    }));
+  };
 
   return (
     <div className="multiple-choice-exercise">
@@ -109,39 +103,41 @@ export default function MultipleChoiceExercise({
                   const isCorrect = opt.isCorrect;
                   const isSelected = selected === opt.id;
 
+                  const showCorrectIcon = isShowResult && isCorrect;
+                  const showWrongIcon = isShowResult && isSelected && !isCorrect;
+
                   return (
                     <button
                       key={opt.id}
                       type="button"
                       className={`custom-btn 
-                        ${
-                          isShowResult
-                            ? isCorrect
-                              ? "correct"
-                              : isSelected
-                              ? "wrong"
-                              : ""
+                        ${isShowResult
+                          ? isCorrect
+                            ? "correct"
+                            : isSelected
+                            ? "wrong"
                             : ""
-                        }
+                          : ""}
                         ${!isShowResult && isSelected ? "selected" : ""}
                       `}
                       onClick={() => handleOptionClick(q._id, opt.id)}
                       disabled={isShowResult}
                     >
-                      <span
-                        className="front"
-                        style={{
-                          display: "flex",
-                          justifyContent: "space-between",
-                          alignItems: "center",
-                          width: "100%",
-                        }}
-                      >
+                      <span className="front" style={{
+                        display: "flex",
+                        justifyContent: "space-between",
+                        alignItems: "center",
+                        width: "100%",
+                      }}>
                         <span>{opt.text}</span>
-                        {(isShowResult && (isCorrect || isSelected)) && (
-                          <span aria-label={isCorrect ? "Correct" : "Wrong"}>
-                            {isCorrect ? "✅" : isSelected ? "❌" : ""}
-                          </span>
+                        {showCorrectIcon && (
+                          <Image src={CheckCorrect} alt="Correct" width={16} height={16} />
+                        )}
+                        {showWrongIcon && (
+                          <Image src={CancelX} alt="Wrong" width={16} height={16} />
+                        )}
+                        {!isShowResult && isSelected && (
+                          <div className="check-box"><div /></div>
                         )}
                       </span>
                     </button>
@@ -152,32 +148,17 @@ export default function MultipleChoiceExercise({
               {isLearned && !submittedCorrect && (
                 <div className="mt-1 text-danger small">
                   Đáp án đúng:{" "}
-                  <strong>{q.answer.options.find((o) => o.isCorrect)?.text}</strong>
+                  <strong>
+                    {q.answer.options.find((o) => o.isCorrect)?.text}
+                  </strong>
                   {q.answer.explain && (
-                    <div
-                      dangerouslySetInnerHTML={{ __html: q.answer.explain }}
-                    />
+                    <div dangerouslySetInnerHTML={{ __html: q.answer.explain }} />
                   )}
                 </div>
               )}
             </div>
           );
         })}
-      </div>
-
-      <div className="btn-container">
-        <ButtonComponent
-          background="#ff8400"
-          borderRadius="48px"
-          color="#fff"
-          fontSize="14px"
-          onClick={handleFinalSubmit}
-          padding="10px 24px"
-          title={isLearned ? "Làm lại" : "Nộp bài"}
-          className="btn-submit-exercise"
-          type="button"
-          disabled={isAllEmpty || isSubmitted}
-        />
       </div>
     </div>
   );

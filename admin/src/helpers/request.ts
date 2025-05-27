@@ -56,7 +56,6 @@ class Request {
       originalRequest._retry = true;
       try {
         const refreshedToken = await this.refreshAccessToken();
-        console.log(refreshedToken)
         if (refreshedToken) {
           LocalStorage.setLocalStorage("access-token", refreshedToken);
           if (originalRequest.headers) {

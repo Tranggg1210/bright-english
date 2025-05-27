@@ -14,6 +14,9 @@ import Setting from "@public/icons/setting.svg";
 import Logout from "@public/icons/logout.svg";
 import Cancel from "@public/icons/cancel.svg";
 import Book from "@public/icons/book.svg";
+import CancelX from "@public/icons/cancel-x.svg";
+import CheckCorrect from "@public/icons/check.svg";
+import Link from "@public/icons/link.svg";
 
 export {
     CloseIcon,
@@ -31,5 +34,8 @@ export {
     Logout,
     Setting,
     Cancel,
-    Book
+    Book,
+    CancelX,
+    CheckCorrect,
+    Link
 }

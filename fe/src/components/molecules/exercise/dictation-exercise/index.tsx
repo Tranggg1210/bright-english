@@ -2,7 +2,6 @@ import "./style.scss";
 import { Formik, Form, Field } from "formik";
 import { Form as BsForm } from "react-bootstrap";
 import { useEffect, useState } from "react";
-import ButtonComponent from "@src/components/atoms/button";
 
 type Question = {
   _id: string;
@@ -24,7 +23,6 @@ type WriteAnswer = {
 type Props = {
   questions: Question[];
   onChangeAnswers: (answers: WriteAnswer[]) => void;
-  handleSubmit: () => void;
   isLearned?: boolean;
   writeAnswers: WriteAnswer[];
 };
@@ -32,7 +30,6 @@ type Props = {
 export default function DictationExercise({
   questions,
   onChangeAnswers,
-  handleSubmit,
   isLearned,
   writeAnswers = [],
 }: Props) {
@@ -98,8 +95,8 @@ export default function DictationExercise({
 
               return (
                 <div key={q._id} className="mb-4">
-                  <p className="font-semibold mb-2">Câu {index + 1}:</p>
-                  <audio controls src={q.audio} className="mb-2" />
+                  <p className="font-semibold mb-2">Câu {index + 1}</p>
+                  <audio controls src={q.audio} className="mb-3 mx-auto block" />
 
                   <Field
                     as={BsForm.Control}
@@ -155,21 +152,6 @@ export default function DictationExercise({
                 </div>
               );
             })}
-
-            <div className="btn-actions">
-              <ButtonComponent
-                background="#ff8400"
-                borderRadius="48px"
-                color="#fff"
-                fontSize="14px"
-                onClick={handleSubmit}
-                padding="10px 24px"
-                title={isLearned ? "Làm lại" : "Nộp bài"}
-                className="btn-submit-exercise"
-                type="submit"
-                disabled={isAllEmpty}
-              />
-            </div>
           </Form>
         )}
       </Formik>

@@ -15,6 +15,7 @@
     background-size: cover;
     box-shadow: 0 0 5px rgba(0 0 0 /10%);
     flex-shrink: 0;
+    background-position: top center;
   }
 
   .exercise-right {
@@ -22,6 +23,7 @@
     height: 78vh;
     overflow-y: auto;
     padding-right: 4px;
+
     &::-webkit-scrollbar {
       width: 4px;
       height: 8px;
@@ -111,5 +113,20 @@
         }
       }
     }
+    .accordion-item:first-of-type > .accordion-header .accordion-button,
+    .accordion-item:first-of-type {
+      border-radius: 24px 24px 0 0;
+    }
+    .accordion-item:last-of-type > .accordion-header .accordion-button,
+    .accordion-item:last-of-type {
+      border-radius: 0 0 24px 24px;
+    }
+  }
+}
+
+
+@media (max-width: 890px){
+  .exercise-left{
+    display: none;
   }
 }

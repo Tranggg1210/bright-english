@@ -5,7 +5,7 @@ import { useState } from "react";
 import { Button } from "react-bootstrap";
 import { MatchedPair, MatchItem } from "@src/types/interface";
 import Image from "next/image";
-import ButtonComponent from "@src/components/atoms/button";
+import { CancelX, CheckCorrect, Link } from "@src/components/svgs";
 
 interface Props {
   dataLeft: MatchItem[];
@@ -13,7 +13,6 @@ interface Props {
   matchedPairs: MatchedPair[];
   setMatchedPairs: React.Dispatch<React.SetStateAction<MatchedPair[]>>;
   isLearned?: boolean;
-  handleSubmit: () => void;
 }
 
 export default function MatchingExercise({
@@ -22,7 +21,6 @@ export default function MatchingExercise({
   matchedPairs,
   setMatchedPairs,
   isLearned = true,
-  handleSubmit
 }: Props) {
   const [selectedLeft, setSelectedLeft] = useState<string | null>(null);
   const [selectedRight, setSelectedRight] = useState<string | null>(null);
@@ -131,11 +129,16 @@ export default function MatchingExercise({
                 className={`remove-pair ${resultClassIcon}`}
               >
                 {isCorrect === undefined ? (
-                  <span className="">🔗</span>
+                  <Image src={Link} alt="" width={16} height={16}></Image>
                 ) : isCorrect ? (
-                  <span>🍀</span>
+                  <Image
+                    src={CheckCorrect}
+                    alt=""
+                    width={16}
+                    height={16}
+                  ></Image>
                 ) : (
-                  <span>❌</span>
+                  <Image src={CancelX} alt="" width={16} height={16}></Image>
                 )}
               </button>
 
@@ -212,20 +215,6 @@ export default function MatchingExercise({
             );
           })}
         </div>
-      </div>
-      <div className="btn-container">
-        <ButtonComponent
-          background="#ff8400"
-          borderRadius="48px"
-          color="#fff"
-          fontSize="14px"
-          onClick={handleSubmit}
-          padding="10px 24px"
-          title={isLearned ? "Làm lại" : "Nộp bài"}
-          className="btn-submit-exercise"
-          type="submit"
-          disabled={matchedPairs?.length !== dataLeft?.length}
-        />
       </div>
     </div>
   ) : null;

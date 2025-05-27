@@ -20,6 +20,7 @@ const config: Config = {
                 lightOrange: '#FFEDD5',
                 linen: '#FAE5D3',
                 mellowApricot: '#F8CFA9',
+                correct: "#33B469"
             },
         },
     },

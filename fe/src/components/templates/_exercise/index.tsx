@@ -12,6 +12,7 @@ import { useAppDispatch } from "@src/hooks/useHookReducers";
 import { getListExerciseByTopicId } from "@src/services/exercise";
 import { typeMap } from "@src/helpers/contant.contant";
 import { useRouter } from "next/navigation";
+import Session from "@src/helpers/session";
 
 function Exercise() {
   const { notify } = useNotification();
@@ -61,9 +62,11 @@ function Exercise() {
     }
   };
 
-  const handleOpenExercise = (id: string) => {
+  const handleOpenExercise = (id: string, idTopic: string, indx: number) => {
     if (!id) return;
-    router.push(`/detail-exercise/${id}`);
+    const allIds = exercisesByTopic[idTopic].map(item => item._id);
+    Session.setSession("list-exercise", allIds);
+    router.push(`/detail-exercise/${id}?i=${indx}`);
   };
 
   if (loadingTopics) return <Loading />;
@@ -91,10 +94,12 @@ function Exercise() {
                   <Loading />
                 ) : exercisesByTopic[topic._id]?.length ? (
                   <ul>
-                    {exercisesByTopic[topic._id].map((ex) => (
+                    {exercisesByTopic[topic._id].map((ex, indx) => (
                       <li
                         key={ex._id}
-                        onClick={() => handleOpenExercise(ex._id || "")}
+                        onClick={() =>
+                          handleOpenExercise(ex._id || "", topic._id, indx)
+                        }
                       >
                         <div className="exercise-name">{ex.name}</div>
                         <div className="exercise-type">
