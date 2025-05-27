@@ -47,7 +47,7 @@ function ListCardStudy() {
       description: "Phát âm chuẩn hơn với các bài luyện nói cùng AI.",
       image: Bear4,
       handleClick: () => {
-        router.push("/speaking");
+        router.push("/conversation");
       },
     },
     {

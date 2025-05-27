@@ -8,6 +8,7 @@ import grammarReducer from "./grammar";
 import reportsReducer from "./report";
 import userVocabularysReducer from "./user-vocabulary";
 import exercisesReducer from "./exercise";
+import conversationReducer from "./conversation";
 
 const stores = configureStore({
     reducer: {
@@ -19,7 +20,8 @@ const stores = configureStore({
         grammar: grammarReducer,
         report: reportsReducer,
         userVocabulary: userVocabularysReducer,
-        exercises: exercisesReducer
+        exercises: exercisesReducer,
+        convetsation: conversationReducer
     }
 });
 

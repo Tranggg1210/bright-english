@@ -66,6 +66,13 @@ const useBreadcrumb = () => {
     };
   }
 
+   if (pathname.includes("/conversation") || pathname.includes("/detail-conversation")) {
+    return {
+      title: "Hội thoại",
+      to: "/conversation",
+    };
+  }
+
   return null;
 };
 

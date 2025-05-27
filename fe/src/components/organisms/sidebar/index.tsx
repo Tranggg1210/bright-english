@@ -73,7 +73,7 @@ const navData: NavGroupType[] = [
         children_id: "a5",
         icon: ConversationIcon,
         title: "Hội thoại",
-        to: "/speaking",
+        to: "/conversation",
       },
     ],
   },

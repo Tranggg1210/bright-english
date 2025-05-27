@@ -1,0 +1,133 @@
+.conversation {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-direction: row-reverse;
+  gap: 32px;
+
+  .conversation-left {
+    width: 44%;
+    height: 78vh;
+    border-radius: 24px;
+    overflow: hidden;
+    background-image: url("../../../../public/images/conversation-banner.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+    box-shadow: 0 0 5px rgba(0 0 0 /10%);
+    flex-shrink: 0;
+    background-position: top center;
+  }
+
+  .conversation-right {
+    flex-grow: 1;
+    height: 78vh;
+    overflow-y: auto;
+    padding-right: 4px;
+
+    &::-webkit-scrollbar {
+      width: 4px;
+      height: 8px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background-color: #888;
+      border-radius: 8px;
+    }
+
+    &::-webkit-scrollbar-thumb:hover {
+      background-color: #555;
+    }
+
+    &::-webkit-scrollbar-track {
+      background-color: #f1f1f1;
+    }
+
+    .accordion-button {
+      color: #3f4254;
+      transition: 0.3s;
+
+      &:not(.collapsed) {
+        background-color: #fff3e0;
+        color: #ff8400;
+        font-weight: 600;
+        outline: none;
+        border: none;
+      }
+    }
+
+    .accordion-button:focus {
+      box-shadow: none;
+      outline: none;
+    }
+
+    .accordion-body {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      padding: 16px;
+
+      .conversation-not {
+        color: #3f4254;
+        font-weight: 700;
+        font-size: 14px;
+      }
+
+      ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+
+        li {
+          background-color: #f8f9fa;
+          padding: 12px 16px;
+          border-radius: 8px;
+          box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+          color: #3f4254;
+          display: flex;
+          flex-direction: column;
+          cursor: pointer;
+
+          .conversation-name {
+            font-size: 14px;
+            font-weight: 700;
+
+            &::before {
+              content: "📘 ";
+              margin-right: 4px;
+            }
+          }
+
+          .conversation-type {
+            font-size: 14px;
+            color: #6c757d;
+            margin-top: 4px;
+            font-weight: 500;
+          }
+
+          &:hover {
+            background-color: #fff3e0;
+          }
+        }
+      }
+    }
+    .accordion-item:first-of-type > .accordion-header .accordion-button,
+    .accordion-item:first-of-type {
+      border-radius: 24px 24px 0 0;
+    }
+    .accordion-item:last-of-type > .accordion-header .accordion-button,
+    .accordion-item:last-of-type {
+      border-radius: 0 0 24px 24px;
+    }
+  }
+}
+
+
+@media (max-width: 890px){
+  .conversation-left{
+    display: none;
+  }
+}

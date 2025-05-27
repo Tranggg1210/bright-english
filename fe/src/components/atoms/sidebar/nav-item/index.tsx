@@ -30,6 +30,7 @@ export const NavCard: FC<NavCardProps> = ({
     if (pathname.includes('/progress') && to === '/app') return 'nav-active'
     if (pathname.includes('/detail-flashcard') && to === '/flashcard') return 'nav-active'
     if (pathname.includes('/detail-exercise') && to === '/exercises') return 'nav-active'
+    if (pathname.includes('/detail-conversation') && to === '/conversation') return 'nav-active'
     return ''
   }
 

@@ -1,4 +1,4 @@
-type SessionType = "list-flashcard" | "word-count" | "list-exercise";
+type SessionType = "list-flashcard" | "word-count" | "list-exercise" | "list-conversation";
 
 const isBrowser = typeof window !== "undefined";
 
